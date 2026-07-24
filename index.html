@@ -2,7 +2,7 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>Super System - Checklist & Prevenção de Perdas Supermercado Paranaíba</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -16,7 +16,7 @@
   <div class="system-root">
     
     <!-- Sidebar Navigation (Desktop) -->
-    <aside class="sidebar">
+    <aside class="sidebar" id="app-sidebar">
       <div class="sidebar-brand">
         <div class="brand-logo">
           <i data-lucide="check-check"></i>
@@ -72,6 +72,14 @@
       
       <!-- Topbar Header -->
       <header class="topbar">
+        <div class="mobile-top-brand">
+          <div class="brand-logo-sm"><i data-lucide="check-check"></i></div>
+          <select id="mobile-store-picker" onchange="switchStore(this.value)">
+            <option value="1">Loja 1 — Centro</option>
+            <option value="2">Loja 2 — Bairro</option>
+          </select>
+        </div>
+
         <div class="topbar-left">
           <h1 id="page-title">Painel Operacional — Loja 1 (Centro)</h1>
           <p id="page-subtitle">Visão consolidada de rotinas, prevenção de perdas e indicadores</p>
@@ -79,7 +87,7 @@
 
         <div class="topbar-right">
           <button class="btn-wa-header" onclick="triggerWhatsAppModal()">
-            <i data-lucide="send"></i> Notificar Grupo WhatsApp
+            <i data-lucide="send"></i> <span class="wa-btn-text">WhatsApp</span>
           </button>
           
           <div class="user-profile-badge">
@@ -120,7 +128,7 @@
               <div class="stat-icon bg-blue"><i data-lucide="clipboard-check"></i></div>
               <div class="stat-data">
                 <span class="stat-num" id="stat-checklists-val">8 / 10</span>
-                <span class="stat-lbl">Rotinas Realizadas Hoje</span>
+                <span class="stat-lbl">Rotinas Realizadas</span>
               </div>
             </div>
 
@@ -136,7 +144,7 @@
               <div class="stat-icon bg-green"><i data-lucide="dollar-sign"></i></div>
               <div class="stat-data">
                 <span class="stat-num" id="stat-perdas-val">R$ 1.840</span>
-                <span class="stat-lbl">Perdas Evitadas este Mês</span>
+                <span class="stat-lbl">Perdas Evitadas</span>
               </div>
             </div>
 
@@ -253,7 +261,7 @@
             <div class="sector-card-header bg-fechamento">
               <i data-lucide="moon"></i>
               <div>
-                <h4>Fechamento & Economia de Energia</h4>
+                <h4>Fechamento & Economia Noturna</h4>
                 <small>Geral • Responsável: Gerente</small>
               </div>
             </div>
@@ -310,7 +318,7 @@
                   <p>Verifique o indicador digital ou termômetro espeto Bluetooth.</p>
                 </div>
                 <button class="btn-pop-hint" onclick="openMicrolearningModal('refrigeracao')">
-                  <i data-lucide="play-circle"></i> Ver Treinamento (POP)
+                  <i data-lucide="play-circle"></i> Treinamento POP
                 </button>
               </div>
 
@@ -322,7 +330,7 @@
                 </div>
 
                 <button class="btn-ai-scan" onclick="triggerAIScan(1)">
-                  <i data-lucide="camera"></i> Escanear com IA Visual
+                  <i data-lucide="camera"></i> Escanear IA
                 </button>
               </div>
 
@@ -331,22 +339,22 @@
                 <div class="ai-image-wrapper">
                   <img src="https://images.unsplash.com/photo-1551028150-64b9f398f678?w=600&auto=format&fit=crop&q=60" alt="Termometro IA">
                   <div class="ai-bounding-box">
-                    <span class="box-label">ALERTA IA: DETECTADO 6.8°C</span>
+                    <span class="box-label">DETECTADO 6.8°C</span>
                   </div>
                 </div>
                 <div class="ai-diagnosis">
                   <strong><i data-lucide="sparkles"></i> Análise da IA Visual:</strong>
-                  <p>Leitura efetuada no display digital. Temperatura registrada: <strong>6.8°C</strong>. Fora do limite sanitário de 4.0°C. Risco sanitário detectado.</p>
+                  <p>Leitura no display digital: <strong>6.8°C</strong>. Fora do limite de 4.0°C. Risco sanitário.</p>
                 </div>
               </div>
 
               <!-- 5W2H Trigger Card -->
               <div class="auto-5w2h-card hidden" id="card-5w2h-trigger-1">
                 <div class="trigger-head">
-                  <i data-lucide="alert-octagon"></i> Plano 5W2H Gerado Automaticamente
+                  <i data-lucide="alert-octagon"></i> Plano 5W2H Gerado
                 </div>
-                <p>Ocorrência registrada. Um plano de ação foi criado e atribuído ao Encarregado de Manutenção com notificação no WhatsApp.</p>
-                <button class="btn-edit-5w2h" onclick="edit5W2H(1)">Editar Responsável & Prazo 5W2H</button>
+                <p>Ocorrência criada e enviada no WhatsApp da Manutenção.</p>
+                <button class="btn-edit-5w2h" onclick="edit5W2H(1)">Editar Plano 5W2H</button>
               </div>
             </div>
 
@@ -355,7 +363,7 @@
               <div class="q-head">
                 <span class="q-number">02</span>
                 <div class="q-title-box">
-                  <h3>Organização FIFO e Etiquetas de Validade no Balcão de Exposição?</h3>
+                  <h3>Organização FIFO e Validades no Balcão de Exposição?</h3>
                   <p>Garantir que as peças mais antigas estejam na frente para venda rápida.</p>
                 </div>
               </div>
@@ -373,7 +381,7 @@
               <div class="q-head">
                 <span class="q-number">03</span>
                 <div class="q-title-box">
-                  <h3>Conferência de Preço de Gôndola vs VR Software (Divergência)?</h3>
+                  <h3>Conferência de Preço de Gôndola vs VR Software?</h3>
                   <p>Bipe a etiqueta de oferta e confirme a integridade com o caixa.</p>
                 </div>
               </div>
@@ -390,7 +398,7 @@
 
           <div class="execution-footer-bar">
             <button class="btn-primary-lg" onclick="finishChecklistSubmission()">
-              <i data-lucide="check-check"></i> Finalizar Vistoria & Disparar Notificação no WhatsApp
+              <i data-lucide="check-check"></i> Finalizar & Notificar WhatsApp
             </button>
           </div>
         </div>
@@ -400,8 +408,8 @@
       <!-- SEÇÃO 3: GERENCIADOR DE PLANOS 5W2H -->
       <section id="view-5w2h" class="view-page">
         <div class="section-header-bar">
-          <h3><i data-lucide="check-square"></i> Matriz de Planos de Ação 5W2H</h3>
-          <span class="tag-info orange">3 Tarefas Pendentes de Resolução</span>
+          <h3><i data-lucide="check-square"></i> Planos de Ação 5W2H</h3>
+          <span class="tag-info orange">3 Pendentes</span>
         </div>
 
         <div class="5w2h-cards-grid" id="container-5w2h">
@@ -417,17 +425,16 @@
             <p class="problem-summary">Temperatura detectada em 6.8°C pela IA Visual.</p>
 
             <div class="matrix-5w2h-details">
-              <div class="detail-cell"><strong>WHAT (O quê):</strong> Manutenção do compressor e transferência das carnes nobres.</div>
-              <div class="detail-cell"><strong>WHY (Por quê):</strong> Evitar degradação da carne e multa sanitária da Anvisa.</div>
+              <div class="detail-cell"><strong>WHAT (O quê):</strong> Manutenção do compressor e transferência das carnes.</div>
+              <div class="detail-cell"><strong>WHY (Por quê):</strong> Evitar degradação da carne e multa da Anvisa.</div>
               <div class="detail-cell"><strong>WHO (Quem):</strong> Ricardo Silva (Manutenção)</div>
               <div class="detail-cell"><strong>WHEN (Quando):</strong> Hoje até as 14:00</div>
-              <div class="detail-cell"><strong>HOW (Como):</strong> Troca de fluido refrigerante e calibração de termostato.</div>
             </div>
 
             <div class="card-5w2h-footer">
               <span class="sla-timer"><i data-lucide="clock"></i> Restam 2h 15min</span>
               <button class="btn-resolve-5w2h" onclick="resolve5W2H('item-5w2h-1')">
-                <i data-lucide="check-circle"></i> Marcar Concluído
+                <i data-lucide="check-circle"></i> Concluir
               </button>
             </div>
           </div>
@@ -439,12 +446,12 @@
               <span class="sector-tag">Hortifrúti • Loja 2</span>
             </div>
 
-            <h4>Devolução e Acordo Comercial de Tomate (#Lote4091)</h4>
+            <h4>Devolução Lote Tomate (#Lote4091)</h4>
             <p class="problem-summary">Amostragem de recebimento na doca indicou 20% de avaria por amassamento.</p>
 
             <div class="matrix-5w2h-details">
-              <div class="detail-cell"><strong>WHAT (O quê):</strong> Aceite com ressalva e emissão de nota de devolução parcial no VR Software.</div>
-              <div class="detail-cell"><strong>WHY (Por quê):</strong> Evitar prejuízo no descarte do hortifrúti na loja.</div>
+              <div class="detail-cell"><strong>WHAT (O quê):</strong> Emissão de nota de devolução parcial no VR Software.</div>
+              <div class="detail-cell"><strong>WHY (Por quê):</strong> Evitar prejuízo no descarte do hortifrúti.</div>
               <div class="detail-cell"><strong>WHO (Quem):</strong> Juliano (Encarregado de Doca)</div>
               <div class="detail-cell"><strong>WHEN (Quando):</strong> Amanhã às 09:00</div>
             </div>
@@ -452,7 +459,7 @@
             <div class="card-5w2h-footer">
               <span class="sla-timer"><i data-lucide="clock"></i> Restam 18h</span>
               <button class="btn-resolve-5w2h" onclick="resolve5W2H('item-5w2h-2')">
-                <i data-lucide="check-circle"></i> Marcar Concluído
+                <i data-lucide="check-circle"></i> Concluir
               </button>
             </div>
           </div>
@@ -463,20 +470,16 @@
       <!-- SEÇÃO 4: PREVENÇÃO DE PERDAS & REBAIXE VR SOFTWARE COM PREÇO DE CUSTO -->
       <section id="view-perdas" class="view-page">
         <div class="section-header-bar">
-          <h3><i data-lucide="shield-alert"></i> Módulo de Prevenção de Perdas & Margem de Custo</h3>
-          <span class="tag-info green">VR Software API Conectado</span>
+          <h3><i data-lucide="shield-alert"></i> Prevenção & Margem de Custo</h3>
+          <span class="tag-info green">VR API Conectado</span>
         </div>
 
         <div class="perdas-banner">
           <div class="perdas-main-card">
             <div class="perdas-card-header">
               <div>
-                <h3><i data-lucide="zap" style="color: var(--orange);"></i> Rebaixe de Preço de Validade (Envio Direto VR Software)</h3>
-                <p>Confira o **Preço de Custo** importado do VR Software e **ajuste livremente o Preço Sugerido** antes de disparar a alteração no caixa da loja.</p>
-              </div>
-              <div class="vr-sync-status">
-                <span class="dot-live"></span>
-                <span>Base VR Atualizada</span>
+                <h3><i data-lucide="zap" style="color: var(--orange);"></i> Rebaixe de Preço de Validade (VR Software)</h3>
+                <p>Confira o **Preço de Custo** e **ajuste o Preço Sugerido** antes de enviar para os caixas da loja.</p>
               </div>
             </div>
 
@@ -484,28 +487,24 @@
               <table class="data-table perdas-table">
                 <thead>
                   <tr>
-                    <th>Código VR</th>
-                    <th>Produto / Descrição</th>
-                    <th>Estoque</th>
+                    <th>Produto</th>
                     <th>Vencimento</th>
-                    <th>Preço Custo (VR)</th>
-                    <th>Venda Atual</th>
-                    <th>Preço Sugerido (Gerente)</th>
-                    <th>Margem Est.</th>
-                    <th>Ação VR Software</th>
+                    <th>Custo</th>
+                    <th>Venda</th>
+                    <th>Preço Sugerido</th>
+                    <th>Margem</th>
+                    <th>Ação VR</th>
                   </tr>
                 </thead>
                 <tbody>
 
                   <!-- Row 1 -->
                   <tr id="row-prod-1">
-                    <td><code>78910001</code></td>
                     <td>
-                      <strong>Iogurte Grego Tradicional 400g</strong>
-                      <small class="block-sub">Lote #9021 • Laticínios</small>
+                      <strong>Iogurte Grego 400g</strong>
+                      <small class="block-sub">Cod: 78910001 • 42 un</small>
                     </td>
-                    <td>42 un.</td>
-                    <td><span class="text-red">Em 3 dias</span></td>
+                    <td><span class="text-red">3 dias</span></td>
                     <td><strong class="text-cost">R$ 3,20</strong></td>
                     <td><span class="line-through">R$ 8,90</span></td>
                     <td>
@@ -519,20 +518,18 @@
                     </td>
                     <td>
                       <button class="btn-apply-vr" id="btn-vr-1" onclick="submitPriceToVR(1, 'Iogurte Grego Tradicional 400g')">
-                        <i data-lucide="send"></i> Enviar p/ VR Software
+                        <i data-lucide="send"></i> Enviar VR
                       </button>
                     </td>
                   </tr>
 
                   <!-- Row 2 -->
                   <tr id="row-prod-2">
-                    <td><code>78910088</code></td>
                     <td>
-                      <strong>Queijo Mussarela Fatiado 200g</strong>
-                      <small class="block-sub">Lote #8812 • Frios</small>
+                      <strong>Queijo Mussarela 200g</strong>
+                      <small class="block-sub">Cod: 78910088 • 18 un</small>
                     </td>
-                    <td>18 un.</td>
-                    <td><span class="text-orange">Em 4 dias</span></td>
+                    <td><span class="text-orange">4 dias</span></td>
                     <td><strong class="text-cost">R$ 7,50</strong></td>
                     <td><span class="line-through">R$ 14,50</span></td>
                     <td>
@@ -546,20 +543,18 @@
                     </td>
                     <td>
                       <button class="btn-apply-vr" id="btn-vr-2" onclick="submitPriceToVR(2, 'Queijo Mussarela Fatiado 200g')">
-                        <i data-lucide="send"></i> Enviar p/ VR Software
+                        <i data-lucide="send"></i> Enviar VR
                       </button>
                     </td>
                   </tr>
 
                   <!-- Row 3 -->
                   <tr id="row-prod-3">
-                    <td><code>78910405</code></td>
                     <td>
-                      <strong>Bandeja Peito de Frango 1kg</strong>
-                      <small class="block-sub">Lote #3301 • Açougue</small>
+                      <strong>Peito de Frango 1kg</strong>
+                      <small class="block-sub">Cod: 78910405 • 25 un</small>
                     </td>
-                    <td>25 un.</td>
-                    <td><span class="text-red">Em 2 dias</span></td>
+                    <td><span class="text-red">2 dias</span></td>
                     <td><strong class="text-cost">R$ 12,80</strong></td>
                     <td><span class="line-through">R$ 21,90</span></td>
                     <td>
@@ -573,7 +568,7 @@
                     </td>
                     <td>
                       <button class="btn-apply-vr" id="btn-vr-3" onclick="submitPriceToVR(3, 'Bandeja Peito de Frango 1kg')">
-                        <i data-lucide="send"></i> Enviar p/ VR Software
+                        <i data-lucide="send"></i> Enviar VR
                       </button>
                     </td>
                   </tr>
@@ -588,13 +583,13 @@
       <!-- SEÇÃO 5: CENTRAL DE NOTIFICAÇÕES WHATSAPP -->
       <section id="view-whatsapp" class="view-page">
         <div class="section-header-bar">
-          <h3><i data-lucide="message-square"></i> Central de Notificações WhatsApp (Servidor)</h3>
-          <span class="tag-info">Webhooks & Bot Meta API</span>
+          <h3><i data-lucide="message-square"></i> Automação WhatsApp</h3>
+          <span class="tag-info">Meta API / Webhooks</span>
         </div>
 
         <div class="whatsapp-config-grid">
           <div class="config-card">
-            <h4><i data-lucide="settings"></i> Grupos de WhatsApp Configurados</h4>
+            <h4><i data-lucide="settings"></i> Grupos Configurados</h4>
             <div class="group-row">
               <div class="group-info">
                 <strong>Grupo Gestores — Loja 1 (Centro)</strong>
@@ -609,25 +604,18 @@
               </div>
               <span class="status-active">Ativo</span>
             </div>
-            <div class="group-row">
-              <div class="group-info">
-                <strong>Grupo Diretoria & Sócios (Consolidado)</strong>
-                <small>ID: 5511777665544-group@wa</small>
-              </div>
-              <span class="status-active">Ativo</span>
-            </div>
 
             <button class="btn-primary full-width mt-15" onclick="triggerWhatsAppModal()">
-              <i data-lucide="send"></i> Disparar Notificação de Teste
+              <i data-lucide="send"></i> Disparar Notificação Teste
             </button>
           </div>
 
           <div class="config-card">
-            <h4><i data-lucide="clock"></i> Horários dos Resumos Automáticos</h4>
+            <h4><i data-lucide="clock"></i> Horários dos Resumos</h4>
             <ul class="schedule-list">
-              <li><i data-lucide="sun"></i> <strong>Resumo Matutino (12:00)</strong> — Parcial de rotinas do açougue e doca.</li>
-              <li><i data-lucide="moon"></i> <strong>Resumo Noturno (18:30)</strong> — Fechamento do ISL diário e planos 5W2H.</li>
-              <li><i data-lucide="alert-circle"></i> <strong>Alertas Imediatos (Instantâneos)</strong> — Falha sanitária ou câmara fria alta.</li>
+              <li><i data-lucide="sun"></i> <strong>Resumo Matutino (12:00)</strong></li>
+              <li><i data-lucide="moon"></i> <strong>Resumo Noturno (18:30)</strong></li>
+              <li><i data-lucide="alert-circle"></i> <strong>Alertas Imediatos (Urgentes)</strong></li>
             </ul>
           </div>
         </div>
@@ -636,8 +624,8 @@
       <!-- SEÇÃO 6: GAMIFICAÇÃO & RANKING -->
       <section id="view-ranking" class="view-page">
         <div class="section-header-bar">
-          <h3><i data-lucide="trophy"></i> Gamificação & Ranking da Rede Paranaíba</h3>
-          <span class="tag-info">Competição Saudável entre Lojas</span>
+          <h3><i data-lucide="trophy"></i> Gamificação da Rede</h3>
+          <span class="tag-info">Ranking de Lojas</span>
         </div>
 
         <div class="ranking-grid">
@@ -645,21 +633,43 @@
             <div class="podium-badge">🏆 1º LUGAR</div>
             <h3>Loja 1 — Centro</h3>
             <div class="score-large">94%</div>
-            <p>Saúde da Loja (ISL Média)</p>
-            <span class="time-fix">Tempo médio de resolução 5W2H: <strong>1h 20min</strong></span>
+            <p>Saúde da Loja (ISL)</p>
           </div>
 
           <div class="ranking-podium-card silver">
             <div class="podium-badge">🥈 2º LUGAR</div>
             <h3>Loja 2 — Bairro</h3>
             <div class="score-large">88%</div>
-            <p>Saúde da Loja (ISL Média)</p>
-            <span class="time-fix">Tempo médio de resolução 5W2H: <strong>2h 45min</strong></span>
+            <p>Saúde da Loja (ISL)</p>
           </div>
         </div>
       </section>
 
     </main>
+
+    <!-- MOBILE BOTTOM NAVIGATION TAB BAR -->
+    <nav class="mobile-bottom-nav">
+      <button class="mob-nav-btn active" id="mob-dashboard" onclick="navigate('dashboard')">
+        <i data-lucide="layout-dashboard"></i>
+        <span>Início</span>
+      </button>
+      <button class="mob-nav-btn" id="mob-rotinas" onclick="navigate('rotinas')">
+        <i data-lucide="clipboard-list"></i>
+        <span>Rotinas</span>
+      </button>
+      <button class="mob-nav-btn" id="mob-5w2h" onclick="navigate('5w2h')">
+        <i data-lucide="check-square"></i>
+        <span>5W2H</span>
+      </button>
+      <button class="mob-nav-btn" id="mob-perdas" onclick="navigate('perdas')">
+        <i data-lucide="shield-alert"></i>
+        <span>Perdas</span>
+      </button>
+      <button class="mob-nav-btn" id="mob-whatsapp" onclick="navigate('whatsapp')">
+        <i data-lucide="message-square"></i>
+        <span>WhatsApp</span>
+      </button>
+    </nav>
 
   </div>
 
@@ -689,7 +699,7 @@
       </div>
       <div class="modal-footer">
         <button class="btn-secondary" onclick="closeModals()">Cancelar</button>
-        <button class="btn-primary" onclick="save5W2HModal()">Salvar & Notificar Responsável</button>
+        <button class="btn-primary" onclick="save5W2HModal()">Salvar & Notificar</button>
       </div>
     </div>
   </div>
@@ -698,7 +708,7 @@
   <div class="modal-overlay hidden" id="modal-wa-simulation">
     <div class="modal-card wa-modal">
       <div class="modal-header">
-        <h3><i data-lucide="message-square" style="color: #25D366;"></i> Simulação de Disparo WhatsApp Bot</h3>
+        <h3><i data-lucide="message-square" style="color: #25D366;"></i> Simulação de Disparo WhatsApp</h3>
         <button class="btn-close" onclick="closeModals()">&times;</button>
       </div>
       <div class="wa-chat-container">
@@ -721,7 +731,7 @@
         </div>
       </div>
       <div class="modal-footer">
-        <button class="btn-primary full-width" style="background: #25D366;" onclick="closeModals()">Notificação Enviada com Sucesso!</button>
+        <button class="btn-primary full-width" style="background: #25D366;" onclick="closeModals()">Notificação Enviada!</button>
       </div>
     </div>
   </div>
@@ -730,13 +740,13 @@
   <div class="modal-overlay hidden" id="modal-pop">
     <div class="modal-card">
       <div class="modal-header">
-        <h3><i data-lucide="play-circle" style="color: #a78bfa;"></i> Microlearning POP — Controle de Refrigeração</h3>
+        <h3><i data-lucide="play-circle" style="color: #a78bfa;"></i> Microlearning POP — Refrigeração</h3>
         <button class="btn-close" onclick="closeModals()">&times;</button>
       </div>
       <div class="modal-body text-center">
         <div class="pop-video-placeholder">
           <i data-lucide="film"></i>
-          <span>Vídeo Educativo 15s — Padrão Operacional Anvisa</span>
+          <span>Vídeo Educativo 15s — Padrão Anvisa</span>
         </div>
         <p class="pop-desc">Em caso de oscilação térmica em câmaras frias, isole o setor imediatamente e transfira peças para a câmara de contingência em até 20 minutos.</p>
       </div>
