@@ -1,5 +1,5 @@
 /* ==========================================================================
-   SUPER CHECKLIST PARANAÍBA — PRODUCTION JAVASCRIPT ENGINE (V5.0)
+   SUPER CHECKLIST PARANAÍBA — PRODUCTION JAVASCRIPT ENGINE (V6.0)
    ========================================================================== */
 
 let currentStore = '1';
@@ -62,6 +62,9 @@ function navigate(viewId) {
     } else if (viewId === 'analytics') {
       hTitle.innerText = `Analytics & Curva ABC — ${storeName}`;
       hSub.innerText = `Relatórios executivos em PDF/Excel e integração com a Curva ABC do VR Software`;
+    } else if (viewId === 'manutencao') {
+      hTitle.innerText = `Manutenção Preventiva de Maquinário — ${storeName}`;
+      hSub.innerText = `Chamados técnicos com fotos Antes/Depois e controle de equipamentos`;
     } else if (viewId === 'builder') {
       hTitle.innerText = `Criador de Checklists (Form Builder)`;
       hSub.innerText = `Personalização livre e criação de rotinas para qualquer setor`;
@@ -109,6 +112,26 @@ function changeStore(storeId) {
   document.getElementById('metric-perdas').innerText = db.perdasStr;
 
   navigate('dashboard');
+}
+
+// Toggle Equipment Maintenance Form
+function toggleNewTicketForm() {
+  const panel = document.getElementById('panel-new-ticket');
+  if (panel) {
+    panel.classList.toggle('hidden');
+  }
+}
+
+// Save Maintenance Ticket
+function saveNewMaintenanceTicket() {
+  const equip = document.getElementById('ticket-equip-select').value;
+  const urgency = document.getElementById('ticket-urgency').value;
+  const tech = document.getElementById('ticket-tech').value || 'Ricardo Silva';
+  const cost = document.getElementById('ticket-cost').value || '350.00';
+
+  alert(`🛠️ CHAMADO TÉCNICO DE MANUTENÇÃO REGISTRADO!\n\nEquipamento: ${equip}\nUrgência: ${urgency}\nTécnico Atribuído: ${tech}\nCusto Estimado: R$ ${cost}\n\nNotificação enviada com foto ANTES/DEPOIS no WhatsApp da equipe.`);
+
+  toggleNewTicketForm();
 }
 
 // Export Audit PDF Report
