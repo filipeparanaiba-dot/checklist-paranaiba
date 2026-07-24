@@ -1,5 +1,5 @@
 /* ==========================================================================
-   SUPER CHECKLIST PARANAÍBA — PRODUCTION JAVASCRIPT ENGINE (V11.0)
+   SUPER CHECKLIST PARANAÍBA — PRODUCTION JAVASCRIPT ENGINE (V12.0)
    ========================================================================== */
 
 let currentStore = '1';
@@ -92,8 +92,8 @@ function navigate(viewId) {
       hTitle.innerText = `Execução de Auditoria — ${storeName}`;
       hSub.innerText = `Formulários operacionais de fiscalização de setor`;
     } else if (viewId === 'treinamento') {
-      hTitle.innerText = `POP Microlearning & Capacitação — ${storeName}`;
-      hSub.innerText = `Treinamentos rápidos de 15s e certificação de colaboradores Padrão Anvisa`;
+      hTitle.innerText = `POP Microlearning (Vídeos YouTube) — ${storeName}`;
+      hSub.innerText = `Treinamentos em vídeo e certificação Anvisa dos funcionários`;
     } else if (viewId === 'furtos') {
       hTitle.innerText = `Prevenção de Furtos & Brigada de Perdas — ${storeName}`;
       hSub.innerText = `Registro de avarias de balcão, furtos confirmados e backup de vídeo do CFTV`;
@@ -158,9 +158,47 @@ function changeStore(storeId) {
   navigate('dashboard');
 }
 
-// POP Microlearning Training Trigger
-function startPOPTraining(moduleName) {
-  openPOPModal();
+// POP Microlearning YouTube Video & Quiz Engine
+function startPOPTraining(moduleName, videoUrl, title) {
+  const iframe = document.getElementById('pop-modal-iframe');
+  const titleEl = document.getElementById('pop-modal-title');
+  const descEl = document.getElementById('pop-modal-desc');
+  const questEl = document.getElementById('pop-quiz-question');
+
+  if (iframe && videoUrl) {
+    iframe.src = videoUrl + "?autoplay=1";
+  }
+
+  if (titleEl && title) {
+    titleEl.innerHTML = `<i data-lucide="play-circle" style="color: #a78bfa;"></i> POP: ${title}`;
+  }
+
+  if (descEl) {
+    descEl.innerText = `Assista ao vídeo em alta definição do ${title} e responda ao teste de fixação para obter o selo no sistema.`;
+  }
+
+  if (questEl) {
+    if (moduleName === 'Açougue') {
+      questEl.innerText = 'Qual é a luva de uso obrigatório no corte de carnes segundo a norma NR-36?';
+    } else if (moduleName === 'Doca') {
+      questEl.innerText = 'Qual a temperatura limite permitida no baú de caminhões refrigerados de congelados?';
+    } else {
+      questEl.innerText = 'Em até quantos dias antes do vencimento deve ser feito o rebaixe no VR Software?';
+    }
+  }
+
+  safeCreateIcons();
+  document.getElementById('modal-pop').classList.remove('hidden');
+}
+
+// Answer POP Quiz
+function answerPOPQuiz(isCorrect) {
+  if (isCorrect) {
+    alert('🏆 PARABÉNS! RESPOSTA CORRETA (100% de Aproveitamento)!\n\nVocê concluiu o treinamento POP e recebeu a Certificação Anvisa para o seu perfil.');
+    closeModals();
+  } else {
+    alert('❌ RESPOSTA INCORRETA!\n\nAssista ao vídeo novamente e tente responder para garantir sua certificação.');
+  }
 }
 
 // Toggle Theft Form
@@ -651,6 +689,10 @@ function openPOPModal() {
 }
 
 function closeModals() {
+  const iframe = document.getElementById('pop-modal-iframe');
+  if (iframe) {
+    iframe.src = 'about:blank';
+  }
   document.querySelectorAll('.modal-backdrop').forEach(m => m.classList.add('hidden'));
 }
 
