@@ -1,0 +1,754 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Super System - Checklist & Prevenção de Perdas Supermercado Paranaíba</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+
+  <!-- Layout Principal Desktop & Mobile Viewport -->
+  <div class="system-root">
+    
+    <!-- Sidebar Navigation (Desktop) -->
+    <aside class="sidebar">
+      <div class="sidebar-brand">
+        <div class="brand-logo">
+          <i data-lucide="check-check"></i>
+        </div>
+        <div>
+          <h2>SUPER CHECKLIST</h2>
+          <span class="brand-sub">Paranaíba v1.0 • VR Ready</span>
+        </div>
+      </div>
+
+      <div class="store-picker-box">
+        <label><i data-lucide="store"></i> UNIDADE ATIVA</label>
+        <select id="global-store-picker" onchange="switchStore(this.value)">
+          <option value="1">Loja 1 — Centro</option>
+          <option value="2">Loja 2 — Bairro</option>
+        </select>
+      </div>
+
+      <nav class="sidebar-menu">
+        <button class="nav-btn active" id="side-dashboard" onclick="navigate('dashboard')">
+          <i data-lucide="layout-dashboard"></i> Dashboard & Saúde
+        </button>
+        <button class="nav-btn" id="side-rotinas" onclick="navigate('rotinas')">
+          <i data-lucide="clipboard-list"></i> Rotinas & Setores
+        </button>
+        <button class="nav-btn" id="side-5w2h" onclick="navigate('5w2h')">
+          <i data-lucide="check-square"></i> Planos 5W2H <span class="badge-count-pill" id="side-badge-5w2h">3</span>
+        </button>
+        <button class="nav-btn" id="side-perdas" onclick="navigate('perdas')">
+          <i data-lucide="shield-alert"></i> Prevenção & VR Software
+        </button>
+        <button class="nav-btn" id="side-whatsapp" onclick="navigate('whatsapp')">
+          <i data-lucide="message-square"></i> Notificações WhatsApp
+        </button>
+        <button class="nav-btn" id="side-ranking" onclick="navigate('ranking')">
+          <i data-lucide="trophy"></i> Gamificação & Lojas
+        </button>
+      </nav>
+
+      <div class="sidebar-footer">
+        <div class="offline-status-indicator">
+          <span class="dot-live"></span>
+          <div>
+            <strong>Servidor Sincronizado</strong>
+            <small>VR Software con. • Offline Ready</small>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Content Area -->
+    <main class="main-content">
+      
+      <!-- Topbar Header -->
+      <header class="topbar">
+        <div class="topbar-left">
+          <h1 id="page-title">Painel Operacional — Loja 1 (Centro)</h1>
+          <p id="page-subtitle">Visão consolidada de rotinas, prevenção de perdas e indicadores</p>
+        </div>
+
+        <div class="topbar-right">
+          <button class="btn-wa-header" onclick="triggerWhatsAppModal()">
+            <i data-lucide="send"></i> Notificar Grupo WhatsApp
+          </button>
+          
+          <div class="user-profile-badge">
+            <div class="avatar-circle">CR</div>
+            <div class="user-meta">
+              <strong>Carlos Roberto</strong>
+              <small>Gerente de Loja</small>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <!-- SEÇÃO 1: DASHBOARD DE SAÚDE & INDICADORES -->
+      <section id="view-dashboard" class="view-page active">
+        
+        <!-- Top Cards Grid -->
+        <div class="dashboard-banner">
+          <div class="health-gauge-card">
+            <div class="gauge-header">
+              <span>ÍNDICE DE SAÚDE DA LOJA (ISL)</span>
+              <span class="isl-badge-live" id="isl-status-tag">Excelente</span>
+            </div>
+            <div class="gauge-body">
+              <div class="big-score" id="isl-score">94<small>%</small></div>
+              <div class="score-breakdown">
+                <div><i data-lucide="check-circle" class="icon-green"></i> <span id="isl-conform-count">24 Conformes</span></div>
+                <div><i data-lucide="alert-triangle" class="icon-red"></i> <span id="isl-nonconform-count">2 Não Conformes</span></div>
+              </div>
+            </div>
+            <div class="progress-bar-glow">
+              <div class="progress-fill-glow" id="isl-progress-bar" style="width: 94%;"></div>
+            </div>
+          </div>
+
+          <!-- Statistics Summary Cards -->
+          <div class="quick-stats-grid">
+            <div class="stat-card">
+              <div class="stat-icon bg-blue"><i data-lucide="clipboard-check"></i></div>
+              <div class="stat-data">
+                <span class="stat-num" id="stat-checklists-val">8 / 10</span>
+                <span class="stat-lbl">Rotinas Realizadas Hoje</span>
+              </div>
+            </div>
+
+            <div class="stat-card">
+              <div class="stat-icon bg-orange"><i data-lucide="clock"></i></div>
+              <div class="stat-data">
+                <span class="stat-num" id="stat-5w2h-val">3 Pendentes</span>
+                <span class="stat-lbl">Planos 5W2H Ativos</span>
+              </div>
+            </div>
+
+            <div class="stat-card">
+              <div class="stat-icon bg-green"><i data-lucide="dollar-sign"></i></div>
+              <div class="stat-data">
+                <span class="stat-num" id="stat-perdas-val">R$ 1.840</span>
+                <span class="stat-lbl">Perdas Evitadas este Mês</span>
+              </div>
+            </div>
+
+            <div class="stat-card">
+              <div class="stat-icon bg-purple"><i data-lucide="sparkles"></i></div>
+              <div class="stat-data">
+                <span class="stat-num">98.5%</span>
+                <span class="stat-lbl">Acurácia IA Visual</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Section: Setores & Rotinas do Dia -->
+        <div class="section-header-bar">
+          <h3><i data-lucide="layers"></i> Rotinas Operacionais por Setor</h3>
+          <span class="tag-info">Sincronizado com VR Software</span>
+        </div>
+
+        <div class="sectors-grid">
+          
+          <!-- Card Açougue -->
+          <div class="sector-card">
+            <div class="sector-card-header bg-acougue">
+              <i data-lucide="beef"></i>
+              <div>
+                <h4>Açougue & Câmaras Frias</h4>
+                <small>Setor 04 • Responsável: Marcos</small>
+              </div>
+            </div>
+            <div class="sector-card-body">
+              <div class="sector-info-row">
+                <span>Última vistoria:</span>
+                <strong>Hoje, 08:30</strong>
+              </div>
+              <div class="sector-info-row">
+                <span>Conformidade:</span>
+                <strong class="text-orange">85% (1 Alerta)</strong>
+              </div>
+              <div class="sector-info-row">
+                <span>Temp. Câmara Fria:</span>
+                <strong class="text-red">6.8°C (Fora da margem)</strong>
+              </div>
+            </div>
+            <div class="sector-card-footer">
+              <button class="btn-primary full-width" onclick="startChecklistExecution('acougue')">
+                <i data-lucide="play"></i> Executar Checklist
+              </button>
+            </div>
+          </div>
+
+          <!-- Card FLV / Recebimento -->
+          <div class="sector-card">
+            <div class="sector-card-header bg-flv">
+              <i data-lucide="apple"></i>
+              <div>
+                <h4>Recebimento Doca / FLV</h4>
+                <small>Setor 02 • Responsável: Juliano</small>
+              </div>
+            </div>
+            <div class="sector-card-body">
+              <div class="sector-info-row">
+                <span>Última vistoria:</span>
+                <strong>Hoje, 09:15</strong>
+              </div>
+              <div class="sector-info-row">
+                <span>Laudo Doca:</span>
+                <strong class="text-green">Aceite com Ressalva</strong>
+              </div>
+              <div class="sector-info-row">
+                <span>Amostragem Lote:</span>
+                <strong>Tomate (20% avaria)</strong>
+              </div>
+            </div>
+            <div class="sector-card-footer">
+              <button class="btn-primary full-width" onclick="startChecklistExecution('flv')">
+                <i data-lucide="play"></i> Executar Checklist
+              </button>
+            </div>
+          </div>
+
+          <!-- Card Gôndolas & Ruptura -->
+          <div class="sector-card">
+            <div class="sector-card-header bg-gondola">
+              <i data-lucide="shopping-bag"></i>
+              <div>
+                <h4>Prevenção de Ruptura & Gôndola</h4>
+                <small>Mercearia • Responsável: Vanessa</small>
+              </div>
+            </div>
+            <div class="sector-card-body">
+              <div class="sector-info-row">
+                <span>IA Visual:</span>
+                <strong class="text-green">0 Rupturas Críticas</strong>
+              </div>
+              <div class="sector-info-row">
+                <span>Conferência Preço:</span>
+                <strong>1 Divergência Encontrada</strong>
+              </div>
+              <div class="sector-info-row">
+                <span>Status:</span>
+                <strong class="text-green">Concluído</strong>
+              </div>
+            </div>
+            <div class="sector-card-footer">
+              <button class="btn-secondary full-width" onclick="startChecklistExecution('gondola')">
+                <i data-lucide="eye"></i> Revisar Checklist
+              </button>
+            </div>
+          </div>
+
+          <!-- Card Lockout / Fechamento Noturno -->
+          <div class="sector-card">
+            <div class="sector-card-header bg-fechamento">
+              <i data-lucide="moon"></i>
+              <div>
+                <h4>Fechamento & Economia de Energia</h4>
+                <small>Geral • Responsável: Gerente</small>
+              </div>
+            </div>
+            <div class="sector-card-body">
+              <div class="sector-info-row">
+                <span>Proteção Térmica Frios:</span>
+                <strong>Lonas de isolamento</strong>
+              </div>
+              <div class="sector-info-row">
+                <span>Saídas Emergência:</span>
+                <strong class="text-green">Desobstruídas</strong>
+              </div>
+              <div class="sector-info-row">
+                <span>Horário Programado:</span>
+                <strong>22:00</strong>
+              </div>
+            </div>
+            <div class="sector-card-footer">
+              <button class="btn-secondary full-width" onclick="startChecklistExecution('fechamento')">
+                <i data-lucide="shield"></i> Iniciar Fechamento
+              </button>
+            </div>
+          </div>
+
+        </div>
+
+      </section>
+
+      <!-- SEÇÃO 2: EXECUÇÃO DO CHECKLIST -->
+      <section id="view-rotinas" class="view-page">
+        
+        <div class="checklist-execution-container">
+          <div class="execution-header-bar">
+            <button class="btn-icon-back" onclick="navigate('dashboard')"><i data-lucide="arrow-left"></i></button>
+            <div>
+              <h2 id="exec-title">Execução: Vistoria Açougue & Câmaras Frias</h2>
+              <span id="exec-subtitle">Unidade: Loja 1 — Centro | Setor 04</span>
+            </div>
+            <div class="exec-progress-box">
+              <span id="exec-progress-num">1 de 4 respondidos</span>
+              <div class="exec-progress-bar"><div id="exec-progress-fill" style="width: 25%;"></div></div>
+            </div>
+          </div>
+
+          <!-- Form Questions -->
+          <div class="questions-list" id="questions-list">
+
+            <!-- Question 1 -->
+            <div class="question-card" id="q-1">
+              <div class="q-head">
+                <span class="q-number">01</span>
+                <div class="q-title-box">
+                  <h3>Temperatura da Câmara Fria 02 está dentro do padrão (0°C a 4°C)?</h3>
+                  <p>Verifique o indicador digital ou termômetro espeto Bluetooth.</p>
+                </div>
+                <button class="btn-pop-hint" onclick="openMicrolearningModal('refrigeracao')">
+                  <i data-lucide="play-circle"></i> Ver Treinamento (POP)
+                </button>
+              </div>
+
+              <div class="q-actions-row">
+                <div class="choice-buttons">
+                  <button class="btn-choice choice-conform" onclick="answerQuestion(1, 'conform')"><i data-lucide="check"></i> Conforme</button>
+                  <button class="btn-choice choice-nonconform" onclick="answerQuestion(1, 'nonconform')"><i data-lucide="x"></i> Não Conforme</button>
+                  <button class="btn-choice choice-na" onclick="answerQuestion(1, 'na')">N/A</button>
+                </div>
+
+                <button class="btn-ai-scan" onclick="triggerAIScan(1)">
+                  <i data-lucide="camera"></i> Escanear com IA Visual
+                </button>
+              </div>
+
+              <!-- AI Visual Photo Output -->
+              <div class="ai-result-area hidden" id="ai-result-1">
+                <div class="ai-image-wrapper">
+                  <img src="https://images.unsplash.com/photo-1551028150-64b9f398f678?w=600&auto=format&fit=crop&q=60" alt="Termometro IA">
+                  <div class="ai-bounding-box">
+                    <span class="box-label">ALERTA IA: DETECTADO 6.8°C</span>
+                  </div>
+                </div>
+                <div class="ai-diagnosis">
+                  <strong><i data-lucide="sparkles"></i> Análise da IA Visual:</strong>
+                  <p>Leitura efetuada no display digital. Temperatura registrada: <strong>6.8°C</strong>. Fora do limite sanitário de 4.0°C. Risco sanitário detectado.</p>
+                </div>
+              </div>
+
+              <!-- 5W2H Trigger Card -->
+              <div class="auto-5w2h-card hidden" id="card-5w2h-trigger-1">
+                <div class="trigger-head">
+                  <i data-lucide="alert-octagon"></i> Plano 5W2H Gerado Automaticamente
+                </div>
+                <p>Ocorrência registrada. Um plano de ação foi criado e atribuído ao Encarregado de Manutenção com notificação no WhatsApp.</p>
+                <button class="btn-edit-5w2h" onclick="edit5W2H(1)">Editar Responsável & Prazo 5W2H</button>
+              </div>
+            </div>
+
+            <!-- Question 2 -->
+            <div class="question-card" id="q-2">
+              <div class="q-head">
+                <span class="q-number">02</span>
+                <div class="q-title-box">
+                  <h3>Organização FIFO e Etiquetas de Validade no Balcão de Exposição?</h3>
+                  <p>Garantir que as peças mais antigas estejam na frente para venda rápida.</p>
+                </div>
+              </div>
+              <div class="q-actions-row">
+                <div class="choice-buttons">
+                  <button class="btn-choice choice-conform" onclick="answerQuestion(2, 'conform')"><i data-lucide="check"></i> Conforme</button>
+                  <button class="btn-choice choice-nonconform" onclick="answerQuestion(2, 'nonconform')"><i data-lucide="x"></i> Não Conforme</button>
+                  <button class="btn-choice choice-na" onclick="answerQuestion(2, 'na')">N/A</button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Question 3 -->
+            <div class="question-card" id="q-3">
+              <div class="q-head">
+                <span class="q-number">03</span>
+                <div class="q-title-box">
+                  <h3>Conferência de Preço de Gôndola vs VR Software (Divergência)?</h3>
+                  <p>Bipe a etiqueta de oferta e confirme a integridade com o caixa.</p>
+                </div>
+              </div>
+              <div class="q-actions-row">
+                <div class="choice-buttons">
+                  <button class="btn-choice choice-conform" onclick="answerQuestion(3, 'conform')"><i data-lucide="check"></i> Conforme</button>
+                  <button class="btn-choice choice-nonconform" onclick="answerQuestion(3, 'nonconform')"><i data-lucide="x"></i> Não Conforme</button>
+                  <button class="btn-choice choice-na" onclick="answerQuestion(3, 'na')">N/A</button>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+          <div class="execution-footer-bar">
+            <button class="btn-primary-lg" onclick="finishChecklistSubmission()">
+              <i data-lucide="check-check"></i> Finalizar Vistoria & Disparar Notificação no WhatsApp
+            </button>
+          </div>
+        </div>
+
+      </section>
+
+      <!-- SEÇÃO 3: GERENCIADOR DE PLANOS 5W2H -->
+      <section id="view-5w2h" class="view-page">
+        <div class="section-header-bar">
+          <h3><i data-lucide="check-square"></i> Matriz de Planos de Ação 5W2H</h3>
+          <span class="tag-info orange">3 Tarefas Pendentes de Resolução</span>
+        </div>
+
+        <div class="5w2h-cards-grid" id="container-5w2h">
+          
+          <!-- Card 1 -->
+          <div class="card-5w2h-item priority-high" id="item-5w2h-1">
+            <div class="card-5w2h-header">
+              <span class="badge-priority high">URGENTE</span>
+              <span class="sector-tag">Açougue • Loja 1</span>
+            </div>
+
+            <h4>Ajuste de Refrigeração da Câmara Fria 02</h4>
+            <p class="problem-summary">Temperatura detectada em 6.8°C pela IA Visual.</p>
+
+            <div class="matrix-5w2h-details">
+              <div class="detail-cell"><strong>WHAT (O quê):</strong> Manutenção do compressor e transferência das carnes nobres.</div>
+              <div class="detail-cell"><strong>WHY (Por quê):</strong> Evitar degradação da carne e multa sanitária da Anvisa.</div>
+              <div class="detail-cell"><strong>WHO (Quem):</strong> Ricardo Silva (Manutenção)</div>
+              <div class="detail-cell"><strong>WHEN (Quando):</strong> Hoje até as 14:00</div>
+              <div class="detail-cell"><strong>HOW (Como):</strong> Troca de fluido refrigerante e calibração de termostato.</div>
+            </div>
+
+            <div class="card-5w2h-footer">
+              <span class="sla-timer"><i data-lucide="clock"></i> Restam 2h 15min</span>
+              <button class="btn-resolve-5w2h" onclick="resolve5W2H('item-5w2h-1')">
+                <i data-lucide="check-circle"></i> Marcar Concluído
+              </button>
+            </div>
+          </div>
+
+          <!-- Card 2 -->
+          <div class="card-5w2h-item priority-medium" id="item-5w2h-2">
+            <div class="card-5w2h-header">
+              <span class="badge-priority medium">MÉDIA</span>
+              <span class="sector-tag">Hortifrúti • Loja 2</span>
+            </div>
+
+            <h4>Devolução e Acordo Comercial de Tomate (#Lote4091)</h4>
+            <p class="problem-summary">Amostragem de recebimento na doca indicou 20% de avaria por amassamento.</p>
+
+            <div class="matrix-5w2h-details">
+              <div class="detail-cell"><strong>WHAT (O quê):</strong> Aceite com ressalva e emissão de nota de devolução parcial no VR Software.</div>
+              <div class="detail-cell"><strong>WHY (Por quê):</strong> Evitar prejuízo no descarte do hortifrúti na loja.</div>
+              <div class="detail-cell"><strong>WHO (Quem):</strong> Juliano (Encarregado de Doca)</div>
+              <div class="detail-cell"><strong>WHEN (Quando):</strong> Amanhã às 09:00</div>
+            </div>
+
+            <div class="card-5w2h-footer">
+              <span class="sla-timer"><i data-lucide="clock"></i> Restam 18h</span>
+              <button class="btn-resolve-5w2h" onclick="resolve5W2H('item-5w2h-2')">
+                <i data-lucide="check-circle"></i> Marcar Concluído
+              </button>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- SEÇÃO 4: PREVENÇÃO DE PERDAS & REBAIXE VR SOFTWARE COM PREÇO DE CUSTO -->
+      <section id="view-perdas" class="view-page">
+        <div class="section-header-bar">
+          <h3><i data-lucide="shield-alert"></i> Módulo de Prevenção de Perdas & Margem de Custo</h3>
+          <span class="tag-info green">VR Software API Conectado</span>
+        </div>
+
+        <div class="perdas-banner">
+          <div class="perdas-main-card">
+            <div class="perdas-card-header">
+              <div>
+                <h3><i data-lucide="zap" style="color: var(--orange);"></i> Rebaixe de Preço de Validade (Envio Direto VR Software)</h3>
+                <p>Confira o **Preço de Custo** importado do VR Software e **ajuste livremente o Preço Sugerido** antes de disparar a alteração no caixa da loja.</p>
+              </div>
+              <div class="vr-sync-status">
+                <span class="dot-live"></span>
+                <span>Base VR Atualizada</span>
+              </div>
+            </div>
+
+            <div class="table-container mt-15">
+              <table class="data-table perdas-table">
+                <thead>
+                  <tr>
+                    <th>Código VR</th>
+                    <th>Produto / Descrição</th>
+                    <th>Estoque</th>
+                    <th>Vencimento</th>
+                    <th>Preço Custo (VR)</th>
+                    <th>Venda Atual</th>
+                    <th>Preço Sugerido (Gerente)</th>
+                    <th>Margem Est.</th>
+                    <th>Ação VR Software</th>
+                  </tr>
+                </thead>
+                <tbody>
+
+                  <!-- Row 1 -->
+                  <tr id="row-prod-1">
+                    <td><code>78910001</code></td>
+                    <td>
+                      <strong>Iogurte Grego Tradicional 400g</strong>
+                      <small class="block-sub">Lote #9021 • Laticínios</small>
+                    </td>
+                    <td>42 un.</td>
+                    <td><span class="text-red">Em 3 dias</span></td>
+                    <td><strong class="text-cost">R$ 3,20</strong></td>
+                    <td><span class="line-through">R$ 8,90</span></td>
+                    <td>
+                      <div class="price-input-wrapper">
+                        <span>R$</span>
+                        <input type="number" step="0.01" value="4.99" class="input-price-edit" id="price-input-1" oninput="calculateMargin(1, 3.20)">
+                      </div>
+                    </td>
+                    <td>
+                      <span class="margin-badge positive" id="margin-badge-1">+35.8%</span>
+                    </td>
+                    <td>
+                      <button class="btn-apply-vr" id="btn-vr-1" onclick="submitPriceToVR(1, 'Iogurte Grego Tradicional 400g')">
+                        <i data-lucide="send"></i> Enviar p/ VR Software
+                      </button>
+                    </td>
+                  </tr>
+
+                  <!-- Row 2 -->
+                  <tr id="row-prod-2">
+                    <td><code>78910088</code></td>
+                    <td>
+                      <strong>Queijo Mussarela Fatiado 200g</strong>
+                      <small class="block-sub">Lote #8812 • Frios</small>
+                    </td>
+                    <td>18 un.</td>
+                    <td><span class="text-orange">Em 4 dias</span></td>
+                    <td><strong class="text-cost">R$ 7,50</strong></td>
+                    <td><span class="line-through">R$ 14,50</span></td>
+                    <td>
+                      <div class="price-input-wrapper">
+                        <span>R$</span>
+                        <input type="number" step="0.01" value="9.90" class="input-price-edit" id="price-input-2" oninput="calculateMargin(2, 7.50)">
+                      </div>
+                    </td>
+                    <td>
+                      <span class="margin-badge positive" id="margin-badge-2">+24.2%</span>
+                    </td>
+                    <td>
+                      <button class="btn-apply-vr" id="btn-vr-2" onclick="submitPriceToVR(2, 'Queijo Mussarela Fatiado 200g')">
+                        <i data-lucide="send"></i> Enviar p/ VR Software
+                      </button>
+                    </td>
+                  </tr>
+
+                  <!-- Row 3 -->
+                  <tr id="row-prod-3">
+                    <td><code>78910405</code></td>
+                    <td>
+                      <strong>Bandeja Peito de Frango 1kg</strong>
+                      <small class="block-sub">Lote #3301 • Açougue</small>
+                    </td>
+                    <td>25 un.</td>
+                    <td><span class="text-red">Em 2 dias</span></td>
+                    <td><strong class="text-cost">R$ 12,80</strong></td>
+                    <td><span class="line-through">R$ 21,90</span></td>
+                    <td>
+                      <div class="price-input-wrapper">
+                        <span>R$</span>
+                        <input type="number" step="0.01" value="14.90" class="input-price-edit" id="price-input-3" oninput="calculateMargin(3, 12.80)">
+                      </div>
+                    </td>
+                    <td>
+                      <span class="margin-badge positive" id="margin-badge-3">+14.0%</span>
+                    </td>
+                    <td>
+                      <button class="btn-apply-vr" id="btn-vr-3" onclick="submitPriceToVR(3, 'Bandeja Peito de Frango 1kg')">
+                        <i data-lucide="send"></i> Enviar p/ VR Software
+                      </button>
+                    </td>
+                  </tr>
+
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SEÇÃO 5: CENTRAL DE NOTIFICAÇÕES WHATSAPP -->
+      <section id="view-whatsapp" class="view-page">
+        <div class="section-header-bar">
+          <h3><i data-lucide="message-square"></i> Central de Notificações WhatsApp (Servidor)</h3>
+          <span class="tag-info">Webhooks & Bot Meta API</span>
+        </div>
+
+        <div class="whatsapp-config-grid">
+          <div class="config-card">
+            <h4><i data-lucide="settings"></i> Grupos de WhatsApp Configurados</h4>
+            <div class="group-row">
+              <div class="group-info">
+                <strong>Grupo Gestores — Loja 1 (Centro)</strong>
+                <small>ID: 5511999887766-group@wa</small>
+              </div>
+              <span class="status-active">Ativo</span>
+            </div>
+            <div class="group-row">
+              <div class="group-info">
+                <strong>Grupo Gestores — Loja 2 (Bairro)</strong>
+                <small>ID: 5511888776655-group@wa</small>
+              </div>
+              <span class="status-active">Ativo</span>
+            </div>
+            <div class="group-row">
+              <div class="group-info">
+                <strong>Grupo Diretoria & Sócios (Consolidado)</strong>
+                <small>ID: 5511777665544-group@wa</small>
+              </div>
+              <span class="status-active">Ativo</span>
+            </div>
+
+            <button class="btn-primary full-width mt-15" onclick="triggerWhatsAppModal()">
+              <i data-lucide="send"></i> Disparar Notificação de Teste
+            </button>
+          </div>
+
+          <div class="config-card">
+            <h4><i data-lucide="clock"></i> Horários dos Resumos Automáticos</h4>
+            <ul class="schedule-list">
+              <li><i data-lucide="sun"></i> <strong>Resumo Matutino (12:00)</strong> — Parcial de rotinas do açougue e doca.</li>
+              <li><i data-lucide="moon"></i> <strong>Resumo Noturno (18:30)</strong> — Fechamento do ISL diário e planos 5W2H.</li>
+              <li><i data-lucide="alert-circle"></i> <strong>Alertas Imediatos (Instantâneos)</strong> — Falha sanitária ou câmara fria alta.</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- SEÇÃO 6: GAMIFICAÇÃO & RANKING -->
+      <section id="view-ranking" class="view-page">
+        <div class="section-header-bar">
+          <h3><i data-lucide="trophy"></i> Gamificação & Ranking da Rede Paranaíba</h3>
+          <span class="tag-info">Competição Saudável entre Lojas</span>
+        </div>
+
+        <div class="ranking-grid">
+          <div class="ranking-podium-card gold">
+            <div class="podium-badge">🏆 1º LUGAR</div>
+            <h3>Loja 1 — Centro</h3>
+            <div class="score-large">94%</div>
+            <p>Saúde da Loja (ISL Média)</p>
+            <span class="time-fix">Tempo médio de resolução 5W2H: <strong>1h 20min</strong></span>
+          </div>
+
+          <div class="ranking-podium-card silver">
+            <div class="podium-badge">🥈 2º LUGAR</div>
+            <h3>Loja 2 — Bairro</h3>
+            <div class="score-large">88%</div>
+            <p>Saúde da Loja (ISL Média)</p>
+            <span class="time-fix">Tempo médio de resolução 5W2H: <strong>2h 45min</strong></span>
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+  </div>
+
+  <!-- MODAL 5W2H EDITAR -->
+  <div class="modal-overlay hidden" id="modal-edit-5w2h">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3><i data-lucide="sliders"></i> Ajustar Plano de Ação 5W2H</h3>
+        <button class="btn-close" onclick="closeModals()">&times;</button>
+      </div>
+      <div class="modal-body">
+        <label>O quê fazer? (What)</label>
+        <input type="text" id="input-5w2h-what" value="Manutenção preventiva do compressor e transferência de carnes">
+        
+        <label>Por que fazer? (Why)</label>
+        <input type="text" id="input-5w2h-why" value="Evitar contaminação sanitária e perda da mercadoria">
+
+        <label>Quem é o responsável? (Who)</label>
+        <select id="input-5w2h-who">
+          <option>Ricardo Silva — Encarregado Manutenção</option>
+          <option>Carlos Roberto — Gerente de Loja</option>
+          <option>Marcos — Encarregado de Açougue</option>
+        </select>
+
+        <label>Prazo Limite (When)</label>
+        <input type="datetime-local" id="input-5w2h-when" value="2026-07-23T14:00">
+      </div>
+      <div class="modal-footer">
+        <button class="btn-secondary" onclick="closeModals()">Cancelar</button>
+        <button class="btn-primary" onclick="save5W2HModal()">Salvar & Notificar Responsável</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL WHATSAPP SIMULADOR -->
+  <div class="modal-overlay hidden" id="modal-wa-simulation">
+    <div class="modal-card wa-modal">
+      <div class="modal-header">
+        <h3><i data-lucide="message-square" style="color: #25D366;"></i> Simulação de Disparo WhatsApp Bot</h3>
+        <button class="btn-close" onclick="closeModals()">&times;</button>
+      </div>
+      <div class="wa-chat-container">
+        <div class="wa-chat-header">
+          <span class="wa-group-title" id="wa-modal-group-title">Grupo Gestores — Loja 1 (Centro)</span>
+          <span class="wa-members">Carlos, Ricardo, Marcos, Diretoria</span>
+        </div>
+        <div class="wa-message-bubble">
+          <div class="wa-msg-content" id="wa-modal-msg-body">
+            📱 *RESUMO OPERACIONAL - LOJA 1 (CENTRO)*<br>
+            🗓️ _Data: 23/07/2026 - 12:00_<br><br>
+            📊 *Saúde da Loja (ISL):* 94% (Excelente)<br>
+            ✅ *Checklists Concluídos:* 8 de 10<br><br>
+            🚨 *Planos 5W2H Ativos (1):*<br>
+            • *Açougue:* Temp. Câmara Fria 02 em 6.8°C.<br>
+            └ 👤 Responsável: Ricardo Silva | ⏰ Prazo: 14:00<br><br>
+            _Disparado via Super Sistema Paranaíba Server_
+          </div>
+          <span class="wa-time">12:00 ✓✓</span>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn-primary full-width" style="background: #25D366;" onclick="closeModals()">Notificação Enviada com Sucesso!</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL MICROLEARNING (POP 15s) -->
+  <div class="modal-overlay hidden" id="modal-pop">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3><i data-lucide="play-circle" style="color: #a78bfa;"></i> Microlearning POP — Controle de Refrigeração</h3>
+        <button class="btn-close" onclick="closeModals()">&times;</button>
+      </div>
+      <div class="modal-body text-center">
+        <div class="pop-video-placeholder">
+          <i data-lucide="film"></i>
+          <span>Vídeo Educativo 15s — Padrão Operacional Anvisa</span>
+        </div>
+        <p class="pop-desc">Em caso de oscilação térmica em câmaras frias, isole o setor imediatamente e transfira peças para a câmara de contingência em até 20 minutos.</p>
+      </div>
+      <div class="modal-footer">
+        <button class="btn-primary full-width" onclick="closeModals()">Ciente do Procedimento</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+  <script>
+    lucide.createIcons();
+  </script>
+</body>
+</html>
