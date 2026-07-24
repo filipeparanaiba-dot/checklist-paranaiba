@@ -1,5 +1,5 @@
 /* ==========================================================================
-   SUPER CHECKLIST PARANAÍBA — PRODUCTION DESIGN SYSTEM (V7.0)
+   SUPER CHECKLIST PARANAÍBA — PRODUCTION DESIGN SYSTEM (V8.0)
    ========================================================================== */
 
 :root {
@@ -306,7 +306,74 @@ html, body {
 }
 
 /* --------------------------------------------------------------------------
-   3. PAGES & VIEWS
+   3. FORNECEDORES & DOCA STYLES
+   -------------------------------------------------------------------------- */
+.fornecedores-card {
+  background: var(--bg-card);
+  border: 1px solid var(--bg-card-border);
+  border-radius: var(--radius-lg);
+  padding: 20px;
+}
+
+.supplier-hero-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+
+.supplier-card {
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid var(--bg-card-border);
+  border-radius: var(--radius-md);
+  padding: 16px;
+}
+
+.sup-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+  border-bottom: 1px solid var(--bg-card-border);
+  padding-bottom: 8px;
+}
+.sup-head strong {
+  font-size: 0.9rem;
+  color: #fff;
+}
+
+.score-badge {
+  font-size: 0.65rem;
+  font-weight: 800;
+  padding: 3px 8px;
+  border-radius: 12px;
+}
+.score-badge.gold {
+  background: rgba(245, 158, 11, 0.2);
+  color: #fbbf24;
+  border: 1px solid rgba(245, 158, 11, 0.4);
+}
+.score-badge.silver {
+  background: rgba(59, 130, 246, 0.2);
+  color: #60a5fa;
+  border: 1px solid rgba(59, 130, 246, 0.4);
+}
+
+.sup-body {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 0.72rem;
+}
+.sup-info-row {
+  display: flex;
+  justify-content: space-between;
+}
+.sup-info-row span {
+  color: var(--txt-secondary);
+}
+
+/* --------------------------------------------------------------------------
+   4. PAGES & VIEWS GENERAL
    -------------------------------------------------------------------------- */
 .page-view {
   display: none;
@@ -472,7 +539,7 @@ html, body {
 }
 
 /* --------------------------------------------------------------------------
-   4. MANUTENÇÃO PREVENTIVA DE EQUIPAMENTOS STYLES
+   5. MANUTENÇÃO PREVENTIVA STYLES
    -------------------------------------------------------------------------- */
 .manutencao-card {
   background: var(--bg-card);
@@ -1257,6 +1324,11 @@ html, body {
   .dashboard-hero {
     grid-template-columns: 1fr !important;
     gap: 14px;
+  }
+
+  .supplier-hero-grid {
+    grid-template-columns: 1fr !important;
+    gap: 12px;
   }
 
   .equip-status-grid {
