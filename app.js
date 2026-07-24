@@ -1,5 +1,5 @@
 /* ==========================================================================
-   SUPER CHECKLIST PARANAÍBA — PRODUCTION JAVASCRIPT ENGINE (V9.0)
+   SUPER CHECKLIST PARANAÍBA — PRODUCTION JAVASCRIPT ENGINE (V10.0)
    ========================================================================== */
 
 let currentStore = '1';
@@ -91,6 +91,9 @@ function navigate(viewId) {
     } else if (viewId === 'rotinas') {
       hTitle.innerText = `Execução de Auditoria — ${storeName}`;
       hSub.innerText = `Formulários operacionais de fiscalização de setor`;
+    } else if (viewId === 'furtos') {
+      hTitle.innerText = `Prevenção de Furtos & Brigada de Perdas — ${storeName}`;
+      hSub.innerText = `Registro de avarias de balcão, furtos confirmados e backup de vídeo do CFTV`;
     } else if (viewId === 'epi') {
       hTitle.innerText = `Segurança do Trabalho & EPIs (CIPA) — ${storeName}`;
       hSub.innerText = `Fichas digitais de entrega de EPI, fiscalização NR-36 e assinaturas de termos`;
@@ -150,6 +153,45 @@ function changeStore(storeId) {
   document.getElementById('metric-perdas').innerText = db.perdasStr;
 
   navigate('dashboard');
+}
+
+// Toggle Theft Form
+function toggleTheftForm() {
+  const panel = document.getElementById('panel-theft-form');
+  if (panel) {
+    panel.classList.toggle('hidden');
+  }
+}
+
+// Save Theft Incident
+function saveTheftIncident() {
+  const sector = document.getElementById('theft-sector').value;
+  const product = document.getElementById('theft-product').value;
+  const cost = parseFloat(document.getElementById('theft-cost').value) || 0;
+  const type = document.getElementById('theft-type').value;
+
+  if (!product) {
+    alert('Por favor, informe o nome do produto envolvido!');
+    return;
+  }
+
+  const tbody = document.getElementById('theft-table-body');
+  const tr = document.createElement('tr');
+  tr.innerHTML = `
+    <td>Hoje - agora</td>
+    <td>${sector}</td>
+    <td><strong>${product}</strong></td>
+    <td><span class="tag-red">${type}</span></td>
+    <td><strong class="text-red">R$ ${cost.toFixed(2)}</strong></td>
+    <td>Brigada Interna</td>
+    <td><button class="btn-sm-action" onclick="alert('🎥 VÍDEO DO CFTV RESERVADO!\n\nImagens de vídeo salvas na ocorrência de ${product}.')"><i data-lucide="video"></i> Ver Vídeo CFTV</button></td>
+  `;
+
+  tbody.insertBefore(tr, tbody.firstChild);
+  safeCreateIcons();
+
+  alert(`🚨 OCORRÊNCIA DA BRIGADA DE PREVENÇÃO REGISTRADA!\n\nProduto: ${product}\nSetor: ${sector}\nTipo: ${type}\nCusto Perdido: R$ ${cost.toFixed(2)}\n\nOcorrência salva e backup de CFTV reservado.`);
+  toggleTheftForm();
 }
 
 // Toggle EPI Delivery Form
