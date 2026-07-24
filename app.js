@@ -1,5 +1,5 @@
 /* ==========================================================================
-   SUPER CHECKLIST PARANAÍBA — PRODUCTION JAVASCRIPT ENGINE (V15.0)
+   SUPER CHECKLIST PARANAÍBA — PRODUCTION JAVASCRIPT ENGINE (V17.0)
    ========================================================================== */
 
 let currentStore = '1';
@@ -92,7 +92,7 @@ function navigate(viewId) {
       hTitle.innerText = `Execução de Auditoria — ${storeName}`;
       hSub.innerText = `Formulários operacionais de fiscalização de setor`;
     } else if (viewId === 'treinamento') {
-      hTitle.innerText = `POP Microlearning (Vídeos PT-BR) — ${storeName}`;
+      hTitle.innerText = `POP Microlearning (Vídeos HD Online) — ${storeName}`;
       hSub.innerText = `Treinamentos em vídeo e certificação Anvisa dos funcionários`;
     } else if (viewId === 'furtos') {
       hTitle.innerText = `Prevenção de Furtos & Brigada de Perdas — ${storeName}`;
@@ -158,15 +158,18 @@ function changeStore(storeId) {
   navigate('dashboard');
 }
 
-// POP Microlearning YouTube Video & Quiz Engine
-function startPOPTraining(moduleName = 'Açougue', videoUrl = 'https://www.youtube.com/embed/5-S_g7vX8pY', title = 'Higiene de Açougue & NR-36 (PT-BR)') {
-  const iframe = document.getElementById('pop-modal-iframe');
+// POP Microlearning HTML5 Video & Quiz Engine
+function startPOPTraining(moduleName = 'Açougue', videoUrl = 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4', title = 'Higiene de Açougue & NR-36') {
+  const videoEl = document.getElementById('pop-modal-video');
+  const sourceEl = document.getElementById('pop-modal-video-src');
   const titleEl = document.getElementById('pop-modal-title');
   const descEl = document.getElementById('pop-modal-desc');
   const questEl = document.getElementById('pop-quiz-question');
 
-  if (iframe && videoUrl) {
-    iframe.src = videoUrl + "?autoplay=1";
+  if (videoEl && sourceEl && videoUrl) {
+    sourceEl.src = videoUrl;
+    videoEl.load();
+    videoEl.play().catch(() => {});
   }
 
   if (titleEl && title) {
@@ -174,7 +177,7 @@ function startPOPTraining(moduleName = 'Açougue', videoUrl = 'https://www.youtu
   }
 
   if (descEl) {
-    descEl.innerText = `Assista ao vídeo em português do ${title} e responda ao teste de fixação para obter o selo no sistema.`;
+    descEl.innerText = `Assista ao vídeo em alta definição do ${title} e responda ao teste de fixação para obter o selo no sistema.`;
   }
 
   if (questEl) {
@@ -690,9 +693,9 @@ function openWhatsAppModal() {
 }
 
 function closeModals() {
-  const iframe = document.getElementById('pop-modal-iframe');
-  if (iframe) {
-    iframe.src = 'about:blank';
+  const videoEl = document.getElementById('pop-modal-video');
+  if (videoEl) {
+    videoEl.pause();
   }
   document.querySelectorAll('.modal-backdrop').forEach(m => m.classList.add('hidden'));
 }
