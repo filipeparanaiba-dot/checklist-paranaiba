@@ -1,8 +1,9 @@
 /* ==========================================================================
-   SUPER CHECKLIST PARANAÍBA — PRODUCTION JAVASCRIPT ENGINE (V3.0)
+   SUPER CHECKLIST PARANAÍBA — PRODUCTION JAVASCRIPT ENGINE (V4.0)
    ========================================================================== */
 
 let currentStore = '1';
+let productCounter = 100;
 
 const storeDatabase = {
   '1': {
@@ -66,7 +67,7 @@ function navigate(viewId) {
       hSub.innerText = `Gestão de não conformidades com atribuição de responsáveis e SLA`;
     } else if (viewId === 'perdas') {
       hTitle.innerText = `Prevenção de Perdas & VR Software — ${storeName}`;
-      hSub.innerText = `Tabela com Preço de Custo real e alteração de preço sugerido`;
+      hSub.innerText = `Bipagem de produtos em data crítica, custo real e ajuste de margem`;
     } else if (viewId === 'whatsapp') {
       hTitle.innerText = `Automação WhatsApp Bot — ${storeName}`;
       hSub.innerText = `Gerenciador de disparos e relatórios em grupos de gestores`;
@@ -105,6 +106,124 @@ function changeStore(storeId) {
   document.getElementById('metric-perdas').innerText = db.perdasStr;
 
   navigate('dashboard');
+}
+
+// Toggle Barcode Product Registration Panel
+function toggleAddProductForm() {
+  const panel = document.getElementById('panel-add-product');
+  if (panel) {
+    panel.classList.toggle('hidden');
+    if (!panel.classList.contains('hidden')) {
+      document.getElementById('new-prod-barcode').focus();
+    }
+  }
+}
+
+// Simulate Camera Barcode Scan (Bipador EAN-13)
+function simulateBarcodeScan() {
+  const samples = [
+    { barcode: '78910005', name: 'Leite Integral 1L Parmalat', cost: 3.40, retail: 6.90, sug: 4.80, qty: 35, sector: 'Laticínios & Frios' },
+    { barcode: '78910012', name: 'Peito de Peru Fatiado 150g', cost: 6.20, retail: 12.90, sug: 8.50, qty: 15, sector: 'Açougue & Carnes' },
+    { barcode: '78910099', name: 'Iogurte Morango 170g Vigor', cost: 1.80, retail: 4.20, sug: 2.79, qty: 50, sector: 'Laticínios & Frios' },
+    { barcode: '78910440', name: 'Pão de Forma Tradicional 450g', cost: 4.50, retail: 9.90, sug: 6.50, qty: 20, sector: 'Padaria & Panificação' }
+  ];
+
+  const chosen = samples[Math.floor(Math.random() * samples.length)];
+
+  document.getElementById('new-prod-barcode').value = chosen.barcode;
+  document.getElementById('new-prod-name').value = chosen.name;
+  document.getElementById('new-prod-cost').value = chosen.cost.toFixed(2);
+  document.getElementById('new-prod-retail').value = chosen.retail.toFixed(2);
+  document.getElementById('new-prod-sug').value = chosen.sug.toFixed(2);
+  document.getElementById('new-prod-qty').value = chosen.qty;
+  document.getElementById('new-prod-sector').value = chosen.sector;
+
+  // Set default expiry to 3 days from now
+  const d = new Date();
+  d.setDate(d.getDate() + 3);
+  document.getElementById('new-prod-expiry').value = d.toISOString().split('T')[0];
+
+  updateNewProdMargin();
+
+  alert(`📸 CÓDIGO DE BARRAS BIPADO COM SUCESSO!\n\nEAN: ${chosen.barcode}\nProduto: ${chosen.name}\nPreço de Custo (VR): R$ ${chosen.cost.toFixed(2)}\n\nDados preenchidos automaticamente.`);
+}
+
+// Calculate Margin % for New Product Form
+function updateNewProdMargin() {
+  const cost = parseFloat(document.getElementById('new-prod-cost').value) || 0;
+  const sug = parseFloat(document.getElementById('new-prod-sug').value) || 0;
+  const tag = document.getElementById('new-prod-margin-tag');
+
+  if (sug <= 0 || cost <= 0) {
+    tag.innerText = '0%';
+    tag.className = 'margin-pill red';
+    return;
+  }
+
+  const margin = (((sug - cost) / sug) * 100).toFixed(1);
+  if (margin >= 0) {
+    tag.innerText = `+${margin}%`;
+    tag.className = 'margin-pill green';
+  } else {
+    tag.innerText = `${margin}%`;
+    tag.className = 'margin-pill red';
+  }
+}
+
+// Save New Critical Date Product into Table
+function saveNewCriticalProduct() {
+  const barcode = document.getElementById('new-prod-barcode').value || '78900000';
+  const name = document.getElementById('new-prod-name').value;
+  const expiry = document.getElementById('new-prod-expiry').value || '2026-07-26';
+  const qty = document.getElementById('new-prod-qty').value || '10';
+  const cost = parseFloat(document.getElementById('new-prod-cost').value) || 0;
+  const retail = parseFloat(document.getElementById('new-prod-retail').value) || 0;
+  const sug = parseFloat(document.getElementById('new-prod-sug').value) || 0;
+
+  if (!name) {
+    alert('Por favor, informe o nome do produto ou bipe o código de barras!');
+    return;
+  }
+
+  productCounter++;
+  const newRowId = productCounter;
+  const margin = sug > 0 ? (((sug - cost) / sug) * 100).toFixed(1) : 0;
+  const marginClass = margin >= 0 ? 'green' : 'red';
+
+  const tbody = document.getElementById('perdas-table-body');
+  const tr = document.createElement('tr');
+  tr.id = 'perdas-row-' + newRowId;
+  tr.innerHTML = `
+    <td>
+      <strong>${name}</strong>
+      <small>Cod: ${barcode} • Cadastrado Agora</small>
+    </td>
+    <td>${qty} un.</td>
+    <td><span class="tag-red">Crítico (${expiry})</span></td>
+    <td><strong class="txt-cost">R$ ${cost.toFixed(2)}</strong></td>
+    <td><span class="old-price">R$ ${retail.toFixed(2)}</span></td>
+    <td>
+      <div class="price-input-box">
+        <span>R$</span>
+        <input type="number" step="0.01" value="${sug.toFixed(2)}" id="price-in-${newRowId}" oninput="calcMargin(${newRowId}, ${cost})">
+      </div>
+    </td>
+    <td><span class="margin-pill ${marginClass}" id="margin-pill-${newRowId}">${margin >= 0 ? '+' : ''}${margin}%</span></td>
+    <td>
+      <button class="btn-send-vr" id="btn-vr-send-${newRowId}" onclick="sendToVR(${newRowId}, '${name}')"><i data-lucide="send"></i> Enviar p/ VR</button>
+    </td>
+  `;
+
+  tbody.insertBefore(tr, tbody.firstChild);
+
+  safeCreateIcons();
+
+  alert(`✅ PRODUTO EM DATA CRÍTICA CADASTRADO E INSERIDO!\n\nProduto: ${name}\nEAN: ${barcode}\nQtd: ${qty} un.\nVencimento: ${expiry}\nMargem Residual: ${margin}%\n\nDisponível para envio ao VR Software.`);
+
+  // Clear inputs and hide panel
+  document.getElementById('new-prod-name').value = '';
+  document.getElementById('new-prod-barcode').value = '';
+  toggleAddProductForm();
 }
 
 // Start Specific Sector Audit
