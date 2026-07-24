@@ -1,5 +1,5 @@
 /* ==========================================================================
-   SUPER CHECKLIST PARANAÍBA — DESIGN SYSTEM V12.0
+   SUPER CHECKLIST PARANAÍBA — DESIGN SYSTEM V15.0
    ========================================================================== */
 
 :root {
@@ -611,14 +611,17 @@ body {
   box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
 }
 
-/* YOUTUBE EMBED BOX (POP MICROLEARNING) */
+/* COMPACT YOUTUBE EMBED BOX (TAMANHO PADRÃO YOUTUBE) */
 .youtube-embed-box {
   width: 100%;
-  aspect-ratio: 16 / 9;
-  border-radius: 10px;
+  max-width: 420px;
+  height: 220px;
+  margin: 0 auto;
+  border-radius: 12px;
   overflow: hidden;
-  background: var(--slate-900);
+  background: #000;
   border: 1px solid var(--card-border);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.4);
 }
 
 .youtube-embed-box iframe {
@@ -629,11 +632,14 @@ body {
 
 .youtube-player-container {
   width: 100%;
-  aspect-ratio: 16 / 9;
+  max-width: 480px;
+  height: 260px;
+  margin: 0 auto;
   border-radius: 12px;
   overflow: hidden;
   background: black;
   border: 1px solid var(--card-border);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
 }
 
 .youtube-player-container iframe {
@@ -873,6 +879,16 @@ body {
 
   .dashboard-hero {
     grid-template-columns: 1fr;
+  }
+
+  .youtube-embed-box {
+    max-width: 100%;
+    height: 190px;
+  }
+
+  .youtube-player-container {
+    max-width: 100%;
+    height: 210px;
   }
 
   .mobile-bottom-nav {
