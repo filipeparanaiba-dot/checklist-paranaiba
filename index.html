@@ -18,7 +18,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   
   <!-- CSS Design System -->
-  <link rel="stylesheet" href="styles.css?v=11.0">
+  <link rel="stylesheet" href="styles.css?v=12.0">
   
   <!-- Lucide Icons -->
   <script src="https://unpkg.com/lucide@latest"></script>
@@ -302,47 +302,62 @@
 
       </section>
 
-      <!-- VIEW NOVO: POP MICROLEARNING & CERTIFICAÇÃO DE COLABORADORES -->
+      <!-- VIEW NOVO: POP MICROLEARNING COM VÍDEOS DO YOUTUBE EMBUTIDOS -->
       <section id="view-treinamento" class="page-view">
         <div class="manutencao-card">
           
           <div class="section-title">
-            <h3><i data-lucide="graduation-cap"></i> Treinamento POP Microlearning (Padrão Anvisa)</h3>
-            <span class="badge-vr">Certificação Rápidas em Vídeos de 15s</span>
+            <h3><i data-lucide="graduation-cap"></i> Treinamento POP Microlearning (Vídeos YouTube)</h3>
+            <span class="badge-vr">Certificação Anvisa & VR Software</span>
           </div>
 
           <div class="supplier-hero-grid mb-20">
             
             <div class="supplier-card">
               <div class="sup-head">
-                <strong>POP 01: Higiene do Açougue</strong>
-                <span class="tag-green">15 Segundos</span>
+                <strong>POP 01: Higiene do Açougue & NR-36</strong>
+                <span class="tag-green">Vídeo YouTube</span>
               </div>
-              <p class="equip-desc">Sanitização dos moedores de carne e uso de luva de aço conforme NR-36.</p>
-              <button class="btn-action-primary full mt-10" onclick="startPOPTraining('Açougue')">
-                <i data-lucide="play"></i> Assistir & Fazer Teste
+              <p class="equip-desc">Sanitização dos moedores de carne e uso obrigatório da luva de aço.</p>
+
+              <div class="youtube-embed-box mt-10">
+                <iframe src="https://www.youtube.com/embed/5-S_g7vX8pY" title="Treinamento Higiene Açougue" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+              </div>
+
+              <button class="btn-action-primary full mt-10" onclick="startPOPTraining('Açougue', 'https://www.youtube.com/embed/5-S_g7vX8pY', 'Higiene de Açougue & NR-36')">
+                <i data-lucide="play-circle"></i> Assistir em Tela Cheia & Fazer Teste
               </button>
             </div>
 
             <div class="supplier-card">
               <div class="sup-head">
-                <strong>POP 02: Temperatura da Doca</strong>
-                <span class="tag-green">15 Segundos</span>
+                <strong>POP 02: Recebimento de Carga na Doca</strong>
+                <span class="tag-green">Vídeo YouTube</span>
               </div>
-              <p class="equip-desc">Como aferir a temperatura dos baús refrigerados no recebimento.</p>
-              <button class="btn-action-primary full mt-10" onclick="startPOPTraining('Doca')">
-                <i data-lucide="play"></i> Assistir & Fazer Teste
+              <p class="equip-desc">Procedimentos de aferição da temperatura do caminhão e inspeção de avarias.</p>
+
+              <div class="youtube-embed-box mt-10">
+                <iframe src="https://www.youtube.com/embed/J___v_88w2Y" title="Recebimento Doca Supermercado" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+              </div>
+
+              <button class="btn-action-primary full mt-10" onclick="startPOPTraining('Doca', 'https://www.youtube.com/embed/J___v_88w2Y', 'Recebimento de Carga na Doca')">
+                <i data-lucide="play-circle"></i> Assistir em Tela Cheia & Fazer Teste
               </button>
             </div>
 
             <div class="supplier-card">
               <div class="sup-head">
-                <strong>POP 03: Rebaixe no VR Software</strong>
-                <span class="tag-green">15 Segundos</span>
+                <strong>POP 03: Rebaixe de Preço no VR Software</strong>
+                <span class="tag-green">Vídeo YouTube</span>
               </div>
-              <p class="equip-desc">Passo a passo para rebaixar preços de produtos em data crítica no caixa.</p>
-              <button class="btn-action-primary full mt-10" onclick="startPOPTraining('VR Software')">
-                <i data-lucide="play"></i> Assistir & Fazer Teste
+              <p class="equip-desc">Gestão de produtos com data crítica e alteração de margem de venda.</p>
+
+              <div class="youtube-embed-box mt-10">
+                <iframe src="https://www.youtube.com/embed/3Q9f5aM9ZzM" title="Prevenção de Perdas Supermercado" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+              </div>
+
+              <button class="btn-action-primary full mt-10" onclick="startPOPTraining('VR Software', 'https://www.youtube.com/embed/3Q9f5aM9ZzM', 'Rebaixe & Prevenção de Perdas')">
+                <i data-lucide="play-circle"></i> Assistir em Tela Cheia & Fazer Teste
               </button>
             </div>
 
@@ -1306,28 +1321,41 @@
     </div>
   </div>
 
-  <!-- MODAL MICROLEARNING POP -->
+  <!-- MODAL MICROLEARNING POP COM REPRODUTOR DE VÍDEO YOUTUBE -->
   <div class="modal-backdrop hidden" id="modal-pop">
     <div class="modal-dialog">
       <div class="modal-head">
-        <h3><i data-lucide="play-circle" style="color: #a78bfa;"></i> Microlearning POP 15s</h3>
+        <h3 id="pop-modal-title"><i data-lucide="play-circle" style="color: #a78bfa;"></i> Treinamento POP Microlearning</h3>
         <button class="btn-x" onclick="closeModals()">&times;</button>
       </div>
       <div class="modal-body text-center">
-        <div class="pop-video-box">
-          <i data-lucide="film"></i>
-          <span>Vídeo Educativo 15s — Padrão Anvisa</span>
+        
+        <div class="youtube-player-container mb-12">
+          <iframe id="pop-modal-iframe" src="https://www.youtube.com/embed/5-S_g7vX8pY" title="POP Treinamento" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
         </div>
-        <p class="pop-txt">Em caso de oscilação térmica na câmara fria, isole o setor e transfira as peças para a câmara de contingência em até 20 minutos.</p>
+
+        <p class="pop-txt mb-12" id="pop-modal-desc">Assista ao procedimento e responda à pergunta de verificação abaixo para obter sua certificação.</p>
+
+        <!-- TESTE DE VERIFICAÇÃO ANVISA -->
+        <div class="pop-quiz-card text-left">
+          <strong>Pergunta de Verificação:</strong>
+          <p id="pop-quiz-question">Qual a temperatura máxima permitida na câmara fria de carnes antes de acionar a transferência?</p>
+          <div class="quiz-options mt-8">
+            <button class="btn-quiz-opt" onclick="answerPOPQuiz(true)">A) 4.0°C</button>
+            <button class="btn-quiz-opt" onclick="answerPOPQuiz(false)">B) 10.0°C</button>
+            <button class="btn-quiz-opt" onclick="answerPOPQuiz(false)">C) 15.0°C</button>
+          </div>
+        </div>
+
       </div>
       <div class="modal-foot">
-        <button class="btn-action-primary full" onclick="closeModals()">Ciente do Procedimento</button>
+        <button class="btn-action-primary full" onclick="closeModals()">Concluir Treinamento</button>
       </div>
     </div>
   </div>
 
   <!-- JS Engine -->
-  <script src="app.js?v=11.0"></script>
+  <script src="app.js?v=12.0"></script>
   <script>
     lucide.createIcons();
     
