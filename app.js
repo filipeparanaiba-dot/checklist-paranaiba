@@ -1,5 +1,5 @@
 /* ==========================================================================
-   SUPER CHECKLIST PARANAÍBA — PRODUCTION JAVASCRIPT ENGINE (V10.0)
+   SUPER CHECKLIST PARANAÍBA — PRODUCTION JAVASCRIPT ENGINE (V11.0)
    ========================================================================== */
 
 let currentStore = '1';
@@ -91,6 +91,9 @@ function navigate(viewId) {
     } else if (viewId === 'rotinas') {
       hTitle.innerText = `Execução de Auditoria — ${storeName}`;
       hSub.innerText = `Formulários operacionais de fiscalização de setor`;
+    } else if (viewId === 'treinamento') {
+      hTitle.innerText = `POP Microlearning & Capacitação — ${storeName}`;
+      hSub.innerText = `Treinamentos rápidos de 15s e certificação de colaboradores Padrão Anvisa`;
     } else if (viewId === 'furtos') {
       hTitle.innerText = `Prevenção de Furtos & Brigada de Perdas — ${storeName}`;
       hSub.innerText = `Registro de avarias de balcão, furtos confirmados e backup de vídeo do CFTV`;
@@ -153,6 +156,11 @@ function changeStore(storeId) {
   document.getElementById('metric-perdas').innerText = db.perdasStr;
 
   navigate('dashboard');
+}
+
+// POP Microlearning Training Trigger
+function startPOPTraining(moduleName) {
+  openPOPModal();
 }
 
 // Toggle Theft Form
