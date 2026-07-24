@@ -1,5 +1,5 @@
 /* ==========================================================================
-   SUPER CHECKLIST PARANAÍBA — PRODUCTION DESIGN SYSTEM (V4.0)
+   SUPER CHECKLIST PARANAÍBA — PRODUCTION DESIGN SYSTEM (V5.0)
    ========================================================================== */
 
 :root {
@@ -430,7 +430,7 @@ html, body {
   align-items: center;
   margin-bottom: 16px;
 }
-.section-title h3 {
+.section-title h3, .section-title h4 {
   font-size: 1rem;
   font-weight: 700;
   color: #fff;
@@ -445,6 +445,148 @@ html, body {
   font-weight: 600;
   padding: 4px 10px;
   border-radius: 12px;
+}
+
+/* --------------------------------------------------------------------------
+   4. ANALYTICS & CURVA ABC STYLES
+   -------------------------------------------------------------------------- */
+.analytics-card {
+  background: var(--bg-card);
+  border: 1px solid var(--bg-card-border);
+  border-radius: var(--radius-lg);
+  padding: 20px;
+}
+
+.export-btn-group {
+  display: flex;
+  gap: 10px;
+}
+
+.analytics-hero-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.chart-box {
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid var(--bg-card-border);
+  border-radius: var(--radius-md);
+  padding: 16px;
+}
+.chart-box h4 {
+  font-size: 0.85rem;
+  color: #fff;
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.bar-chart-visual {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-around;
+  height: 120px;
+  padding-top: 20px;
+  border-bottom: 1px solid var(--bg-card-border);
+}
+.chart-col {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  width: 45px;
+}
+.bar {
+  width: 100%;
+  background: rgba(99, 102, 241, 0.3);
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding-top: 4px;
+  transition: height 0.4s ease;
+}
+.bar.active-bar {
+  background: linear-gradient(180deg, var(--emerald), var(--indigo));
+  box-shadow: 0 0 12px rgba(16, 185, 129, 0.4);
+}
+.bar span {
+  font-size: 0.65rem;
+  font-weight: 800;
+  color: #fff;
+}
+.chart-col small {
+  font-size: 0.65rem;
+  color: var(--txt-muted);
+}
+
+.sector-loss-bars {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.s-bar-row {
+  font-size: 0.72rem;
+}
+.s-bar-row span {
+  display: block;
+  color: var(--txt-secondary);
+  margin-bottom: 4px;
+}
+.s-track {
+  height: 8px;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 4px;
+  overflow: hidden;
+  margin-bottom: 4px;
+}
+.s-fill {
+  height: 100%;
+  border-radius: 4px;
+}
+.s-bar-row strong {
+  display: block;
+  font-size: 0.7rem;
+  color: #fff;
+  text-align: right;
+}
+
+/* Curva ABC Badges */
+.abc-badge {
+  font-size: 0.65rem;
+  font-weight: 800;
+  padding: 3px 8px;
+  border-radius: 6px;
+  display: inline-block;
+}
+.abc-badge.curve-a {
+  background: rgba(239, 68, 68, 0.2);
+  color: #f87171;
+  border: 1px solid rgba(239, 68, 68, 0.4);
+}
+.abc-badge.curve-b {
+  background: rgba(245, 158, 11, 0.2);
+  color: #fbbf24;
+  border: 1px solid rgba(245, 158, 11, 0.4);
+}
+.abc-badge.curve-c {
+  background: rgba(59, 130, 246, 0.2);
+  color: #60a5fa;
+  border: 1px solid rgba(59, 130, 246, 0.4);
+}
+
+.btn-sm-action {
+  background: rgba(255, 255, 255, 0.08);
+  color: #fff;
+  border: 1px solid var(--bg-card-border);
+  padding: 5px 10px;
+  border-radius: 4px;
+  font-size: 0.68rem;
+  font-weight: 700;
+  cursor: pointer;
 }
 
 /* Sectors Grid */
@@ -1284,6 +1426,11 @@ html, body {
     gap: 14px;
   }
 
+  .analytics-hero-grid {
+    grid-template-columns: 1fr !important;
+    gap: 14px;
+  }
+
   .metrics-grid {
     grid-template-columns: 1fr 1fr !important;
     gap: 10px;
@@ -1383,5 +1530,9 @@ html, body {
   }
   .add-prod-grid {
     grid-template-columns: 1fr !important;
+  }
+  .export-btn-group {
+    flex-direction: column;
+    width: 100%;
   }
 }
