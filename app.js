@@ -21,6 +21,13 @@ let storeData = {
   }
 };
 
+// Safe Icon Creator
+function safeCreateIcons() {
+  if (typeof lucide !== 'undefined' && lucide.createIcons) {
+    try { lucide.createIcons(); } catch (e) { console.warn(e); }
+  }
+}
+
 // Navigation Controller (Desktop & Mobile)
 function navigate(viewId) {
   document.querySelectorAll('.view-page').forEach(page => page.classList.remove('active'));
@@ -47,8 +54,12 @@ function navigate(viewId) {
     else if (viewId === 'ranking') pageTitle.innerText = `Gamificação da Rede`;
   }
 
-  // Scroll to top on view change
-  window.scrollTo({ top: 0, behavior: 'smooth' });
+  // Scroll main container AND window to top so user sees the new screen immediately
+  const mainContent = document.querySelector('.main-content');
+  if (mainContent) mainContent.scrollTop = 0;
+  window.scrollTo(0, 0);
+
+  safeCreateIcons();
 }
 
 // Switch Active Store
@@ -99,18 +110,22 @@ function startChecklistExecution(type) {
 // Question Answer Handler
 function answerQuestion(qId, choice) {
   const card = document.getElementById('q-' + qId);
-  const buttons = card.querySelectorAll('.btn-choice');
+  if (!card) return;
 
+  const buttons = card.querySelectorAll('.btn-choice');
   buttons.forEach(b => b.classList.remove('selected'));
 
   if (choice === 'conform') {
-    card.querySelector('.choice-conform').classList.add('selected');
+    const btn = card.querySelector('.choice-conform');
+    if (btn) btn.classList.add('selected');
     document.getElementById('card-5w2h-trigger-' + qId)?.classList.add('hidden');
   } else if (choice === 'nonconform') {
-    card.querySelector('.choice-nonconform').classList.add('selected');
+    const btn = card.querySelector('.choice-nonconform');
+    if (btn) btn.classList.add('selected');
     document.getElementById('card-5w2h-trigger-' + qId)?.classList.remove('hidden');
   } else {
-    card.querySelector('.choice-na').classList.add('selected');
+    const btn = card.querySelector('.choice-na');
+    if (btn) btn.classList.add('selected');
     document.getElementById('card-5w2h-trigger-' + qId)?.classList.add('hidden');
   }
 }
@@ -192,7 +207,7 @@ function submitPriceToVR(rowId, prodName) {
   btnElem.disabled = true;
   inputElem.disabled = true;
 
-  if (window.lucide) lucide.createIcons();
+  safeCreateIcons();
 
   alert(`🎯 PREÇO ATUALIZADO NO VR SOFTWARE!\n\nProduto: ${prodName}\nNovo Preço de Venda: R$ ${finalPrice}\n\nInstrução enviada imediatamente aos caixas da ${storeData[currentStore].name}.`);
 }
@@ -224,3 +239,8 @@ function openMicrolearningModal(topic) {
 function closeModals() {
   document.querySelectorAll('.modal-overlay').forEach(m => m.classList.add('hidden'));
 }
+
+// Initialize on page load
+document.addEventListener('DOMContentLoaded', () => {
+  safeCreateIcons();
+});
