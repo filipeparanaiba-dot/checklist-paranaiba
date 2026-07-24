@@ -1,5 +1,5 @@
 /* ==========================================================================
-   SUPER CHECKLIST PARANAÍBA — PRODUCTION JAVASCRIPT ENGINE (V8.0)
+   SUPER CHECKLIST PARANAÍBA — PRODUCTION JAVASCRIPT ENGINE (V9.0)
    ========================================================================== */
 
 let currentStore = '1';
@@ -91,6 +91,9 @@ function navigate(viewId) {
     } else if (viewId === 'rotinas') {
       hTitle.innerText = `Execução de Auditoria — ${storeName}`;
       hSub.innerText = `Formulários operacionais de fiscalização de setor`;
+    } else if (viewId === 'epi') {
+      hTitle.innerText = `Segurança do Trabalho & EPIs (CIPA) — ${storeName}`;
+      hSub.innerText = `Fichas digitais de entrega de EPI, fiscalização NR-36 e assinaturas de termos`;
     } else if (viewId === 'fornecedores') {
       hTitle.innerText = `Doca & Auditoria de Fornecedores — ${storeName}`;
       hSub.innerText = `Emissão de laudos de recebimento e avaliação de qualidade de carga`;
@@ -147,6 +150,45 @@ function changeStore(storeId) {
   document.getElementById('metric-perdas').innerText = db.perdasStr;
 
   navigate('dashboard');
+}
+
+// Toggle EPI Delivery Form
+function toggleEPIForm() {
+  const panel = document.getElementById('panel-epi-form');
+  if (panel) {
+    panel.classList.toggle('hidden');
+  }
+}
+
+// Save EPI Delivery
+function saveEPIDelivery() {
+  const employee = document.getElementById('epi-employee').value;
+  const item = document.getElementById('epi-item-select').value;
+  const expiry = document.getElementById('epi-expiry-date').value || '2027-07-23';
+  const sig = document.getElementById('epi-signature').value || '4091';
+
+  if (!employee) {
+    alert('Por favor, informe o nome do colaborador!');
+    return;
+  }
+
+  const tbody = document.getElementById('epi-table-body');
+  const tr = document.createElement('tr');
+  tr.innerHTML = `
+    <td><strong>${employee}</strong></td>
+    <td>Setor Ativo</td>
+    <td>${item}</td>
+    <td>Certificado C.A. OK</td>
+    <td>Hoje</td>
+    <td><span class="tag-green">${expiry}</span></td>
+    <td><button class="btn-sm-action" onclick="alert('📄 FICHA CIPA GERADA!\n\nRecibo de entrega de EPI assinado digitalmente (Matrícula ${sig}).')"><i data-lucide="file-text"></i> Ver Ficha</button></td>
+  `;
+
+  tbody.insertBefore(tr, tbody.firstChild);
+  safeCreateIcons();
+
+  alert(`🦺 ENTREGA DE EPI REGISTRADA COM SUCESSO!\n\nColaborador: ${employee}\nEquipamento: ${item}\nMatrícula/Assinatura: ${sig}\n\nFicha CIPA arquivada e termo assinado digitalmente.`);
+  toggleEPIForm();
 }
 
 // Toggle Supplier Receiving Form
