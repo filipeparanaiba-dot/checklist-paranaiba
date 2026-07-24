@@ -21,16 +21,19 @@ let storeData = {
   }
 };
 
-// Navigation Controller
+// Navigation Controller (Desktop & Mobile)
 function navigate(viewId) {
   document.querySelectorAll('.view-page').forEach(page => page.classList.remove('active'));
   document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
+  document.querySelectorAll('.mob-nav-btn').forEach(btn => btn.classList.remove('active'));
 
   const targetView = document.getElementById('view-' + viewId);
   const targetNav = document.getElementById('side-' + viewId);
+  const targetMobNav = document.getElementById('mob-' + viewId);
 
   if (targetView) targetView.classList.add('active');
   if (targetNav) targetNav.classList.add('active');
+  if (targetMobNav) targetMobNav.classList.add('active');
 
   // Update Page Title
   const storeName = storeData[currentStore].name;
@@ -39,16 +42,25 @@ function navigate(viewId) {
     if (viewId === 'dashboard') pageTitle.innerText = `Painel Operacional — ${storeName}`;
     else if (viewId === 'rotinas') pageTitle.innerText = `Execução de Checklist — ${storeName}`;
     else if (viewId === '5w2h') pageTitle.innerText = `Planos de Ação 5W2H — ${storeName}`;
-    else if (viewId === 'perdas') pageTitle.innerText = `Prevenção de Perdas & VR Software — ${storeName}`;
+    else if (viewId === 'perdas') pageTitle.innerText = `Prevenção de Perdas & VR — ${storeName}`;
     else if (viewId === 'whatsapp') pageTitle.innerText = `Automação de WhatsApp — ${storeName}`;
-    else if (viewId === 'ranking') pageTitle.innerText = `Gamificação & Ranking da Rede`;
+    else if (viewId === 'ranking') pageTitle.innerText = `Gamificação da Rede`;
   }
+
+  // Scroll to top on view change
+  window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
 // Switch Active Store
 function switchStore(storeId) {
   currentStore = storeId;
   const data = storeData[storeId];
+
+  // Sync both select pickers
+  const globalPicker = document.getElementById('global-store-picker');
+  const mobilePicker = document.getElementById('mobile-store-picker');
+  if (globalPicker) globalPicker.value = storeId;
+  if (mobilePicker) mobilePicker.value = storeId;
 
   document.getElementById('isl-score').innerHTML = `${data.isl}<small>%</small>`;
   document.getElementById('isl-progress-bar').style.width = data.isl + '%';
