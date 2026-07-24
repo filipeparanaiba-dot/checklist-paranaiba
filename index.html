@@ -18,7 +18,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   
   <!-- CSS Design System -->
-  <link rel="stylesheet" href="styles.css?v=7.0">
+  <link rel="stylesheet" href="styles.css?v=8.0">
   
   <!-- Lucide Icons -->
   <script src="https://unpkg.com/lucide@latest"></script>
@@ -61,6 +61,10 @@
         <button class="nav-item" id="nav-rotinas" onclick="navigate('rotinas')">
           <i data-lucide="clipboard-check"></i>
           <span>Auditorias & Setores</span>
+        </button>
+        <button class="nav-item" id="nav-fornecedores" onclick="navigate('fornecedores')">
+          <i data-lucide="truck"></i>
+          <span>Doca & Fornecedores</span>
         </button>
         <button class="nav-item" id="nav-analytics" onclick="navigate('analytics')">
           <i data-lucide="bar-chart-3"></i>
@@ -284,6 +288,155 @@
 
         </div>
 
+      </section>
+
+      <!-- VIEW NOVO: AUDITORIA DE FORNECEDORES & LAUDOS DE DOCA -->
+      <section id="view-fornecedores" class="page-view">
+        <div class="fornecedores-card">
+          
+          <div class="section-title">
+            <h3><i data-lucide="truck"></i> Auditoria de Fornecedores & Laudo de Recebimento na Doca</h3>
+            <button class="btn-action-primary" onclick="toggleReceivingForm()">
+              <i data-lucide="file-check-2"></i> + Novo Recebimento de Carga com Laudo
+            </button>
+          </div>
+
+          <!-- PAINEL DE ABERTURA DE LAUDO DE RECEBIMENTO -->
+          <div class="ticket-form-card hidden mb-20" id="panel-receiving-form">
+            <div class="add-prod-header">
+              <h4><i data-lucide="clipboard"></i> Check-in de Carga & Inspeção na Doca</h4>
+              <button class="btn-x" onclick="toggleReceivingForm()">&times;</button>
+            </div>
+
+            <div class="add-prod-grid">
+              <div class="form-group">
+                <label>Fornecedor</label>
+                <select id="rec-supplier">
+                  <option value="BRF / Sadia">BRF / Sadia (Frios & Embutidos)</option>
+                  <option value="JBS / Friboi">JBS / Friboi (Carnes Fressas)</option>
+                  <option value="Ambev">Ambev (Bebidas & Cervejas)</option>
+                  <option value="Nestlé">Nestlé (Laticínios & Chocolates)</option>
+                  <option value="Unilever">Unilever (Higiene & Limpeza)</option>
+                  <option value="Coca-Cola">Coca-Cola (Refrigerantes)</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label>Número da Nota Fiscal (NF-e)</label>
+                <input type="text" id="rec-nfe" placeholder="Ex: NF 409182">
+              </div>
+
+              <div class="form-group">
+                <label>Temperatura do Caminhão (°C)</label>
+                <input type="number" step="0.1" id="rec-temp" placeholder="Ex: 3.5">
+              </div>
+
+              <div class="form-group">
+                <label>Parecer do Recebimento</label>
+                <select id="rec-status">
+                  <option value="APROVADO">🟢 Aprovado 100% (Sem Ressalvas)</option>
+                  <option value="RESSALVA">⚠️ Aceite com Ressalva (Devolução Parcial)</option>
+                  <option value="REJEITADO">🚨 Carga Rejeitada (Devolução Total)</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-group mt-10">
+              <label>Observação / Motivo de Avaria ou Rejeição</label>
+              <input type="text" id="rec-obs" placeholder="Ex: 4 caixas amassadas por umidade e lote próximo do vencimento (15 dias restante).">
+            </div>
+
+            <div class="text-right mt-15">
+              <button class="btn-action-primary" onclick="saveReceivingAudit()">
+                <i data-lucide="file-down"></i> Emitir Laudo de Devolução & Notificar Compras
+              </button>
+            </div>
+          </div>
+
+          <!-- SCORECARD DE FORNECEDORES -->
+          <div class="supplier-hero-grid mb-20">
+            
+            <div class="supplier-card">
+              <div class="sup-head">
+                <strong>BRF / Sadia</strong>
+                <span class="score-badge gold">Score: 9.8 / 10</span>
+              </div>
+              <div class="sup-body">
+                <div class="sup-info-row"><span>Pontualidade Doca:</span> <strong>100% no horário</strong></div>
+                <div class="sup-info-row"><span>Temp. Média Baú:</span> <strong class="text-green">2.8°C (Ideal)</strong></div>
+                <div class="sup-info-row"><span>Índice de Avaria:</span> <strong>0.2% (Excelente)</strong></div>
+              </div>
+            </div>
+
+            <div class="supplier-card">
+              <div class="sup-head">
+                <strong>JBS / Friboi</strong>
+                <span class="score-badge gold">Score: 9.2 / 10</span>
+              </div>
+              <div class="sup-body">
+                <div class="sup-info-row"><span>Pontualidade Doca:</span> <strong>95% no horário</strong></div>
+                <div class="sup-info-row"><span>Temp. Média Baú:</span> <strong class="text-green">3.1°C (Ideal)</strong></div>
+                <div class="sup-info-row"><span>Índice de Avaria:</span> <strong>0.8% (Baixo)</strong></div>
+              </div>
+            </div>
+
+            <div class="supplier-card">
+              <div class="sup-head">
+                <strong>Ambev</strong>
+                <span class="score-badge silver">Score: 8.9 / 10</span>
+              </div>
+              <div class="sup-body">
+                <div class="sup-info-row"><span>Pontualidade Doca:</span> <strong class="text-orange">90% (Atraso 20min)</strong></div>
+                <div class="sup-info-row"><span>Pallet Stretch:</span> <strong>Embalagem OK</strong></div>
+                <div class="sup-info-row"><span>Amassados Cerveja:</span> <strong class="text-red">1.5% (Atenção)</strong></div>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- HISTÓRICO DE RECEBIMENTOS & LAUDOS DE DEVOLUÇÃO -->
+          <div class="section-title mt-20">
+            <h4><i data-lucide="history"></i> Últimos Laudos de Recebimento Emitidos na Doca</h4>
+          </div>
+
+          <div class="table-scroll-wrapper">
+            <table class="perdas-table">
+              <thead>
+                <tr>
+                  <th>Data / Hora</th>
+                  <th>Fornecedor</th>
+                  <th>NF-e</th>
+                  <th>Temp. Baú</th>
+                  <th>Status Laudo</th>
+                  <th>Motivo / Ocorrência</th>
+                  <th>Laudo PDF</th>
+                </tr>
+              </thead>
+              <tbody id="receiving-table-body">
+                <tr>
+                  <td>23/07 - 09:15</td>
+                  <td><strong>Hortifrúti Fazenda Sul</strong></td>
+                  <td>NF 4091</td>
+                  <td>Ambiental</td>
+                  <td><span class="tag-orange">Ressalva (20%)</span></td>
+                  <td>Tomate com avaria por impacto no transporte.</td>
+                  <td><button class="btn-sm-action" onclick="downloadLaudoPDF('NF 4091', 'Hortifrúti Fazenda Sul')"><i data-lucide="download"></i> Imprimir Laudo</button></td>
+                </tr>
+
+                <tr>
+                  <td>23/07 - 08:00</td>
+                  <td><strong>BRF / Sadia</strong></td>
+                  <td>NF 88201</td>
+                  <td><strong class="text-green">2.5°C</strong></td>
+                  <td><span class="tag-green">Aprovado 100%</span></td>
+                  <td>Carga sem inconformidades sanitárias.</td>
+                  <td><button class="btn-sm-action" onclick="downloadLaudoPDF('NF 88201', 'BRF Sadia')"><i data-lucide="download"></i> Imprimir Laudo</button></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+        </div>
       </section>
 
       <!-- VIEW 2: EXECUÇÃO DE AUDITORIA -->
@@ -973,6 +1126,10 @@
         <i data-lucide="clipboard-check"></i>
         <span>Rotinas</span>
       </button>
+      <button class="mob-tab" id="mobtab-fornecedores" onclick="navigate('fornecedores')">
+        <i data-lucide="truck"></i>
+        <span>Doca</span>
+      </button>
       <button class="mob-tab" id="mobtab-manutencao" onclick="navigate('manutencao')">
         <i data-lucide="wrench"></i>
         <span>Maquinário</span>
@@ -980,10 +1137,6 @@
       <button class="mob-tab" id="mobtab-perdas" onclick="navigate('perdas')">
         <i data-lucide="trending-down"></i>
         <span>Perdas</span>
-      </button>
-      <button class="mob-tab" id="mobtab-whatsapp" onclick="navigate('whatsapp')">
-        <i data-lucide="message-square"></i>
-        <span>WhatsApp</span>
       </button>
     </nav>
 
@@ -1073,7 +1226,7 @@
   </div>
 
   <!-- JS Engine -->
-  <script src="app.js?v=7.0"></script>
+  <script src="app.js?v=8.0"></script>
   <script>
     lucide.createIcons();
     
