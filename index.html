@@ -1,6 +1,20 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
+  <script>
+    // KILLER DE CACHE E SERVICE WORKER ANTIGO (FORÇA ATUALIZAÇÃO IMEDIATA)
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.getRegistrations().then(function(registrations) {
+        for (let r of registrations) { r.unregister(); }
+      });
+    }
+    if (window.caches) {
+      caches.keys().then(function(names) {
+        for (let name of names) { caches.delete(name); }
+      });
+    }
+  </script>
+
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
@@ -21,7 +35,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   
   <!-- CSS Design System -->
-  <link rel="stylesheet" href="styles.css?v=17.0">
+  <link rel="stylesheet" href="styles.css?v=18.0">
   
   <!-- Lucide Icons -->
   <script src="https://unpkg.com/lucide@latest"></script>
@@ -44,7 +58,7 @@
         </div>
         <div class="brand-text">
           <h2>SUPER CHECKLIST</h2>
-          <span class="brand-tag">Paranaíba • v17.0 HTML5</span>
+          <span class="brand-tag" style="color: #34d399; font-weight: 800;">Paranaíba • v18.0 MP4 OK</span>
         </div>
       </div>
 
@@ -117,7 +131,7 @@
           <span class="status-dot"></span>
           <div>
             <strong id="side-status-title">VR Software Conectado</strong>
-            <small id="side-status-sub">API v4.2 • PWA v17.0</small>
+            <small id="side-status-sub">API v4.2 • PWA v18.0</small>
           </div>
         </div>
       </div>
@@ -132,7 +146,7 @@
           <i data-lucide="shield-check" class="mob-logo"></i>
           <div>
             <h2>SUPER CHECKLIST</h2>
-            <small>Paranaíba • v17.0</small>
+            <small style="color: #34d399; font-weight: 800;">Paranaíba • v18.0</small>
           </div>
         </div>
         <select id="mobile-store-picker" class="mob-picker" onchange="changeStore(this.value)">
@@ -305,12 +319,12 @@
 
       </section>
 
-      <!-- VIEW NOVO: POP MICROLEARNING COM VÍDEOS EM REPRODUTOR DIRETO HTML5 SEM REPOSIÇÃO / TRAVA DO YOUTUBE -->
+      <!-- VIEW NOVO: POP MICROLEARNING COM VÍDEOS MP4 HTML5 (SEM DEPENDÊNCIA DE YOUTUBE) -->
       <section id="view-treinamento" class="page-view">
         <div class="manutencao-card">
           
           <div class="section-title">
-            <h3><i data-lucide="graduation-cap"></i> Treinamento POP Microlearning (Vídeos em HD)</h3>
+            <h3><i data-lucide="graduation-cap"></i> Treinamento POP Microlearning (Vídeos HD MP4)</h3>
             <span class="badge-vr">Certificação Anvisa & VR Software</span>
           </div>
 
@@ -319,12 +333,12 @@
             <div class="supplier-card text-center">
               <div class="sup-head">
                 <strong>POP 01: Higiene do Açougue & NR-36</strong>
-                <span class="tag-green">Vídeo HD Online</span>
+                <span class="tag-green">Vídeo MP4 HD</span>
               </div>
               <p class="equip-desc mb-10">Boas práticas de higienização de equipamentos, tábuas e aventais no açougue.</p>
 
               <div class="video-player-box">
-                <video controls preload="metadata" poster="https://images.unsplash.com/photo-1607623814075-e51df1bdc82f?w=600&auto=format&fit=crop&q=80">
+                <video controls preload="auto" poster="https://images.unsplash.com/photo-1607623814075-e51df1bdc82f?w=600&auto=format&fit=crop&q=80">
                   <source src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4" type="video/mp4">
                   Seu navegador não suporta a reprodução de vídeo.
                 </video>
@@ -338,12 +352,12 @@
             <div class="supplier-card text-center">
               <div class="sup-head">
                 <strong>POP 02: Recebimento na Doca & Temperatura</strong>
-                <span class="tag-green">Vídeo HD Online</span>
+                <span class="tag-green">Vídeo MP4 HD</span>
               </div>
               <p class="equip-desc mb-10">Procedimento padrão de conferência de baú refrigerado e laudo de recebimento.</p>
 
               <div class="video-player-box">
-                <video controls preload="metadata" poster="https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=600&auto=format&fit=crop&q=80">
+                <video controls preload="auto" poster="https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=600&auto=format&fit=crop&q=80">
                   <source src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4" type="video/mp4">
                   Seu navegador não suporta a reprodução de vídeo.
                 </video>
@@ -357,12 +371,12 @@
             <div class="supplier-card text-center">
               <div class="sup-head">
                 <strong>POP 03: Prevenção de Perdas & VR Software</strong>
-                <span class="tag-green">Vídeo HD Online</span>
+                <span class="tag-green">Vídeo MP4 HD</span>
               </div>
               <p class="equip-desc mb-10">Técnicas de combate à ruptura de gôndola e rebaixe de mercadorias críticas.</p>
 
               <div class="video-player-box">
-                <video controls preload="metadata" poster="https://images.unsplash.com/photo-1534723452862-4c874018d66d?w=600&auto=format&fit=crop&q=80">
+                <video controls preload="auto" poster="https://images.unsplash.com/photo-1534723452862-4c874018d66d?w=600&auto=format&fit=crop&q=80">
                   <source src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4" type="video/mp4">
                   Seu navegador não suporta a reprodução de vídeo.
                 </video>
@@ -1158,7 +1172,6 @@
                   </td>
                   <td>25 un.</td>
                   <td><span class="tag-red">2 dias</span></td>
-                  <td><strong class="txt-cost">R$ 12,80</strong></td>
                   <td><span class="line-through">R$ 21,90</span></td>
                   <td>
                     <div class="price-input-box">
@@ -1369,28 +1382,9 @@
   </div>
 
   <!-- JS Engine -->
-  <script src="app.js?v=17.0"></script>
+  <script src="app.js?v=18.0"></script>
   <script>
     lucide.createIcons();
-    
-    // Register PWA Service Worker & Force Purge Old Caches
-    if ('serviceWorker' in navigator) {
-      window.addEventListener('load', () => {
-        navigator.serviceWorker.register('./sw.js?v=17.0').then((reg) => {
-          console.log('Service Worker v17.0 ativo');
-          reg.update();
-        });
-      });
-      if (window.caches) {
-        caches.keys().then(function(names) {
-          for (let name of names) {
-            if (name !== 'paranaiba-checklist-v17.0') {
-              caches.delete(name);
-            }
-          }
-        });
-      }
-    }
   </script>
 </body>
 </html>
