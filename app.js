@@ -1,5 +1,5 @@
 /* ==========================================================================
-   SUPER CHECKLIST PARANAÍBA — PRODUCTION JAVASCRIPT ENGINE (V12.0)
+   SUPER CHECKLIST PARANAÍBA — PRODUCTION JAVASCRIPT ENGINE (V13.0)
    ========================================================================== */
 
 let currentStore = '1';
@@ -159,7 +159,7 @@ function changeStore(storeId) {
 }
 
 // POP Microlearning YouTube Video & Quiz Engine
-function startPOPTraining(moduleName, videoUrl, title) {
+function startPOPTraining(moduleName = 'Açougue', videoUrl = 'https://www.youtube.com/embed/5-S_g7vX8pY', title = 'Higiene de Açougue & NR-36') {
   const iframe = document.getElementById('pop-modal-iframe');
   const titleEl = document.getElementById('pop-modal-title');
   const descEl = document.getElementById('pop-modal-desc');
@@ -189,6 +189,11 @@ function startPOPTraining(moduleName, videoUrl, title) {
 
   safeCreateIcons();
   document.getElementById('modal-pop').classList.remove('hidden');
+}
+
+// Legacy Fallback for openPOPModal
+function openPOPModal(moduleName, videoUrl, title) {
+  startPOPTraining(moduleName, videoUrl, title);
 }
 
 // Answer POP Quiz
@@ -682,10 +687,6 @@ function openWhatsAppModal() {
   }
 
   document.getElementById('modal-wa').classList.remove('hidden');
-}
-
-function openPOPModal() {
-  document.getElementById('modal-pop').classList.remove('hidden');
 }
 
 function closeModals() {
