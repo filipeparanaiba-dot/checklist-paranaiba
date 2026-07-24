@@ -11,7 +11,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   
   <!-- CSS Design System -->
-  <link rel="stylesheet" href="styles.css?v=3.0">
+  <link rel="stylesheet" href="styles.css?v=4.0">
   
   <!-- Lucide Icons -->
   <script src="https://unpkg.com/lucide@latest"></script>
@@ -455,12 +455,88 @@
         </div>
       </section>
 
-      <!-- VIEW 5: PREVENÇÃO DE PERDAS & PREÇO DE CUSTO EDITÁVEL -->
+      <!-- VIEW 5: PREVENÇÃO DE PERDAS & CADASTRO DE PRODUTO EM DATA CRÍTICA -->
       <section id="view-perdas" class="page-view">
         <div class="perdas-container">
+          
           <div class="section-title">
             <h3><i data-lucide="trending-down"></i> Prevenção de Perdas & Margem de Custo</h3>
-            <span class="badge-vr">VR Software API Conectado</span>
+            <button class="btn-action-primary" onclick="toggleAddProductForm()">
+              <i data-lucide="barcode"></i> + Cadastrar Produto em Data Crítica (Bipar EAN)
+            </button>
+          </div>
+
+          <!-- NOVO PAINEL DE CADASTRO DE PRODUTO EM DATA CRÍTICA (BIPADOR) -->
+          <div class="add-product-card hidden mb-20" id="panel-add-product">
+            <div class="add-prod-header">
+              <h4><i data-lucide="qr-code"></i> Entrada de Produto em Validade Crítica</h4>
+              <button class="btn-x" onclick="toggleAddProductForm()">&times;</button>
+            </div>
+
+            <div class="scan-action-bar">
+              <div class="input-with-btn">
+                <input type="text" id="new-prod-barcode" placeholder="Bipe o código de barras ou digite o EAN-13...">
+                <button class="btn-scan-camera" onclick="simulateBarcodeScan()">
+                  <i data-lucide="camera"></i> Bipar com a Câmera
+                </button>
+              </div>
+            </div>
+
+            <div class="add-prod-grid">
+              <div class="form-group">
+                <label>Nome do Produto</label>
+                <input type="text" id="new-prod-name" placeholder="Ex: Leite Integral 1L">
+              </div>
+
+              <div class="form-group">
+                <label>Setor do Produto</label>
+                <select id="new-prod-sector">
+                  <option>Laticínios & Frios</option>
+                  <option>Açougue & Carnes</option>
+                  <option>Padaria & Panificação</option>
+                  <option>Mercearia Doce</option>
+                  <option>Bebidas & Matinais</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label>Data de Vencimento</label>
+                <input type="date" id="new-prod-expiry">
+              </div>
+
+              <div class="form-group">
+                <label>Qtd. em Estoque Crítico</label>
+                <input type="number" id="new-prod-qty" placeholder="Ex: 30 un">
+              </div>
+
+              <div class="form-group">
+                <label>Preço de Custo (VR R$)</label>
+                <input type="number" step="0.01" id="new-prod-cost" placeholder="Ex: 3.50" oninput="updateNewProdMargin()">
+              </div>
+
+              <div class="form-group">
+                <label>Preço de Venda Atual (R$)</label>
+                <input type="number" step="0.01" id="new-prod-retail" placeholder="Ex: 7.90">
+              </div>
+
+              <div class="form-group">
+                <label>Preço Sugerido (Gerente R$)</label>
+                <input type="number" step="0.01" id="new-prod-sug" placeholder="Ex: 4.99" oninput="updateNewProdMargin()">
+              </div>
+
+              <div class="form-group">
+                <label>Margem Residual %</label>
+                <div class="margin-preview-box">
+                  <span class="margin-pill green" id="new-prod-margin-tag">+29.8%</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="text-right mt-15">
+              <button class="btn-action-primary" onclick="saveNewCriticalProduct()">
+                <i data-lucide="check"></i> Cadastrar & Enviar p/ Tabela VR Software
+              </button>
+            </div>
           </div>
 
           <p class="sub-text mb-15">Confira o **Preço de Custo** importado do VR Software e **ajuste livremente o Preço Sugerido** do produto antes de disparar o rebaixe para os caixas da loja.</p>
@@ -479,7 +555,8 @@
                   <th>Ação VR Software</th>
                 </tr>
               </thead>
-              <tbody>
+              <tbody id="perdas-table-body">
+                
                 <tr id="perdas-row-1">
                   <td>
                     <strong>Iogurte Grego 400g</strong>
@@ -530,7 +607,7 @@
                   <td>25 un.</td>
                   <td><span class="tag-red">2 dias</span></td>
                   <td><strong class="txt-cost">R$ 12,80</strong></td>
-                  <td><span class="old-price">R$ 21,90</span></td>
+                  <td><span class="line-through">R$ 21,90</span></td>
                   <td>
                     <div class="price-input-box">
                       <span>R$</span>
@@ -542,6 +619,7 @@
                     <button class="btn-send-vr" id="btn-vr-send-3" onclick="sendToVR(3, 'Peito de Frango 1kg')"><i data-lucide="send"></i> Enviar p/ VR</button>
                   </td>
                 </tr>
+
               </tbody>
             </table>
           </div>
@@ -723,7 +801,7 @@
   </div>
 
   <!-- JS Engine -->
-  <script src="app.js?v=3.0"></script>
+  <script src="app.js?v=4.0"></script>
   <script>
     lucide.createIcons();
   </script>
