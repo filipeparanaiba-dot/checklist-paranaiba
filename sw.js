@@ -1,13 +1,13 @@
 /* ==========================================================================
-   SUPER CHECKLIST PARANAÍBA — SERVICE WORKER PWA ENGINE (SW.JS V16.0)
+   SUPER CHECKLIST PARANAÍBA — SERVICE WORKER PWA ENGINE (SW.JS V17.0)
    ========================================================================== */
 
-const CACHE_NAME = 'paranaiba-checklist-v16.0';
+const CACHE_NAME = 'paranaiba-checklist-v17.0';
 const ASSETS_TO_CACHE = [
   './',
-  './index.html?v=16.0',
-  './styles.css?v=16.0',
-  './app.js?v=16.0',
+  './index.html?v=17.0',
+  './styles.css?v=17.0',
+  './app.js?v=17.0',
   './manifest.json',
   'https://unpkg.com/lucide@latest',
   'https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap'
@@ -17,7 +17,7 @@ self.addEventListener('install', (event) => {
   self.skipWaiting();
   event.waitUntil(
     caches.open(CACHE_NAME).then((cache) => {
-      console.log('[Service Worker] Caching app shell v16.0...');
+      console.log('[Service Worker] Caching app shell v17.0...');
       return cache.addAll(ASSETS_TO_CACHE);
     })
   );
