@@ -18,7 +18,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   
   <!-- CSS Design System -->
-  <link rel="stylesheet" href="styles.css?v=10.0">
+  <link rel="stylesheet" href="styles.css?v=11.0">
   
   <!-- Lucide Icons -->
   <script src="https://unpkg.com/lucide@latest"></script>
@@ -61,6 +61,10 @@
         <button class="nav-item" id="nav-rotinas" onclick="navigate('rotinas')">
           <i data-lucide="clipboard-check"></i>
           <span>Auditorias & Setores</span>
+        </button>
+        <button class="nav-item" id="nav-treinamento" onclick="navigate('treinamento')">
+          <i data-lucide="graduation-cap"></i>
+          <span>POP Microlearning</span>
         </button>
         <button class="nav-item" id="nav-furtos" onclick="navigate('furtos')">
           <i data-lucide="shield-alert"></i>
@@ -298,7 +302,92 @@
 
       </section>
 
-      <!-- VIEW NOVO: PREVENÇÃO DE FURTOS & EMBALAGENS VIOLADAS -->
+      <!-- VIEW NOVO: POP MICROLEARNING & CERTIFICAÇÃO DE COLABORADORES -->
+      <section id="view-treinamento" class="page-view">
+        <div class="manutencao-card">
+          
+          <div class="section-title">
+            <h3><i data-lucide="graduation-cap"></i> Treinamento POP Microlearning (Padrão Anvisa)</h3>
+            <span class="badge-vr">Certificação Rápidas em Vídeos de 15s</span>
+          </div>
+
+          <div class="supplier-hero-grid mb-20">
+            
+            <div class="supplier-card">
+              <div class="sup-head">
+                <strong>POP 01: Higiene do Açougue</strong>
+                <span class="tag-green">15 Segundos</span>
+              </div>
+              <p class="equip-desc">Sanitização dos moedores de carne e uso de luva de aço conforme NR-36.</p>
+              <button class="btn-action-primary full mt-10" onclick="startPOPTraining('Açougue')">
+                <i data-lucide="play"></i> Assistir & Fazer Teste
+              </button>
+            </div>
+
+            <div class="supplier-card">
+              <div class="sup-head">
+                <strong>POP 02: Temperatura da Doca</strong>
+                <span class="tag-green">15 Segundos</span>
+              </div>
+              <p class="equip-desc">Como aferir a temperatura dos baús refrigerados no recebimento.</p>
+              <button class="btn-action-primary full mt-10" onclick="startPOPTraining('Doca')">
+                <i data-lucide="play"></i> Assistir & Fazer Teste
+              </button>
+            </div>
+
+            <div class="supplier-card">
+              <div class="sup-head">
+                <strong>POP 03: Rebaixe no VR Software</strong>
+                <span class="tag-green">15 Segundos</span>
+              </div>
+              <p class="equip-desc">Passo a passo para rebaixar preços de produtos em data crítica no caixa.</p>
+              <button class="btn-action-primary full mt-10" onclick="startPOPTraining('VR Software')">
+                <i data-lucide="play"></i> Assistir & Fazer Teste
+              </button>
+            </div>
+
+          </div>
+
+          <!-- MURAL DE COLABORADORES CERTIFICADOS -->
+          <div class="section-title mt-20">
+            <h4><i data-lucide="award"></i> Colaboradores Certificados no Mês</h4>
+          </div>
+
+          <div class="table-scroll-wrapper">
+            <table class="perdas-table">
+              <thead>
+                <tr>
+                  <th>Colaborador</th>
+                  <th>Setor</th>
+                  <th>Treinamento Concluído</th>
+                  <th>Nota Teste</th>
+                  <th>Selo Certificação</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Marcos Silva</strong></td>
+                  <td>Açougue</td>
+                  <td>POP 01 — Higiene & NR-36</td>
+                  <td><strong class="text-green">100%</strong></td>
+                  <td><span class="tag-green">🏆 Certificado Anvisa</span></td>
+                </tr>
+
+                <tr>
+                  <td><strong>Juliano</strong></td>
+                  <td>Doca / Recebimento</td>
+                  <td>POP 02 — Calibração Térmica Doca</td>
+                  <td><strong class="text-green">100%</strong></td>
+                  <td><span class="tag-green">🏆 Certificado Anvisa</span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- VIEW PREVENÇÃO DE FURTOS -->
       <section id="view-furtos" class="page-view">
         <div class="manutencao-card">
           
@@ -309,7 +398,6 @@
             </button>
           </div>
 
-          <!-- PAINEL REGISTRO DE FURTO COM FOTO DA EMBALAGEM VIOLADA -->
           <div class="ticket-form-card hidden mb-20" id="panel-theft-form">
             <div class="add-prod-header">
               <h4><i data-lucide="alert-octagon"></i> Nova Ocorrência de Furto / Embalagem Violada</h4>
@@ -360,7 +448,6 @@
             </div>
           </div>
 
-          <!-- HISTÓRICO DE OCORRÊNCIAS DE FURTO -->
           <div class="section-title mb-10">
             <h4><i data-lucide="file-warning"></i> Registro de Ocorrências e Avarias de Furtos</h4>
           </div>
@@ -1139,13 +1226,14 @@
         <i data-lucide="clipboard-check"></i>
         <span>Rotinas</span>
       </button>
+
+      <button class="mob-tab" id="mobtab-treinamento" onclick="navigate('treinamento')">
+        <i data-lucide="graduation-cap"></i>
+        <span>POP</span>
+      </button>
       <button class="mob-tab" id="mobtab-furtos" onclick="navigate('furtos')">
         <i data-lucide="shield-alert"></i>
         <span>Furtos</span>
-      </button>
-      <button class="mob-tab" id="mobtab-epi" onclick="navigate('epi')">
-        <i data-lucide="hard-hat"></i>
-        <span>EPIs</span>
       </button>
       <button class="mob-tab" id="mobtab-perdas" onclick="navigate('perdas')">
         <i data-lucide="trending-down"></i>
@@ -1239,7 +1327,7 @@
   </div>
 
   <!-- JS Engine -->
-  <script src="app.js?v=10.0"></script>
+  <script src="app.js?v=11.0"></script>
   <script>
     lucide.createIcons();
     
