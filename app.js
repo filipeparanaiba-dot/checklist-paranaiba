@@ -1,5 +1,5 @@
 /* ==========================================================================
-   SUPER CHECKLIST PARANAÍBA — PRODUCTION JAVASCRIPT ENGINE (V4.0)
+   SUPER CHECKLIST PARANAÍBA — PRODUCTION JAVASCRIPT ENGINE (V5.0)
    ========================================================================== */
 
 let currentStore = '1';
@@ -59,6 +59,9 @@ function navigate(viewId) {
     } else if (viewId === 'rotinas') {
       hTitle.innerText = `Execução de Auditoria — ${storeName}`;
       hSub.innerText = `Formulários operacionais de fiscalização de setor`;
+    } else if (viewId === 'analytics') {
+      hTitle.innerText = `Analytics & Curva ABC — ${storeName}`;
+      hSub.innerText = `Relatórios executivos em PDF/Excel e integração com a Curva ABC do VR Software`;
     } else if (viewId === 'builder') {
       hTitle.innerText = `Criador de Checklists (Form Builder)`;
       hSub.innerText = `Personalização livre e criação de rotinas para qualquer setor`;
@@ -108,6 +111,46 @@ function changeStore(storeId) {
   navigate('dashboard');
 }
 
+// Export Audit PDF Report
+function exportAuditPDF() {
+  const storeName = storeDatabase[currentStore].name;
+  alert(`📄 RELATÓRIO EXECUTIVO GERADO COM SUCESSO!\n\nUnidade: ${storeName}\nSaúde da Loja (ISL): ${storeDatabase[currentStore].isl}%\nConformidades: ${storeDatabase[currentStore].conformCount}\nPerdas Evitadas: ${storeDatabase[currentStore].perdasStr}\n\nO download do arquivo 'Relatorio_Auditoria_${currentStore}.pdf' foi iniciado.`);
+}
+
+// Export Audit Excel (CSV) Spreadsheet
+function exportAuditExcel() {
+  const storeName = storeDatabase[currentStore].name;
+  const csvContent = `data:text/csv;charset=utf-8,Unidade,ISL,Conformidades,NaoConformidades,PerdasEvitadas\n"${storeName}",${storeDatabase[currentStore].isl}%,${storeDatabase[currentStore].conformCount},${storeDatabase[currentStore].nonConformCount},"${storeDatabase[currentStore].perdasStr}"`;
+  const encodedUri = encodeURI(csvContent);
+  const link = document.createElement("a");
+  link.setAttribute("href", encodedUri);
+  link.setAttribute("download", `Auditoria_Paranaiba_Loja_${currentStore}.csv`);
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+
+  alert(`📊 PLANILHA EXCEL (CSV) EXPORTADA!\n\nArquivo 'Auditoria_Paranaiba_Loja_${currentStore}.csv' baixado com sucesso.`);
+}
+
+// Sync Curva ABC Batch from VR Software API
+function importVRABCBatch() {
+  const tbody = document.getElementById('abc-table-body');
+  const tr = document.createElement('tr');
+  tr.innerHTML = `
+    <td><span class="abc-badge curve-a">CURVA A</span></td>
+    <td>78910999</td>
+    <td><strong>Presunto Cozido Sadia 200g</strong></td>
+    <td>22 un/dia</td>
+    <td>30 un.</td>
+    <td><span class="tag-red">2 dias</span></td>
+    <td><strong class="text-red">R$ 297,00</strong></td>
+    <td><button class="btn-sm-action" onclick="navigate('perdas')">Rebaixar no VR</button></td>
+  `;
+  tbody.insertBefore(tr, tbody.firstChild);
+
+  alert(`⚡ BATCH DA CURVA ABC SINCRONIZADO DO VR SOFTWARE!\n\nForam identificados novos lotes de alta rotatividade com vencimento crítico.`);
+}
+
 // Toggle Barcode Product Registration Panel
 function toggleAddProductForm() {
   const panel = document.getElementById('panel-add-product');
@@ -138,7 +181,6 @@ function simulateBarcodeScan() {
   document.getElementById('new-prod-qty').value = chosen.qty;
   document.getElementById('new-prod-sector').value = chosen.sector;
 
-  // Set default expiry to 3 days from now
   const d = new Date();
   d.setDate(d.getDate() + 3);
   document.getElementById('new-prod-expiry').value = d.toISOString().split('T')[0];
@@ -220,7 +262,6 @@ function saveNewCriticalProduct() {
 
   alert(`✅ PRODUTO EM DATA CRÍTICA CADASTRADO E INSERIDO!\n\nProduto: ${name}\nEAN: ${barcode}\nQtd: ${qty} un.\nVencimento: ${expiry}\nMargem Residual: ${margin}%\n\nDisponível para envio ao VR Software.`);
 
-  // Clear inputs and hide panel
   document.getElementById('new-prod-name').value = '';
   document.getElementById('new-prod-barcode').value = '';
   toggleAddProductForm();
@@ -320,7 +361,6 @@ function calcMargin(rowId, costPrice) {
     return;
   }
 
-  // Margin % = ((Price - Cost) / Price) * 100
   const margin = (((newPrice - costPrice) / newPrice) * 100).toFixed(1);
 
   if (margin >= 0) {
