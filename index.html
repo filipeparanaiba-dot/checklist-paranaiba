@@ -11,7 +11,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   
   <!-- CSS Design System -->
-  <link rel="stylesheet" href="styles.css?v=5.0">
+  <link rel="stylesheet" href="styles.css?v=6.0">
   
   <!-- Lucide Icons -->
   <script src="https://unpkg.com/lucide@latest"></script>
@@ -52,6 +52,10 @@
         <button class="nav-item" id="nav-analytics" onclick="navigate('analytics')">
           <i data-lucide="bar-chart-3"></i>
           <span>Analytics & Curva ABC</span>
+        </button>
+        <button class="nav-item" id="nav-manutencao" onclick="navigate('manutencao')">
+          <i data-lucide="wrench"></i>
+          <span>Manutenção de Maquinário</span>
         </button>
         <button class="nav-item" id="nav-builder" onclick="navigate('builder')">
           <i data-lucide="sliders"></i>
@@ -362,7 +366,141 @@
         </div>
       </section>
 
-      <!-- VIEW NOVO: ANALYTICS EXECUTIVO & CURVA ABC DO VR SOFTWARE -->
+      <!-- VIEW NOVO: MANUTENÇÃO PREVENTIVA DE EQUIPAMENTOS & REGISTRO ANTES/DEPOIS -->
+      <section id="view-manutencao" class="page-view">
+        <div class="manutencao-card">
+          
+          <div class="section-title">
+            <h3><i data-lucide="wrench"></i> Manutenção Preventiva de Equipamentos & Chamados</h3>
+            <button class="btn-action-primary" onclick="toggleNewTicketForm()">
+              <i data-lucide="plus-circle"></i> + Abrir Chamado Técnico de Maquinário
+            </button>
+          </div>
+
+          <!-- PAINEL DE ABERTURA DE CHAMADO TÉCNICO COM FOTO ANTES/DEPOIS -->
+          <div class="ticket-form-card hidden mb-20" id="panel-new-ticket">
+            <div class="add-prod-header">
+              <h4><i data-lucide="alert-triangle"></i> Novo Chamado Técnico de Equipamento</h4>
+              <button class="btn-x" onclick="toggleNewTicketForm()">&times;</button>
+            </div>
+
+            <div class="add-prod-grid">
+              <div class="form-group">
+                <label>Equipamento / Maquinário</label>
+                <select id="ticket-equip-select">
+                  <option>Câmara Fria 02 — Açougue (Compressor Bitzer)</option>
+                  <option>Ilha de Congelados 03 — Frios (Expositor Gelopar)</option>
+                  <option>Balança Filizola Doca — Recebimento</option>
+                  <option>Gerador Diesel Principal — Matriz</option>
+                  <option>Ar Condicionado Central — Salão de Vendas</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label>Severidade / Urgência</label>
+                <select id="ticket-urgency">
+                  <option value="URGENTE">🚨 Crítica (Risco de Perda de Alimento)</option>
+                  <option value="MÉDIA">⚠️ Média (Prevenção)</option>
+                  <option value="BAIXA">🟢 Baixa (Manutenção de Rotina)</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label>Técnico Responsável</label>
+                <input type="text" id="ticket-tech" placeholder="Ex: Ricardo Silva (Refrigeração Frio-Tech)">
+              </div>
+
+              <div class="form-group">
+                <label>Custo Estimado do Reparo (R$)</label>
+                <input type="number" step="0.01" id="ticket-cost" placeholder="Ex: 450.00">
+              </div>
+            </div>
+
+            <!-- REGISTRO FOTO ANTES E DEPOIS -->
+            <div class="photos-before-after-grid mt-15">
+              <div class="photo-upload-box">
+                <label><i data-lucide="camera"></i> Foto ANTES (Defeito Identificado)</label>
+                <div class="photo-preview" id="preview-before">
+                  <img src="https://images.unsplash.com/photo-1581092160607-ee22621dd758?w=600&auto=format&fit=crop&q=60" alt="Defeito Maquinario">
+                  <span class="photo-badge red">ANTES (Fuga de Gás / Gelo)</span>
+                </div>
+              </div>
+
+              <div class="photo-upload-box">
+                <label><i data-lucide="check-circle"></i> Foto DEPOIS (Consertado / Liberado)</label>
+                <div class="photo-preview" id="preview-after">
+                  <img src="https://images.unsplash.com/photo-1581092335397-9583fe92d232?w=600&auto=format&fit=crop&q=60" alt="Consertado">
+                  <span class="photo-badge green">DEPOIS (Ajustado / Selado)</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="text-right mt-15">
+              <button class="btn-action-primary" onclick="saveNewMaintenanceTicket()">
+                <i data-lucide="check-check"></i> Registrar Chamado & Notificar WhatsApp da Manutenção
+              </button>
+            </div>
+          </div>
+
+          <!-- LISTA DE EQUIPAMENTOS DA LOJA E STATUS DE MANUTENÇÃO -->
+          <div class="equip-status-grid mb-20">
+            
+            <div class="equip-card status-danger">
+              <div class="equip-head">
+                <span class="status-pill red">ALERTA TÉCNICO</span>
+                <small>Setor 04 • Açougue</small>
+              </div>
+              <h4>Câmara Fria 02 (Compressor Bitzer)</h4>
+              <p class="equip-desc">Oscilação de temperatura em 6.8°C. Congelamento excessivo no evaporador.</p>
+
+              <div class="equip-photo-comparison">
+                <div class="thumb-photo">
+                  <img src="https://images.unsplash.com/photo-1581092160607-ee22621dd758?w=300&auto=format&fit=crop&q=60" alt="Antes">
+                  <span>Antes</span>
+                </div>
+                <div class="thumb-photo empty">
+                  <i data-lucide="clock"></i>
+                  <span>Aguardando Reparo</span>
+                </div>
+              </div>
+
+              <div class="equip-foot">
+                <span>Técnico: Ricardo Silva</span>
+                <button class="btn-sm-action" onclick="toggleNewTicketForm()">Resolver Chamado</button>
+              </div>
+            </div>
+
+            <div class="equip-card status-ok">
+              <div class="equip-head">
+                <span class="status-pill green">EM OPERAÇÃO</span>
+                <small>Setor 02 • Doca</small>
+              </div>
+              <h4>Balança Filizola 500kg (Recebimento)</h4>
+              <p class="equip-desc">Calibração anual IPEM realizada com selo de aprovação.</p>
+
+              <div class="equip-photo-comparison">
+                <div class="thumb-photo">
+                  <img src="https://images.unsplash.com/photo-1581092335397-9583fe92d232?w=300&auto=format&fit=crop&q=60" alt="Consertado">
+                  <span>Selo IPEM OK</span>
+                </div>
+                <div class="thumb-photo">
+                  <img src="https://images.unsplash.com/photo-1581092335397-9583fe92d232?w=300&auto=format&fit=crop&q=60" alt="Liberado">
+                  <span>Liberado</span>
+                </div>
+              </div>
+
+              <div class="equip-foot">
+                <span>Próxima Vistoria: Out/2026</span>
+                <span class="text-green">100% Calibrado</span>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+      </section>
+
+      <!-- VIEW ANALYTICS: EXECUTIVO & CURVA ABC -->
       <section id="view-analytics" class="page-view">
         <div class="analytics-card">
           
@@ -378,7 +516,6 @@
             </div>
           </div>
 
-          <!-- Charts Summary Grid -->
           <div class="analytics-hero-grid mb-20">
             <div class="chart-box">
               <h4><i data-lucide="trending-up"></i> Histórico do ISL (Conformidade Mensal)</h4>
@@ -412,7 +549,6 @@
             </div>
           </div>
 
-          <!-- TABELA INTELIGENTE CURVA ABC DE VALIDADES (VR SOFTWARE) -->
           <div class="section-title mt-20">
             <h4><i data-lucide="list-ordered"></i> Tabela Curva ABC de Validades (Importada do VR Software)</h4>
             <button class="btn-action secondary" onclick="importVRABCBatch()">
@@ -828,9 +964,9 @@
         <i data-lucide="clipboard-check"></i>
         <span>Rotinas</span>
       </button>
-      <button class="mob-tab" id="mobtab-analytics" onclick="navigate('analytics')">
-        <i data-lucide="bar-chart-3"></i>
-        <span>Analytics</span>
+      <button class="mob-tab" id="mobtab-manutencao" onclick="navigate('manutencao')">
+        <i data-lucide="wrench"></i>
+        <span>Maquinário</span>
       </button>
       <button class="mob-tab" id="mobtab-perdas" onclick="navigate('perdas')">
         <i data-lucide="trending-down"></i>
@@ -928,7 +1064,7 @@
   </div>
 
   <!-- JS Engine -->
-  <script src="app.js?v=5.0"></script>
+  <script src="app.js?v=6.0"></script>
   <script>
     lucide.createIcons();
   </script>
