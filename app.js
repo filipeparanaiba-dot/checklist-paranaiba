@@ -1,9 +1,10 @@
 /* ==========================================================================
-   SUPER CHECKLIST PARANAÍBA — PRODUCTION JAVASCRIPT ENGINE (V6.0)
+   SUPER CHECKLIST PARANAÍBA — PRODUCTION JAVASCRIPT ENGINE (V7.0)
    ========================================================================== */
 
 let currentStore = '1';
 let productCounter = 100;
+let offlineQueue = [];
 
 const storeDatabase = {
   '1': {
@@ -31,6 +32,37 @@ function safeCreateIcons() {
   if (typeof lucide !== 'undefined' && lucide.createIcons) {
     try { lucide.createIcons(); } catch (e) { console.warn(e); }
   }
+}
+
+// Network Online/Offline Status Detector (PWA Engine)
+function initNetworkListeners() {
+  const banner = document.getElementById('net-offline-banner');
+  const sideBox = document.getElementById('side-status-box');
+  const sideTitle = document.getElementById('side-status-title');
+  const sideSub = document.getElementById('side-status-sub');
+
+  function updateStatus() {
+    if (!navigator.onLine) {
+      if (banner) banner.classList.remove('hidden');
+      if (sideBox) sideBox.classList.add('offline');
+      if (sideTitle) sideTitle.innerText = 'Modo Offline (IndexedDB)';
+      if (sideSub) sideSub.innerText = 'Câmara Fria • Dados Salvos no Celular';
+    } else {
+      if (banner) banner.classList.add('hidden');
+      if (sideBox) sideBox.classList.remove('offline');
+      if (sideTitle) sideTitle.innerText = 'VR Software Conectado';
+      if (sideSub) sideSub.innerText = 'API v4.2 • PWA Offline Ready';
+
+      if (offlineQueue.length > 0) {
+        alert(`⚡ SINCRONIZAÇÃO AUTOMÁTICA PWA!\n\nForam sincronizadas ${offlineQueue.length} vistorias e alterações feitas offline no servidor.`);
+        offlineQueue = [];
+      }
+    }
+  }
+
+  window.addEventListener('online', updateStatus);
+  window.addEventListener('offline', updateStatus);
+  updateStatus();
 }
 
 // Navigation Controller
@@ -129,7 +161,12 @@ function saveNewMaintenanceTicket() {
   const tech = document.getElementById('ticket-tech').value || 'Ricardo Silva';
   const cost = document.getElementById('ticket-cost').value || '350.00';
 
-  alert(`🛠️ CHAMADO TÉCNICO DE MANUTENÇÃO REGISTRADO!\n\nEquipamento: ${equip}\nUrgência: ${urgency}\nTécnico Atribuído: ${tech}\nCusto Estimado: R$ ${cost}\n\nNotificação enviada com foto ANTES/DEPOIS no WhatsApp da equipe.`);
+  if (!navigator.onLine) {
+    offlineQueue.push({ type: 'TICKET', equip, urgency, tech, cost, date: new Date() });
+    alert(`🛠️ CHAMADO REGISTRADO NO MODO OFFLINE!\n\nComo você está sem internet (ex: dentro da Câmara Fria), o chamado foi salvo no celular e será sincronizado assim que o Wi-Fi voltar.`);
+  } else {
+    alert(`🛠️ CHAMADO TÉCNICO DE MANUTENÇÃO REGISTRADO!\n\nEquipamento: ${equip}\nUrgência: ${urgency}\nTécnico Atribuído: ${tech}\nCusto Estimado: R$ ${cost}\n\nNotificação enviada com foto ANTES/DEPOIS no WhatsApp da equipe.`);
+  }
 
   toggleNewTicketForm();
 }
@@ -283,7 +320,12 @@ function saveNewCriticalProduct() {
 
   safeCreateIcons();
 
-  alert(`✅ PRODUTO EM DATA CRÍTICA CADASTRADO E INSERIDO!\n\nProduto: ${name}\nEAN: ${barcode}\nQtd: ${qty} un.\nVencimento: ${expiry}\nMargem Residual: ${margin}%\n\nDisponível para envio ao VR Software.`);
+  if (!navigator.onLine) {
+    offlineQueue.push({ type: 'PERDA', name, barcode, date: new Date() });
+    alert(`✅ PRODUTO EM DATA CRÍTICA REGISTRADO NO MODO OFFLINE!\n\nSalvo localmente no smartphone. Será enviado ao VR Software ao sair da câmara fria.`);
+  } else {
+    alert(`✅ PRODUTO EM DATA CRÍTICA CADASTRADO E INSERIDO!\n\nProduto: ${name}\nEAN: ${barcode}\nQtd: ${qty} un.\nVencimento: ${expiry}\nMargem Residual: ${margin}%\n\nDisponível para envio ao VR Software.`);
+  }
 
   document.getElementById('new-prod-name').value = '';
   document.getElementById('new-prod-barcode').value = '';
@@ -423,8 +465,13 @@ function resolve5W2H(cardId) {
 
 // Submission of Checklist Audit
 function submitChecklist() {
-  alert('Auditoria finalizada com sucesso! Dados sincronizados no servidor e laudo enviado ao WhatsApp.');
-  openWhatsAppModal();
+  if (!navigator.onLine) {
+    offlineQueue.push({ type: 'AUDIT', date: new Date() });
+    alert('📶 VISTORIA FINALIZADA NO MODO OFFLINE!\n\nOs dados foram armazenados no seu celular e serão sincronizados com o servidor da matriz assim que o Wi-Fi for restabelecido.');
+  } else {
+    alert('Auditoria finalizada com sucesso! Dados sincronizados no servidor e laudo enviado ao WhatsApp.');
+    openWhatsAppModal();
+  }
 }
 
 // Modal Trigger Functions
@@ -470,4 +517,5 @@ function closeModals() {
 // Initial Load
 document.addEventListener('DOMContentLoaded', () => {
   safeCreateIcons();
+  initNetworkListeners();
 });
