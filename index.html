@@ -18,7 +18,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   
   <!-- CSS Design System -->
-  <link rel="stylesheet" href="styles.css?v=9.0">
+  <link rel="stylesheet" href="styles.css?v=10.0">
   
   <!-- Lucide Icons -->
   <script src="https://unpkg.com/lucide@latest"></script>
@@ -61,6 +61,10 @@
         <button class="nav-item" id="nav-rotinas" onclick="navigate('rotinas')">
           <i data-lucide="clipboard-check"></i>
           <span>Auditorias & Setores</span>
+        </button>
+        <button class="nav-item" id="nav-furtos" onclick="navigate('furtos')">
+          <i data-lucide="shield-alert"></i>
+          <span>Prevenção de Furtos</span>
         </button>
         <button class="nav-item" id="nav-epi" onclick="navigate('epi')">
           <i data-lucide="hard-hat"></i>
@@ -294,7 +298,114 @@
 
       </section>
 
-      <!-- VIEW NOVO: SEGURANÇA DO TRABALHO & CONTROLE DE EPIS (CIPA / NR-36) -->
+      <!-- VIEW NOVO: PREVENÇÃO DE FURTOS & EMBALAGENS VIOLADAS -->
+      <section id="view-furtos" class="page-view">
+        <div class="manutencao-card">
+          
+          <div class="section-title">
+            <h3><i data-lucide="shield-alert"></i> Ocorrências da Brigada de Prevenção de Furtos</h3>
+            <button class="btn-action-primary" onclick="toggleTheftForm()">
+              <i data-lucide="plus-circle"></i> + Registrar Ocorrência de Furto ou Avaria
+            </button>
+          </div>
+
+          <!-- PAINEL REGISTRO DE FURTO COM FOTO DA EMBALAGEM VIOLADA -->
+          <div class="ticket-form-card hidden mb-20" id="panel-theft-form">
+            <div class="add-prod-header">
+              <h4><i data-lucide="alert-octagon"></i> Nova Ocorrência de Furto / Embalagem Violada</h4>
+              <button class="btn-x" onclick="toggleTheftForm()">&times;</button>
+            </div>
+
+            <div class="add-prod-grid">
+              <div class="form-group">
+                <label>Setor / Local da Ocorrência</label>
+                <select id="theft-sector">
+                  <option value="Bebidas Nobres (Adega)">Bebidas Nobres (Adega / Uísques)</option>
+                  <option value="Perfumaria & Cosmésticos">Perfumaria & Cosméticos</option>
+                  <option value="Açougue & Carnes Nobres">Açougue (Carnes Nobres/Picanha)</option>
+                  <option value="Chocolates & Bomboniere">Chocolates & Bomboniere</option>
+                  <option value="Frente de Caixa">Frente de Caixa (Ocultação)</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label>Produto Envolvido</label>
+                <input type="text" id="theft-product" placeholder="Ex: Whisky Red Label 1L">
+              </div>
+
+              <div class="form-group">
+                <label>Preço de Custo Perdido (R$)</label>
+                <input type="number" step="0.01" id="theft-cost" placeholder="Ex: 89.90">
+              </div>
+
+              <div class="form-group">
+                <label>Tipo de Ocorrência</label>
+                <select id="theft-type">
+                  <option value="EMBALAGEM VIOLADA">📦 Embalagem Violada no Provador/Prateleira</option>
+                  <option value="FURTO CONFIRMADO">🚨 Furto Confirmado por CFTV</option>
+                  <option value="ETIQUETA TROCADA">🏷️ Troca de Etiqueta de Preço no Caixa</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-group mt-10">
+              <label>Detalhes da Ocorrência & Agente da Brigada</label>
+              <input type="text" id="theft-desc" placeholder="Ex: Caixa vazia encontrada escondida na gôndola de biscoitos. Imagens do CFTV reservadas.">
+            </div>
+
+            <div class="text-right mt-15">
+              <button class="btn-action-primary" onclick="saveTheftIncident()">
+                <i data-lucide="check"></i> Registrar na Brigada & Gerar Ocorrência Interna
+              </button>
+            </div>
+          </div>
+
+          <!-- HISTÓRICO DE OCORRÊNCIAS DE FURTO -->
+          <div class="section-title mb-10">
+            <h4><i data-lucide="file-warning"></i> Registro de Ocorrências e Avarias de Furtos</h4>
+          </div>
+
+          <div class="table-scroll-wrapper">
+            <table class="perdas-table">
+              <thead>
+                <tr>
+                  <th>Data / Hora</th>
+                  <th>Setor</th>
+                  <th>Produto</th>
+                  <th>Tipo de Ocorrência</th>
+                  <th>Preço Custo</th>
+                  <th>Agente Responsável</th>
+                  <th>Ação CFTV</th>
+                </tr>
+              </thead>
+              <tbody id="theft-table-body">
+                <tr>
+                  <td>23/07 - 11:30</td>
+                  <td>Adega Nobre</td>
+                  <td><strong>Whisky Jack Daniel's 1L</strong></td>
+                  <td><span class="tag-red">Embalagem Violada</span></td>
+                  <td><strong class="text-red">R$ 115,00</strong></td>
+                  <td>Agente Silveira</td>
+                  <td><button class="btn-sm-action" onclick="alert('🎥 VÍDEO DO CFTV RESERVADO!\n\nGravado backup das câmeras das 11:20h às 11:35h no servidor.')"><i data-lucide="video"></i> Ver Vídeo CFTV</button></td>
+                </tr>
+
+                <tr>
+                  <td>22/07 - 16:45</td>
+                  <td>Perfumaria</td>
+                  <td><strong>Desodorante Dove Aero 150ml</strong></td>
+                  <td><span class="tag-orange">Consumo Interno Loja</span></td>
+                  <td><strong>R$ 12,50</strong></td>
+                  <td>Agente Marcos</td>
+                  <td><button class="btn-sm-action" onclick="alert('📄 REGISTRO ARQUIVADO!\n\nOcorrência concluída e baixada no inventário do VR Software.')"><i data-lucide="file-check"></i> Ver Detalhes</button></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- VIEW SEGURANÇA DO TRABALHO -->
       <section id="view-epi" class="page-view">
         <div class="manutencao-card">
           
@@ -305,7 +416,6 @@
             </button>
           </div>
 
-          <!-- FORMULÁRIO DE ENTREGA DE EPI COM TERMO DIGITAL -->
           <div class="ticket-form-card hidden mb-20" id="panel-epi-form">
             <div class="add-prod-header">
               <h4><i data-lucide="shield-alert"></i> Ficha de Entrega de Equipamento de Proteção Individual</h4>
@@ -346,7 +456,6 @@
             </div>
           </div>
 
-          <!-- PAINEL CIPA: FISCALIZAÇÃO NR-36 NO AÇOUGUE & CÂMARA FRIA -->
           <div class="equip-status-grid mb-20">
             
             <div class="equip-card status-ok">
@@ -377,7 +486,6 @@
 
           </div>
 
-          <!-- HISTÓRICO DE ENTREGAS DE EPIS -->
           <div class="section-title mt-20">
             <h4><i data-lucide="file-badge"></i> Ficha Digital de Entrega de EPIs por Colaborador</h4>
           </div>
@@ -1031,13 +1139,13 @@
         <i data-lucide="clipboard-check"></i>
         <span>Rotinas</span>
       </button>
+      <button class="mob-tab" id="mobtab-furtos" onclick="navigate('furtos')">
+        <i data-lucide="shield-alert"></i>
+        <span>Furtos</span>
+      </button>
       <button class="mob-tab" id="mobtab-epi" onclick="navigate('epi')">
         <i data-lucide="hard-hat"></i>
         <span>EPIs</span>
-      </button>
-      <button class="mob-tab" id="mobtab-fornecedores" onclick="navigate('fornecedores')">
-        <i data-lucide="truck"></i>
-        <span>Doca</span>
       </button>
       <button class="mob-tab" id="mobtab-perdas" onclick="navigate('perdas')">
         <i data-lucide="trending-down"></i>
@@ -1131,7 +1239,7 @@
   </div>
 
   <!-- JS Engine -->
-  <script src="app.js?v=9.0"></script>
+  <script src="app.js?v=10.0"></script>
   <script>
     lucide.createIcons();
     
