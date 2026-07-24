@@ -3,6 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="0">
   <title>Super System — Sistema de Checklist & Prevenção de Perdas Supermercado Paranaíba</title>
   
   <!-- PWA Requirements -->
@@ -18,7 +21,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   
   <!-- CSS Design System -->
-  <link rel="stylesheet" href="styles.css?v=15.0">
+  <link rel="stylesheet" href="styles.css?v=16.0">
   
   <!-- Lucide Icons -->
   <script src="https://unpkg.com/lucide@latest"></script>
@@ -41,7 +44,7 @@
         </div>
         <div class="brand-text">
           <h2>SUPER CHECKLIST</h2>
-          <span class="brand-tag">Paranaíba • PWA Ready</span>
+          <span class="brand-tag">Paranaíba • v16.0 PT-BR</span>
         </div>
       </div>
 
@@ -114,7 +117,7 @@
           <span class="status-dot"></span>
           <div>
             <strong id="side-status-title">VR Software Conectado</strong>
-            <small id="side-status-sub">API v4.2 • PWA Offline Ready</small>
+            <small id="side-status-sub">API v4.2 • PWA v16.0</small>
           </div>
         </div>
       </div>
@@ -129,7 +132,7 @@
           <i data-lucide="shield-check" class="mob-logo"></i>
           <div>
             <h2>SUPER CHECKLIST</h2>
-            <small>Supermercado Paranaíba</small>
+            <small>Paranaíba • v16.0</small>
           </div>
         </div>
         <select id="mobile-store-picker" class="mob-picker" onchange="changeStore(this.value)">
@@ -1355,20 +1358,27 @@
   </div>
 
   <!-- JS Engine -->
-  <script src="app.js?v=15.0"></script>
+  <script src="app.js?v=16.0"></script>
   <script>
     lucide.createIcons();
     
-    // Register PWA Service Worker & Force Immediate Cache Unregister if Old
+    // Register PWA Service Worker & Force Purge Old Caches
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
-        navigator.serviceWorker.register('./sw.js?v=15.0').then((reg) => {
-          console.log('Service Worker registrado com sucesso v15.0:', reg.scope);
+        navigator.serviceWorker.register('./sw.js?v=16.0').then((reg) => {
+          console.log('Service Worker v16.0 ativo');
           reg.update();
-        }).catch((err) => {
-          console.warn('Falha no registro do Service Worker:', err);
         });
       });
+      if (window.caches) {
+        caches.keys().then(function(names) {
+          for (let name of names) {
+            if (name !== 'paranaiba-checklist-v16.0') {
+              caches.delete(name);
+            }
+          }
+        });
+      }
     }
   </script>
 </body>
