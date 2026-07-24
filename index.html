@@ -5,18 +5,31 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>Super System — Sistema de Checklist & Prevenção de Perdas Supermercado Paranaíba</title>
   
+  <!-- PWA Requirements -->
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#0f172a">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Super Checklist">
+
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   
   <!-- CSS Design System -->
-  <link rel="stylesheet" href="styles.css?v=6.0">
+  <link rel="stylesheet" href="styles.css?v=7.0">
   
   <!-- Lucide Icons -->
   <script src="https://unpkg.com/lucide@latest"></script>
 </head>
 <body>
+
+  <!-- BANNER DE STATUS DE CONEXÃO OFFLINE (PWA ENGINE) -->
+  <div class="offline-banner hidden" id="net-offline-banner">
+    <i data-lucide="wifi-off"></i>
+    <span><strong>Modo Offline Ativado:</strong> Sem sinal de Wi-Fi. Auditorias e perdas sendo salvas no celular e sincronizadas ao reconectar.</span>
+  </div>
 
   <div class="system-root">
     
@@ -28,7 +41,7 @@
         </div>
         <div class="brand-text">
           <h2>SUPER CHECKLIST</h2>
-          <span class="brand-tag">Paranaíba • VR Ready</span>
+          <span class="brand-tag">Paranaíba • PWA Ready</span>
         </div>
       </div>
 
@@ -81,11 +94,11 @@
       </nav>
 
       <div class="sidebar-footer">
-        <div class="status-box">
+        <div class="status-box" id="side-status-box">
           <span class="status-dot"></span>
           <div>
-            <strong>VR Software Conectado</strong>
-            <small>API v4.2 • Sincronizado</small>
+            <strong id="side-status-title">VR Software Conectado</strong>
+            <small id="side-status-sub">API v4.2 • PWA Offline Ready</small>
           </div>
         </div>
       </div>
@@ -377,7 +390,6 @@
             </button>
           </div>
 
-          <!-- PAINEL DE ABERTURA DE CHAMADO TÉCNICO COM FOTO ANTES/DEPOIS -->
           <div class="ticket-form-card hidden mb-20" id="panel-new-ticket">
             <div class="add-prod-header">
               <h4><i data-lucide="alert-triangle"></i> Novo Chamado Técnico de Equipamento</h4>
@@ -416,7 +428,6 @@
               </div>
             </div>
 
-            <!-- REGISTRO FOTO ANTES E DEPOIS -->
             <div class="photos-before-after-grid mt-15">
               <div class="photo-upload-box">
                 <label><i data-lucide="camera"></i> Foto ANTES (Defeito Identificado)</label>
@@ -442,7 +453,6 @@
             </div>
           </div>
 
-          <!-- LISTA DE EQUIPAMENTOS DA LOJA E STATUS DE MANUTENÇÃO -->
           <div class="equip-status-grid mb-20">
             
             <div class="equip-card status-danger">
@@ -729,7 +739,6 @@
             </button>
           </div>
 
-          <!-- NOVO PAINEL DE CADASTRO DE PRODUTO EM DATA CRÍTICA (BIPADOR) -->
           <div class="add-product-card hidden mb-20" id="panel-add-product">
             <div class="add-prod-header">
               <h4><i data-lucide="qr-code"></i> Entrada de Produto em Validade Crítica</h4>
@@ -1064,9 +1073,20 @@
   </div>
 
   <!-- JS Engine -->
-  <script src="app.js?v=6.0"></script>
+  <script src="app.js?v=7.0"></script>
   <script>
     lucide.createIcons();
+    
+    // Register PWA Service Worker
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('./sw.js').then((reg) => {
+          console.log('Service Worker registrado com sucesso:', reg.scope);
+        }).catch((err) => {
+          console.warn('Falha no registro do Service Worker:', err);
+        });
+      });
+    }
   </script>
 </body>
 </html>
