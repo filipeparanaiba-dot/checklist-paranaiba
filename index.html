@@ -11,7 +11,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   
   <!-- CSS Design System -->
-  <link rel="stylesheet" href="styles.css?v=4.0">
+  <link rel="stylesheet" href="styles.css?v=5.0">
   
   <!-- Lucide Icons -->
   <script src="https://unpkg.com/lucide@latest"></script>
@@ -48,6 +48,10 @@
         <button class="nav-item" id="nav-rotinas" onclick="navigate('rotinas')">
           <i data-lucide="clipboard-check"></i>
           <span>Auditorias & Setores</span>
+        </button>
+        <button class="nav-item" id="nav-analytics" onclick="navigate('analytics')">
+          <i data-lucide="bar-chart-3"></i>
+          <span>Analytics & Curva ABC</span>
         </button>
         <button class="nav-item" id="nav-builder" onclick="navigate('builder')">
           <i data-lucide="sliders"></i>
@@ -355,6 +359,129 @@
           <div class="exec-submit-bar">
             <button class="btn-action-primary" onclick="submitChecklist()"><i data-lucide="check-check"></i> Finalizar Vistoria & Disparar Notificação no WhatsApp</button>
           </div>
+        </div>
+      </section>
+
+      <!-- VIEW NOVO: ANALYTICS EXECUTIVO & CURVA ABC DO VR SOFTWARE -->
+      <section id="view-analytics" class="page-view">
+        <div class="analytics-card">
+          
+          <div class="section-title">
+            <h3><i data-lucide="bar-chart-3"></i> Inteligência, Analytics & Curva ABC (VR API)</h3>
+            <div class="export-btn-group">
+              <button class="btn-action-primary" onclick="exportAuditPDF()">
+                <i data-lucide="file-text"></i> Exportar Relatório PDF
+              </button>
+              <button class="btn-action secondary" onclick="exportAuditExcel()">
+                <i data-lucide="sheet"></i> Exportar Planilha Excel (CSV)
+              </button>
+            </div>
+          </div>
+
+          <!-- Charts Summary Grid -->
+          <div class="analytics-hero-grid mb-20">
+            <div class="chart-box">
+              <h4><i data-lucide="trending-up"></i> Histórico do ISL (Conformidade Mensal)</h4>
+              <div class="bar-chart-visual">
+                <div class="chart-col"><div class="bar" style="height: 82%;"><span>82%</span></div><small>Sem 1</small></div>
+                <div class="chart-col"><div class="bar" style="height: 88%;"><span>88%</span></div><small>Sem 2</small></div>
+                <div class="chart-col"><div class="bar" style="height: 91%;"><span>91%</span></div><small>Sem 3</small></div>
+                <div class="chart-col"><div class="bar active-bar" style="height: 94%;"><span>94%</span></div><small>Atual</small></div>
+              </div>
+            </div>
+
+            <div class="chart-box">
+              <h4><i data-lucide="pie-chart"></i> Perdas Evitadas vs Reais por Setor</h4>
+              <div class="sector-loss-bars">
+                <div class="s-bar-row">
+                  <span>Açougue / Frios</span>
+                  <div class="s-track"><div class="s-fill" style="width: 78%; background: var(--emerald);"></div></div>
+                  <strong>R$ 1.120 evitados</strong>
+                </div>
+                <div class="s-bar-row">
+                  <span>Hortifrúti / FLV</span>
+                  <div class="s-track"><div class="s-fill" style="width: 65%; background: var(--indigo);"></div></div>
+                  <strong>R$ 480 evitados</strong>
+                </div>
+                <div class="s-bar-row">
+                  <span>Padaria & Doce</span>
+                  <div class="s-track"><div class="s-fill" style="width: 42%; background: var(--orange);"></div></div>
+                  <strong>R$ 240 evitados</strong>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- TABELA INTELIGENTE CURVA ABC DE VALIDADES (VR SOFTWARE) -->
+          <div class="section-title mt-20">
+            <h4><i data-lucide="list-ordered"></i> Tabela Curva ABC de Validades (Importada do VR Software)</h4>
+            <button class="btn-action secondary" onclick="importVRABCBatch()">
+              <i data-lucide="download-cloud"></i> Sincronizar Lotes ABC do VR
+            </button>
+          </div>
+
+          <div class="table-scroll-wrapper mt-10">
+            <table class="perdas-table abc-table">
+              <thead>
+                <tr>
+                  <th>Curva ABC</th>
+                  <th>Código VR</th>
+                  <th>Descrição do Produto</th>
+                  <th>Giro Médio / Dia</th>
+                  <th>Estoque Atual</th>
+                  <th>Vencimento</th>
+                  <th>Risco de Perda (Estimado)</th>
+                  <th>Ação Sugerida</th>
+                </tr>
+              </thead>
+              <tbody id="abc-table-body">
+                <tr>
+                  <td><span class="abc-badge curve-a">CURVA A</span></td>
+                  <td>78910001</td>
+                  <td><strong>Iogurte Grego Tradicional 400g</strong></td>
+                  <td>28 un/dia</td>
+                  <td>42 un.</td>
+                  <td><span class="tag-red">3 dias</span></td>
+                  <td><strong class="text-red">R$ 373,80</strong></td>
+                  <td><button class="btn-sm-action" onclick="navigate('perdas')">Rebaixar no VR</button></td>
+                </tr>
+
+                <tr>
+                  <td><span class="abc-badge curve-a">CURVA A</span></td>
+                  <td>78910088</td>
+                  <td><strong>Queijo Mussarela Fatiado 200g</strong></td>
+                  <td>14 un/dia</td>
+                  <td>18 un.</td>
+                  <td><span class="tag-orange">4 dias</span></td>
+                  <td><strong class="text-orange">R$ 261,00</strong></td>
+                  <td><button class="btn-sm-action" onclick="navigate('perdas')">Rebaixar no VR</button></td>
+                </tr>
+
+                <tr>
+                  <td><span class="abc-badge curve-b">CURVA B</span></td>
+                  <td>78910405</td>
+                  <td><strong>Bandeja Peito de Frango 1kg</strong></td>
+                  <td>10 un/dia</td>
+                  <td>25 un.</td>
+                  <td><span class="tag-red">2 dias</span></td>
+                  <td><strong class="text-red">R$ 547,50</strong></td>
+                  <td><button class="btn-sm-action" onclick="navigate('perdas')">Rebaixar no VR</button></td>
+                </tr>
+
+                <tr>
+                  <td><span class="abc-badge curve-c">CURVA C</span></td>
+                  <td>78910888</td>
+                  <td><strong>Requeijão Cremoso 200g</strong></td>
+                  <td>5 un/dia</td>
+                  <td>12 un.</td>
+                  <td><span class="tag-orange">5 dias</span></td>
+                  <td><strong>R$ 106,80</strong></td>
+                  <td><button class="btn-sm-action" onclick="navigate('perdas')">Rebaixar no VR</button></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
         </div>
       </section>
 
@@ -701,9 +828,9 @@
         <i data-lucide="clipboard-check"></i>
         <span>Rotinas</span>
       </button>
-      <button class="mob-tab" id="mobtab-5w2h" onclick="navigate('5w2h')">
-        <i data-lucide="check-square"></i>
-        <span>5W2H</span>
+      <button class="mob-tab" id="mobtab-analytics" onclick="navigate('analytics')">
+        <i data-lucide="bar-chart-3"></i>
+        <span>Analytics</span>
       </button>
       <button class="mob-tab" id="mobtab-perdas" onclick="navigate('perdas')">
         <i data-lucide="trending-down"></i>
@@ -801,7 +928,7 @@
   </div>
 
   <!-- JS Engine -->
-  <script src="app.js?v=4.0"></script>
+  <script src="app.js?v=5.0"></script>
   <script>
     lucide.createIcons();
   </script>
