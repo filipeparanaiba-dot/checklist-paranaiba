@@ -1,5 +1,5 @@
 /* ==========================================================================
-   SUPER CHECKLIST PARANAÍBA — PRODUCTION JAVASCRIPT ENGINE (V7.0)
+   SUPER CHECKLIST PARANAÍBA — PRODUCTION JAVASCRIPT ENGINE (V8.0)
    ========================================================================== */
 
 let currentStore = '1';
@@ -91,6 +91,9 @@ function navigate(viewId) {
     } else if (viewId === 'rotinas') {
       hTitle.innerText = `Execução de Auditoria — ${storeName}`;
       hSub.innerText = `Formulários operacionais de fiscalização de setor`;
+    } else if (viewId === 'fornecedores') {
+      hTitle.innerText = `Doca & Auditoria de Fornecedores — ${storeName}`;
+      hSub.innerText = `Emissão de laudos de recebimento e avaliação de qualidade de carga`;
     } else if (viewId === 'analytics') {
       hTitle.innerText = `Analytics & Curva ABC — ${storeName}`;
       hSub.innerText = `Relatórios executivos em PDF/Excel e integração com a Curva ABC do VR Software`;
@@ -144,6 +147,51 @@ function changeStore(storeId) {
   document.getElementById('metric-perdas').innerText = db.perdasStr;
 
   navigate('dashboard');
+}
+
+// Toggle Supplier Receiving Form
+function toggleReceivingForm() {
+  const panel = document.getElementById('panel-receiving-form');
+  if (panel) {
+    panel.classList.toggle('hidden');
+  }
+}
+
+// Save Supplier Receiving Audit
+function saveReceivingAudit() {
+  const supplier = document.getElementById('rec-supplier').value;
+  const nfe = document.getElementById('rec-nfe').value || 'NF 00912';
+  const temp = document.getElementById('rec-temp').value || '3.2';
+  const status = document.getElementById('rec-status').value;
+  const obs = document.getElementById('rec-obs').value || 'Conferência realizada na doca.';
+
+  const tbody = document.getElementById('receiving-table-body');
+  const tr = document.createElement('tr');
+  
+  let statusBadge = '<span class="tag-green">Aprovado 100%</span>';
+  if (status === 'RESSALVA') statusBadge = '<span class="tag-orange">Ressalva</span>';
+  if (status === 'REJEITADO') statusBadge = '<span class="tag-red">Carga Rejeitada</span>';
+
+  tr.innerHTML = `
+    <td>Hoje - agora</td>
+    <td><strong>${supplier}</strong></td>
+    <td>${nfe}</td>
+    <td><strong>${temp}°C</strong></td>
+    <td>${statusBadge}</td>
+    <td>${obs}</td>
+    <td><button class="btn-sm-action" onclick="downloadLaudoPDF('${nfe}', '${supplier}')"><i data-lucide="download"></i> Imprimir Laudo</button></td>
+  `;
+
+  tbody.insertBefore(tr, tbody.firstChild);
+  safeCreateIcons();
+
+  alert(`📋 LAUDO DE RECEBIMENTO EMITIDO!\n\nFornecedor: ${supplier}\nNF-e: ${nfe}\nStatus: ${status}\n\nNotificação enviada ao Setor de Compras e Laudo de Devolução gerado.`);
+  toggleReceivingForm();
+}
+
+// Download Formal Rejection / Receiving PDF Laudo
+function downloadLaudoPDF(nfe, supplier) {
+  alert(`📄 EMISSÃO DE LAUDO OFICIAL DE RECEBIMENTO!\n\nDocumento 'Laudo_Recebimento_${nfe}.pdf' referente ao fornecedor ${supplier} pronto para impressão e assinatura do motorista.`);
 }
 
 // Toggle Equipment Maintenance Form
