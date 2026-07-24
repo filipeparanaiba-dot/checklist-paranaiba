@@ -1,5 +1,5 @@
 /* ==========================================================================
-   SUPER CHECKLIST PARANAÍBA — PRODUCTION JAVASCRIPT ENGINE (V17.0)
+   SUPER CHECKLIST PARANAÍBA — PRODUCTION JAVASCRIPT ENGINE (V19.0)
    ========================================================================== */
 
 let currentStore = '1';
@@ -51,7 +51,7 @@ function initNetworkListeners() {
       if (banner) banner.classList.add('hidden');
       if (sideBox) sideBox.classList.remove('offline');
       if (sideTitle) sideTitle.innerText = 'VR Software Conectado';
-      if (sideSub) sideSub.innerText = 'API v4.2 • PWA Offline Ready';
+      if (sideSub) sideSub.innerText = 'API v4.2 • PWA Ready';
 
       if (offlineQueue.length > 0) {
         alert(`⚡ SINCRONIZAÇÃO AUTOMÁTICA PWA!\n\nForam sincronizadas ${offlineQueue.length} vistorias e alterações feitas offline no servidor.`);
@@ -92,7 +92,7 @@ function navigate(viewId) {
       hTitle.innerText = `Execução de Auditoria — ${storeName}`;
       hSub.innerText = `Formulários operacionais de fiscalização de setor`;
     } else if (viewId === 'treinamento') {
-      hTitle.innerText = `POP Microlearning (Vídeos HD Online) — ${storeName}`;
+      hTitle.innerText = `POP Microlearning (Vídeos HD Streaming) — ${storeName}`;
       hSub.innerText = `Treinamentos em vídeo e certificação Anvisa dos funcionários`;
     } else if (viewId === 'furtos') {
       hTitle.innerText = `Prevenção de Furtos & Brigada de Perdas — ${storeName}`;
@@ -158,18 +158,25 @@ function changeStore(storeId) {
   navigate('dashboard');
 }
 
-// POP Microlearning HTML5 Video & Quiz Engine
+// POP Microlearning HTML5 Video & Quiz Engine (FIXED INSTANT PLAYBACK)
 function startPOPTraining(moduleName = 'Açougue', videoUrl = 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4', title = 'Higiene de Açougue & NR-36') {
   const videoEl = document.getElementById('pop-modal-video');
-  const sourceEl = document.getElementById('pop-modal-video-src');
   const titleEl = document.getElementById('pop-modal-title');
   const descEl = document.getElementById('pop-modal-desc');
   const questEl = document.getElementById('pop-quiz-question');
 
-  if (videoEl && sourceEl && videoUrl) {
-    sourceEl.src = videoUrl;
+  if (videoEl && videoUrl) {
+    videoEl.src = videoUrl;
     videoEl.load();
-    videoEl.play().catch(() => {});
+    videoEl.currentTime = 0;
+    
+    // Play HTML5 video smoothly
+    const playPromise = videoEl.play();
+    if (playPromise !== undefined) {
+      playPromise.catch(() => {
+        console.log("Interactive play ready");
+      });
+    }
   }
 
   if (titleEl && title) {
@@ -177,7 +184,7 @@ function startPOPTraining(moduleName = 'Açougue', videoUrl = 'https://commondat
   }
 
   if (descEl) {
-    descEl.innerText = `Assista ao vídeo em alta definição do ${title} e responda ao teste de fixação para obter o selo no sistema.`;
+    descEl.innerText = `Assista ao procedimento em alta definição do ${title} e responda ao teste de fixação para obter a certificação.`;
   }
 
   if (questEl) {
