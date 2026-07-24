@@ -1,30 +1,28 @@
 /* ==========================================================================
-   SUPER CHECKLIST PARANAÍBA — SERVICE WORKER PWA ENGINE (SW.JS)
+   SUPER CHECKLIST PARANAÍBA — SERVICE WORKER PWA ENGINE (SW.JS V16.0)
    ========================================================================== */
 
-const CACHE_NAME = 'paranaiba-checklist-v15.0';
+const CACHE_NAME = 'paranaiba-checklist-v16.0';
 const ASSETS_TO_CACHE = [
   './',
-  './index.html?v=15.0',
-  './styles.css?v=15.0',
-  './app.js?v=15.0',
+  './index.html?v=16.0',
+  './styles.css?v=16.0',
+  './app.js?v=16.0',
   './manifest.json',
   'https://unpkg.com/lucide@latest',
   'https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap'
 ];
 
-// Install Event: Cache Core Static Assets & Force Activation Immediately
 self.addEventListener('install', (event) => {
   self.skipWaiting();
   event.waitUntil(
     caches.open(CACHE_NAME).then((cache) => {
-      console.log('[Service Worker] Caching app shell v15.0...');
+      console.log('[Service Worker] Caching app shell v16.0...');
       return cache.addAll(ASSETS_TO_CACHE);
     })
   );
 });
 
-// Activate Event: Purge ALL Old Caches
 self.addEventListener('activate', (event) => {
   event.waitUntil(
     caches.keys().then((keyList) => {
@@ -40,7 +38,6 @@ self.addEventListener('activate', (event) => {
   );
 });
 
-// Fetch Event: Network-First Strategy for HTML/JS (Fresh Content First)
 self.addEventListener('fetch', (event) => {
   if (event.request.mode === 'navigate' || event.request.url.includes('.html') || event.request.url.includes('.js')) {
     event.respondWith(
