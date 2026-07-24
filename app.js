@@ -1,5 +1,5 @@
 /* ==========================================================================
-   SUPER CHECKLIST PARANAÍBA — PRODUCTION JAVASCRIPT ENGINE (V14.0)
+   SUPER CHECKLIST PARANAÍBA — PRODUCTION JAVASCRIPT ENGINE (V15.0)
    ========================================================================== */
 
 let currentStore = '1';
@@ -92,7 +92,7 @@ function navigate(viewId) {
       hTitle.innerText = `Execução de Auditoria — ${storeName}`;
       hSub.innerText = `Formulários operacionais de fiscalização de setor`;
     } else if (viewId === 'treinamento') {
-      hTitle.innerText = `POP Microlearning (Vídeos YouTube) — ${storeName}`;
+      hTitle.innerText = `POP Microlearning (Vídeos PT-BR) — ${storeName}`;
       hSub.innerText = `Treinamentos em vídeo e certificação Anvisa dos funcionários`;
     } else if (viewId === 'furtos') {
       hTitle.innerText = `Prevenção de Furtos & Brigada de Perdas — ${storeName}`;
@@ -159,14 +159,14 @@ function changeStore(storeId) {
 }
 
 // POP Microlearning YouTube Video & Quiz Engine
-function startPOPTraining(moduleName = 'Açougue', videoUrl = 'https://www.youtube-nocookie.com/embed/M7lc1UVf-VE?rel=0', title = 'Higiene de Açougue & NR-36') {
+function startPOPTraining(moduleName = 'Açougue', videoUrl = 'https://www.youtube.com/embed/5-S_g7vX8pY', title = 'Higiene de Açougue & NR-36 (PT-BR)') {
   const iframe = document.getElementById('pop-modal-iframe');
   const titleEl = document.getElementById('pop-modal-title');
   const descEl = document.getElementById('pop-modal-desc');
   const questEl = document.getElementById('pop-quiz-question');
 
   if (iframe && videoUrl) {
-    iframe.src = videoUrl + "&autoplay=1";
+    iframe.src = videoUrl + "?autoplay=1";
   }
 
   if (titleEl && title) {
@@ -174,7 +174,7 @@ function startPOPTraining(moduleName = 'Açougue', videoUrl = 'https://www.youtu
   }
 
   if (descEl) {
-    descEl.innerText = `Assista ao vídeo em alta definição do ${title} e responda ao teste de fixação para obter o selo no sistema.`;
+    descEl.innerText = `Assista ao vídeo em português do ${title} e responda ao teste de fixação para obter o selo no sistema.`;
   }
 
   if (questEl) {
