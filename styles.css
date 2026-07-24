@@ -1,5 +1,5 @@
 /* ==========================================================================
-   SUPER CHECKLIST PARANAÍBA — PRODUCTION DESIGN SYSTEM (V3.0)
+   SUPER CHECKLIST PARANAÍBA — PRODUCTION DESIGN SYSTEM (V4.0)
    ========================================================================== */
 
 :root {
@@ -637,88 +637,6 @@ html, body {
   gap: 6px;
 }
 
-/* AI Output Box */
-.ai-box {
-  margin-top: 12px;
-  background: rgba(15, 23, 42, 0.9);
-  border: 1px solid var(--indigo);
-  border-radius: var(--radius-sm);
-  padding: 12px;
-  display: flex;
-  gap: 12px;
-}
-.ai-box.hidden { display: none; }
-
-.ai-img-wrapper {
-  position: relative;
-  width: 120px;
-  height: 80px;
-  border-radius: 6px;
-  overflow: hidden;
-  flex-shrink: 0;
-}
-.ai-img-wrapper img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-.bounding-tag {
-  position: absolute;
-  top: 6px;
-  left: 6px;
-  background: var(--red);
-  color: #fff;
-  font-size: 0.55rem;
-  font-weight: 800;
-  padding: 2px 5px;
-  border-radius: 3px;
-}
-
-.ai-txt strong {
-  color: #a78bfa;
-  font-size: 0.75rem;
-  display: flex;
-  align-items: center;
-  gap: 4px;
-}
-.ai-txt p {
-  font-size: 0.7rem;
-  color: var(--txt-secondary);
-  margin-top: 4px;
-}
-
-.trigger-5w2h-box {
-  margin-top: 12px;
-  background: rgba(239, 68, 68, 0.12);
-  border: 1px solid rgba(239, 68, 68, 0.4);
-  border-radius: var(--radius-sm);
-  padding: 12px;
-}
-.trigger-5w2h-box.hidden { display: none; }
-.trigger-title {
-  color: #f87171;
-  font-weight: 800;
-  font-size: 0.75rem;
-  display: flex;
-  align-items: center;
-  gap: 6px;
-}
-.trigger-5w2h-box p {
-  font-size: 0.7rem;
-  color: #fca5a5;
-  margin: 4px 0 8px 0;
-}
-.btn-sm-red {
-  background: var(--red);
-  color: #fff;
-  border: none;
-  padding: 8px 12px;
-  border-radius: 4px;
-  font-size: 0.72rem;
-  font-weight: 700;
-  cursor: pointer;
-}
-
 /* Form Builder */
 .builder-card {
   background: var(--bg-card);
@@ -871,12 +789,89 @@ html, body {
   gap: 6px;
 }
 
-/* Perdas Table */
+/* Perdas & Cadastro de Produto Crítico */
 .perdas-container {
   background: var(--bg-card);
   border: 1px solid var(--bg-card-border);
   border-radius: var(--radius-lg);
   padding: 20px;
+}
+
+.add-product-card {
+  background: rgba(15, 23, 42, 0.95);
+  border: 1px solid var(--indigo);
+  border-radius: var(--radius-md);
+  padding: 18px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  animation: fadeIn 0.25s ease-in-out;
+}
+.add-product-card.hidden { display: none; }
+
+.add-prod-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 14px;
+  border-bottom: 1px solid var(--bg-card-border);
+  padding-bottom: 10px;
+}
+.add-prod-header h4 {
+  font-size: 0.9rem;
+  font-weight: 800;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.scan-action-bar {
+  margin-bottom: 16px;
+}
+.input-with-btn {
+  display: flex;
+  gap: 10px;
+}
+.input-with-btn input {
+  flex: 1;
+  background: rgba(0, 0, 0, 0.4);
+  border: 1px solid var(--indigo);
+  color: #fff;
+  padding: 10px 14px;
+  border-radius: var(--radius-sm);
+  font-size: 0.85rem;
+  font-weight: 700;
+  outline: none;
+}
+.btn-scan-camera {
+  background: linear-gradient(135deg, var(--indigo), var(--purple));
+  color: #fff;
+  border: none;
+  padding: 10px 16px;
+  border-radius: var(--radius-sm);
+  font-size: 0.78rem;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  white-space: nowrap;
+}
+
+.add-prod-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
+}
+
+.margin-preview-box {
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid var(--bg-card-border);
+  padding: 8px;
+  border-radius: var(--radius-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 40px;
 }
 
 .sub-text {
@@ -1159,6 +1154,7 @@ html, body {
 .mt-15 { margin-top: 15px; }
 .mt-20 { margin-top: 20px; }
 .mb-15 { margin-bottom: 15px; }
+.mb-20 { margin-bottom: 20px; }
 .text-right { text-align: right; }
 
 /* WhatsApp Chat Modal Simulation */
@@ -1307,6 +1303,10 @@ html, body {
     grid-template-columns: 1fr !important;
   }
 
+  .add-prod-grid {
+    grid-template-columns: 1fr 1fr !important;
+  }
+
   .whatsapp-layout-grid {
     grid-template-columns: 1fr !important;
     gap: 14px;
@@ -1379,6 +1379,9 @@ html, body {
 
 @media screen and (max-width: 480px) {
   .metrics-grid {
+    grid-template-columns: 1fr !important;
+  }
+  .add-prod-grid {
     grid-template-columns: 1fr !important;
   }
 }
