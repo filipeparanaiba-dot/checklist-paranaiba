@@ -15,7 +15,7 @@
   <!-- Layout Principal Desktop & Mobile Viewport -->
   <div class="system-root">
     
-    <!-- Sidebar Navigation (Desktop) -->
+    <!-- Sidebar Navigation (Desktop Only) -->
     <aside class="sidebar" id="app-sidebar">
       <div class="sidebar-brand">
         <div class="brand-logo">
@@ -70,16 +70,23 @@
     <!-- Content Area -->
     <main class="main-content">
       
-      <!-- Topbar Header -->
-      <header class="topbar">
-        <div class="mobile-top-brand">
-          <div class="brand-logo-sm"><i data-lucide="check-check"></i></div>
-          <select id="mobile-store-picker" onchange="switchStore(this.value)">
-            <option value="1">Loja 1 — Centro</option>
-            <option value="2">Loja 2 — Bairro</option>
-          </select>
+      <!-- Topbar Header (Mobile Top Header) -->
+      <div class="mobile-header-bar">
+        <div class="mob-brand-info">
+          <div class="brand-logo"><i data-lucide="check-check"></i></div>
+          <div>
+            <h2>SUPER CHECKLIST</h2>
+            <span>Paranaíba v1.0</span>
+          </div>
         </div>
+        <select id="mobile-store-picker" onchange="switchStore(this.value)">
+          <option value="1">Loja 1 — Centro</option>
+          <option value="2">Loja 2 — Bairro</option>
+        </select>
+      </div>
 
+      <!-- Topbar Header (Desktop) -->
+      <header class="topbar">
         <div class="topbar-left">
           <h1 id="page-title">Painel Operacional — Loja 1 (Centro)</h1>
           <p id="page-subtitle">Visão consolidada de rotinas, prevenção de perdas e indicadores</p>
@@ -87,7 +94,7 @@
 
         <div class="topbar-right">
           <button class="btn-wa-header" onclick="triggerWhatsAppModal()">
-            <i data-lucide="send"></i> <span class="wa-btn-text">WhatsApp</span>
+            <i data-lucide="send"></i> Notificar Grupo WhatsApp
           </button>
           
           <div class="user-profile-badge">
@@ -107,7 +114,7 @@
         <div class="dashboard-banner">
           <div class="health-gauge-card">
             <div class="gauge-header">
-              <span>ÍNDICE DE SAÚDE DA LOJA (ISL)</span>
+              <span>SAÚDE DA LOJA (ISL)</span>
               <span class="isl-badge-live" id="isl-status-tag">Excelente</span>
             </div>
             <div class="gauge-body">
@@ -161,7 +168,7 @@
         <!-- Section: Setores & Rotinas do Dia -->
         <div class="section-header-bar">
           <h3><i data-lucide="layers"></i> Rotinas Operacionais por Setor</h3>
-          <span class="tag-info">Sincronizado com VR Software</span>
+          <span class="tag-info">VR Software Sync</span>
         </div>
 
         <div class="sectors-grid">
@@ -172,7 +179,7 @@
               <i data-lucide="beef"></i>
               <div>
                 <h4>Açougue & Câmaras Frias</h4>
-                <small>Setor 04 • Responsável: Marcos</small>
+                <small>Setor 04 • Marcos</small>
               </div>
             </div>
             <div class="sector-card-body">
@@ -186,7 +193,7 @@
               </div>
               <div class="sector-info-row">
                 <span>Temp. Câmara Fria:</span>
-                <strong class="text-red">6.8°C (Fora da margem)</strong>
+                <strong class="text-red">6.8°C (Alta)</strong>
               </div>
             </div>
             <div class="sector-card-footer">
@@ -202,7 +209,7 @@
               <i data-lucide="apple"></i>
               <div>
                 <h4>Recebimento Doca / FLV</h4>
-                <small>Setor 02 • Responsável: Juliano</small>
+                <small>Setor 02 • Juliano</small>
               </div>
             </div>
             <div class="sector-card-body">
@@ -231,18 +238,18 @@
             <div class="sector-card-header bg-gondola">
               <i data-lucide="shopping-bag"></i>
               <div>
-                <h4>Prevenção de Ruptura & Gôndola</h4>
-                <small>Mercearia • Responsável: Vanessa</small>
+                <h4>Prevenção Ruptura & Gôndola</h4>
+                <small>Mercearia • Vanessa</small>
               </div>
             </div>
             <div class="sector-card-body">
               <div class="sector-info-row">
                 <span>IA Visual:</span>
-                <strong class="text-green">0 Rupturas Críticas</strong>
+                <strong class="text-green">0 Rupturas</strong>
               </div>
               <div class="sector-info-row">
                 <span>Conferência Preço:</span>
-                <strong>1 Divergência Encontrada</strong>
+                <strong>1 Divergência</strong>
               </div>
               <div class="sector-info-row">
                 <span>Status:</span>
@@ -261,13 +268,13 @@
             <div class="sector-card-header bg-fechamento">
               <i data-lucide="moon"></i>
               <div>
-                <h4>Fechamento & Economia Noturna</h4>
-                <small>Geral • Responsável: Gerente</small>
+                <h4>Fechamento & Economia</h4>
+                <small>Geral • Gerente</small>
               </div>
             </div>
             <div class="sector-card-body">
               <div class="sector-info-row">
-                <span>Proteção Térmica Frios:</span>
+                <span>Proteção Frios:</span>
                 <strong>Lonas de isolamento</strong>
               </div>
               <div class="sector-info-row">
@@ -318,7 +325,7 @@
                   <p>Verifique o indicador digital ou termômetro espeto Bluetooth.</p>
                 </div>
                 <button class="btn-pop-hint" onclick="openMicrolearningModal('refrigeracao')">
-                  <i data-lucide="play-circle"></i> Treinamento POP
+                  <i data-lucide="play-circle"></i> POP 15s
                 </button>
               </div>
 
