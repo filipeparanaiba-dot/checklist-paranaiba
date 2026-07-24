@@ -3,294 +3,261 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Super System - Checklist & Prevenção de Perdas Supermercado Paranaíba</title>
+  <title>Super System — Sistema de Checklist & Prevenção de Perdas Supermercado Paranaíba</title>
+  
+  <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-  <!-- Cache Buster v2.0 for immediate mobile updates -->
-  <link rel="stylesheet" href="styles.css?v=2.0">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- CSS Design System -->
+  <link rel="stylesheet" href="styles.css?v=3.0">
+  
+  <!-- Lucide Icons -->
   <script src="https://unpkg.com/lucide@latest"></script>
 </head>
 <body>
 
-  <!-- Layout Principal Desktop & Mobile Viewport -->
   <div class="system-root">
     
-    <!-- Sidebar Navigation (Desktop Only) -->
-    <aside class="sidebar" id="app-sidebar">
+    <!-- DESKTOP SIDEBAR -->
+    <aside class="sidebar">
       <div class="sidebar-brand">
-        <div class="brand-logo">
-          <i data-lucide="check-check"></i>
+        <div class="brand-icon">
+          <i data-lucide="shield-check"></i>
         </div>
-        <div>
+        <div class="brand-text">
           <h2>SUPER CHECKLIST</h2>
-          <span class="brand-sub">Paranaíba v1.0 • VR Ready</span>
+          <span class="brand-tag">Paranaíba • VR Ready</span>
         </div>
       </div>
 
-      <div class="store-picker-box">
-        <label><i data-lucide="store"></i> UNIDADE ATIVA</label>
-        <select id="global-store-picker" onchange="switchStore(this.value)">
+      <div class="store-selector-card">
+        <label><i data-lucide="store"></i> SELECIONAR LOJA</label>
+        <select id="desktop-store-picker" onchange="changeStore(this.value)">
           <option value="1">Loja 1 — Centro</option>
           <option value="2">Loja 2 — Bairro</option>
         </select>
       </div>
 
-      <nav class="sidebar-menu">
-        <button class="nav-btn active" id="side-dashboard" onclick="navigate('dashboard')">
-          <i data-lucide="layout-dashboard"></i> Dashboard & Saúde
+      <nav class="sidebar-nav">
+        <button class="nav-item active" id="nav-dashboard" onclick="navigate('dashboard')">
+          <i data-lucide="layout-dashboard"></i>
+          <span>Dashboard & ISL</span>
         </button>
-        <button class="nav-btn" id="side-rotinas" onclick="navigate('rotinas')">
-          <i data-lucide="clipboard-list"></i> Rotinas & Setores
+        <button class="nav-item" id="nav-rotinas" onclick="navigate('rotinas')">
+          <i data-lucide="clipboard-check"></i>
+          <span>Auditorias & Setores</span>
         </button>
-        <button class="nav-btn" id="side-5w2h" onclick="navigate('5w2h')">
-          <i data-lucide="check-square"></i> Planos 5W2H <span class="badge-count-pill" id="side-badge-5w2h">3</span>
+        <button class="nav-item" id="nav-builder" onclick="navigate('builder')">
+          <i data-lucide="sliders"></i>
+          <span>Criar Checklists</span>
         </button>
-        <button class="nav-btn" id="side-perdas" onclick="navigate('perdas')">
-          <i data-lucide="shield-alert"></i> Prevenção & VR Software
+        <button class="nav-item" id="nav-5w2h" onclick="navigate('5w2h')">
+          <i data-lucide="check-square"></i>
+          <span>Planos 5W2H</span>
+          <span class="badge-count" id="badge-5w2h-count">3</span>
         </button>
-        <button class="nav-btn" id="side-whatsapp" onclick="navigate('whatsapp')">
-          <i data-lucide="message-square"></i> Notificações WhatsApp
+        <button class="nav-item" id="nav-perdas" onclick="navigate('perdas')">
+          <i data-lucide="trending-down"></i>
+          <span>Prevenção & Custo</span>
         </button>
-        <button class="nav-btn" id="side-ranking" onclick="navigate('ranking')">
-          <i data-lucide="trophy"></i> Gamificação & Lojas
+        <button class="nav-item" id="nav-whatsapp" onclick="navigate('whatsapp')">
+          <i data-lucide="message-square"></i>
+          <span>WhatsApp Bot</span>
+        </button>
+        <button class="nav-item" id="nav-ranking" onclick="navigate('ranking')">
+          <i data-lucide="trophy"></i>
+          <span>Gamificação</span>
         </button>
       </nav>
 
       <div class="sidebar-footer">
-        <div class="offline-status-indicator">
-          <span class="dot-live"></span>
+        <div class="status-box">
+          <span class="status-dot"></span>
           <div>
-            <strong>Servidor Sincronizado</strong>
-            <small>VR Software con. • Offline Ready</small>
+            <strong>VR Software Conectado</strong>
+            <small>API v4.2 • Sincronizado</small>
           </div>
         </div>
       </div>
     </aside>
 
-    <!-- Content Area -->
-    <main class="main-content">
+    <!-- MAIN APP CONTAINER -->
+    <main class="app-main">
       
-      <!-- Topbar Header (Mobile Top Header) -->
-      <div class="mobile-header-bar">
-        <div class="mob-brand-info">
-          <div class="brand-logo"><i data-lucide="check-check"></i></div>
+      <!-- MOBILE TOP APP BAR -->
+      <div class="mobile-top-bar">
+        <div class="mobile-brand">
+          <i data-lucide="shield-check" class="mob-logo"></i>
           <div>
             <h2>SUPER CHECKLIST</h2>
-            <span>Paranaíba v1.0</span>
+            <small>Supermercado Paranaíba</small>
           </div>
         </div>
-        <select id="mobile-store-picker" onchange="switchStore(this.value)">
+        <select id="mobile-store-picker" class="mob-picker" onchange="changeStore(this.value)">
           <option value="1">Loja 1 — Centro</option>
           <option value="2">Loja 2 — Bairro</option>
         </select>
       </div>
 
-      <!-- Topbar Header (Desktop) -->
-      <header class="topbar">
-        <div class="topbar-left">
-          <h1 id="page-title">Painel Operacional — Loja 1 (Centro)</h1>
-          <p id="page-subtitle">Visão consolidada de rotinas, prevenção de perdas e indicadores</p>
+      <!-- DESKTOP TOP HEADER BAR -->
+      <header class="desktop-header">
+        <div class="header-titles">
+          <h1 id="header-page-title">Painel Operacional — Loja 1 (Centro)</h1>
+          <p id="header-page-subtitle">Acompanhamento em tempo real de rotinas, prevenção de perdas e indicadores</p>
         </div>
 
-        <div class="topbar-right">
-          <button class="btn-wa-header" onclick="triggerWhatsAppModal()">
-            <i data-lucide="send"></i> Notificar Grupo WhatsApp
+        <div class="header-actions">
+          <button class="btn-wa-header" onclick="openWhatsAppModal()">
+            <i data-lucide="send"></i> Disparar WhatsApp
           </button>
           
-          <div class="user-profile-badge">
-            <div class="avatar-circle">CR</div>
-            <div class="user-meta">
+          <div class="user-card">
+            <div class="user-avatar">CR</div>
+            <div class="user-info">
               <strong>Carlos Roberto</strong>
-              <small>Gerente de Loja</small>
+              <small>Gerente de Operações</small>
             </div>
           </div>
         </div>
       </header>
 
-      <!-- SEÇÃO 1: DASHBOARD DE SAÚDE & INDICADORES -->
-      <section id="view-dashboard" class="view-page active">
+      <!-- VIEW 1: DASHBOARD DE SAÚDE & ISL -->
+      <section id="view-dashboard" class="page-view active">
         
-        <!-- Top Cards Grid -->
-        <div class="dashboard-banner">
-          <div class="health-gauge-card">
-            <div class="gauge-header">
-              <span>SAÚDE DA LOJA (ISL)</span>
-              <span class="isl-badge-live" id="isl-status-tag">Excelente</span>
+        <div class="dashboard-hero">
+          <div class="isl-card">
+            <div class="isl-card-header">
+              <span>ÍNDICE DE SAÚDE DA LOJA (ISL)</span>
+              <span class="isl-tag" id="isl-status-label">Excelente</span>
             </div>
-            <div class="gauge-body">
-              <div class="big-score" id="isl-score">94<small>%</small></div>
-              <div class="score-breakdown">
-                <div><i data-lucide="check-circle" class="icon-green"></i> <span id="isl-conform-count">24 Conformes</span></div>
-                <div><i data-lucide="alert-triangle" class="icon-red"></i> <span id="isl-nonconform-count">2 Não Conformes</span></div>
+            <div class="isl-card-body">
+              <div class="isl-score-box">
+                <span class="isl-score" id="isl-score-val">94</span>
+                <span class="isl-pct">%</span>
+              </div>
+              <div class="isl-stats">
+                <div><i data-lucide="check-circle-2" class="text-green"></i> <span id="isl-conform-txt">24 Itens Conformes</span></div>
+                <div><i data-lucide="alert-octagon" class="text-red"></i> <span id="isl-nonconform-txt">2 Não Conformes</span></div>
               </div>
             </div>
-            <div class="progress-bar-glow">
-              <div class="progress-fill-glow" id="isl-progress-bar" style="width: 94%;"></div>
+            <div class="isl-progress-track">
+              <div class="isl-progress-bar" id="isl-bar-fill" style="width: 94%;"></div>
             </div>
           </div>
 
-          <!-- Statistics Summary Cards -->
-          <div class="quick-stats-grid">
-            <div class="stat-card">
-              <div class="stat-icon bg-blue"><i data-lucide="clipboard-check"></i></div>
-              <div class="stat-data">
-                <span class="stat-num" id="stat-checklists-val">8 / 10</span>
-                <span class="stat-lbl">Rotinas Realizadas</span>
+          <div class="metrics-grid">
+            <div class="metric-card">
+              <div class="metric-icon bg-blue"><i data-lucide="clipboard-check"></i></div>
+              <div>
+                <span class="metric-val" id="metric-checklists">8 / 10</span>
+                <span class="metric-lbl">Checklists Hoje</span>
               </div>
             </div>
 
-            <div class="stat-card">
-              <div class="stat-icon bg-orange"><i data-lucide="clock"></i></div>
-              <div class="stat-data">
-                <span class="stat-num" id="stat-5w2h-val">3 Pendentes</span>
-                <span class="stat-lbl">Planos 5W2H Ativos</span>
+            <div class="metric-card">
+              <div class="metric-icon bg-orange"><i data-lucide="clock"></i></div>
+              <div>
+                <span class="metric-val" id="metric-5w2h">3 Pendentes</span>
+                <span class="metric-lbl">Planos 5W2H Ativos</span>
               </div>
             </div>
 
-            <div class="stat-card">
-              <div class="stat-icon bg-green"><i data-lucide="dollar-sign"></i></div>
-              <div class="stat-data">
-                <span class="stat-num" id="stat-perdas-val">R$ 1.840</span>
-                <span class="stat-lbl">Perdas Evitadas</span>
+            <div class="metric-card">
+              <div class="metric-icon bg-green"><i data-lucide="dollar-sign"></i></div>
+              <div>
+                <span class="metric-val" id="metric-perdas">R$ 1.840</span>
+                <span class="metric-lbl">Perdas Evitadas Mês</span>
               </div>
             </div>
 
-            <div class="stat-card">
-              <div class="stat-icon bg-purple"><i data-lucide="sparkles"></i></div>
-              <div class="stat-data">
-                <span class="stat-num">98.5%</span>
-                <span class="stat-lbl">Acurácia IA Visual</span>
+            <div class="metric-card">
+              <div class="metric-icon bg-purple"><i data-lucide="sparkles"></i></div>
+              <div>
+                <span class="metric-val">98.5%</span>
+                <span class="metric-lbl">Acurácia IA Visual</span>
               </div>
             </div>
           </div>
         </div>
 
-        <!-- Section: Setores & Rotinas do Dia -->
-        <div class="section-header-bar">
-          <h3><i data-lucide="layers"></i> Rotinas Operacionais por Setor</h3>
-          <span class="tag-info">VR Software Sync</span>
+        <div class="section-title">
+          <h3><i data-lucide="layers"></i> Checklists por Setor de Loja</h3>
+          <span class="badge-vr">Integrado com VR Software</span>
         </div>
 
         <div class="sectors-grid">
           
-          <!-- Card Açougue -->
           <div class="sector-card">
-            <div class="sector-card-header bg-acougue">
+            <div class="sector-header bg-acougue">
               <i data-lucide="beef"></i>
               <div>
                 <h4>Açougue & Câmaras Frias</h4>
-                <small>Setor 04 • Marcos</small>
+                <small>Setor 04 • Responsável: Marcos</small>
               </div>
             </div>
-            <div class="sector-card-body">
-              <div class="sector-info-row">
-                <span>Última vistoria:</span>
-                <strong>Hoje, 08:30</strong>
-              </div>
-              <div class="sector-info-row">
-                <span>Conformidade:</span>
-                <strong class="text-orange">85% (1 Alerta)</strong>
-              </div>
-              <div class="sector-info-row">
-                <span>Temp. Câmara Fria:</span>
-                <strong class="text-red">6.8°C (Alta)</strong>
-              </div>
+            <div class="sector-body">
+              <div class="row-info"><span>Vistoria:</span> <strong>Hoje, 08:30</strong></div>
+              <div class="row-info"><span>Conformidade:</span> <strong class="text-orange">85% (1 Alerta)</strong></div>
+              <div class="row-info"><span>Câmara Fria:</span> <strong class="text-red">6.8°C (Fora limite)</strong></div>
             </div>
-            <div class="sector-card-footer">
-              <button class="btn-primary full-width" onclick="startChecklistExecution('acougue')">
-                <i data-lucide="play"></i> Executar Checklist
-              </button>
+            <div class="sector-footer">
+              <button class="btn-action full" onclick="startChecklist('acougue')"><i data-lucide="play"></i> Executar Vistoria</button>
             </div>
           </div>
 
-          <!-- Card FLV / Recebimento -->
           <div class="sector-card">
-            <div class="sector-card-header bg-flv">
+            <div class="sector-header bg-flv">
               <i data-lucide="apple"></i>
               <div>
                 <h4>Recebimento Doca / FLV</h4>
-                <small>Setor 02 • Juliano</small>
+                <small>Setor 02 • Responsável: Juliano</small>
               </div>
             </div>
-            <div class="sector-card-body">
-              <div class="sector-info-row">
-                <span>Última vistoria:</span>
-                <strong>Hoje, 09:15</strong>
-              </div>
-              <div class="sector-info-row">
-                <span>Laudo Doca:</span>
-                <strong class="text-green">Aceite com Ressalva</strong>
-              </div>
-              <div class="sector-info-row">
-                <span>Amostragem Lote:</span>
-                <strong>Tomate (20% avaria)</strong>
-              </div>
+            <div class="sector-body">
+              <div class="row-info"><span>Vistoria:</span> <strong>Hoje, 09:15</strong></div>
+              <div class="row-info"><span>Laudo Doca:</span> <strong class="text-green">Aceite com Ressalva</strong></div>
+              <div class="row-info"><span>Amostragem:</span> <strong>Tomate (20% avaria)</strong></div>
             </div>
-            <div class="sector-card-footer">
-              <button class="btn-primary full-width" onclick="startChecklistExecution('flv')">
-                <i data-lucide="play"></i> Executar Checklist
-              </button>
+            <div class="sector-footer">
+              <button class="btn-action full" onclick="startChecklist('flv')"><i data-lucide="play"></i> Executar Vistoria</button>
             </div>
           </div>
 
-          <!-- Card Gôndolas & Ruptura -->
           <div class="sector-card">
-            <div class="sector-card-header bg-gondola">
+            <div class="sector-header bg-gondola">
               <i data-lucide="shopping-bag"></i>
               <div>
                 <h4>Prevenção Ruptura & Gôndola</h4>
-                <small>Mercearia • Vanessa</small>
+                <small>Mercearia • Responsável: Vanessa</small>
               </div>
             </div>
-            <div class="sector-card-body">
-              <div class="sector-info-row">
-                <span>IA Visual:</span>
-                <strong class="text-green">0 Rupturas</strong>
-              </div>
-              <div class="sector-info-row">
-                <span>Conferência Preço:</span>
-                <strong>1 Divergência</strong>
-              </div>
-              <div class="sector-info-row">
-                <span>Status:</span>
-                <strong class="text-green">Concluído</strong>
-              </div>
+            <div class="sector-body">
+              <div class="row-info"><span>IA Visual:</span> <strong class="text-green">0 Rupturas Críticas</strong></div>
+              <div class="row-info"><span>Preço Gôndola:</span> <strong>1 Divergência</strong></div>
+              <div class="row-info"><span>Status:</span> <strong class="text-green">Concluído</strong></div>
             </div>
-            <div class="sector-card-footer">
-              <button class="btn-secondary full-width" onclick="startChecklistExecution('gondola')">
-                <i data-lucide="eye"></i> Revisar Checklist
-              </button>
+            <div class="sector-footer">
+              <button class="btn-action secondary full" onclick="startChecklist('gondola')"><i data-lucide="eye"></i> Revisar Vistoria</button>
             </div>
           </div>
 
-          <!-- Card Lockout / Fechamento Noturno -->
           <div class="sector-card">
-            <div class="sector-card-header bg-fechamento">
+            <div class="sector-header bg-fechamento">
               <i data-lucide="moon"></i>
               <div>
                 <h4>Fechamento & Economia</h4>
-                <small>Geral • Gerente</small>
+                <small>Geral • Responsável: Gerente</small>
               </div>
             </div>
-            <div class="sector-card-body">
-              <div class="sector-info-row">
-                <span>Proteção Frios:</span>
-                <strong>Lonas de isolamento</strong>
-              </div>
-              <div class="sector-info-row">
-                <span>Saídas Emergência:</span>
-                <strong class="text-green">Desobstruídas</strong>
-              </div>
-              <div class="sector-info-row">
-                <span>Horário Programado:</span>
-                <strong>22:00</strong>
-              </div>
+            <div class="sector-body">
+              <div class="row-info"><span>Lona Térmica:</span> <strong>Frios protegidos</strong></div>
+              <div class="row-info"><span>Emergência:</span> <strong class="text-green">Desobstruídas</strong></div>
+              <div class="row-info"><span>Horário:</span> <strong>22:00</strong></div>
             </div>
-            <div class="sector-card-footer">
-              <button class="btn-secondary full-width" onclick="startChecklistExecution('fechamento')">
-                <i data-lucide="shield"></i> Iniciar Fechamento
-              </button>
+            <div class="sector-footer">
+              <button class="btn-action secondary full" onclick="startChecklist('fechamento')"><i data-lucide="shield"></i> Executar Fechamento</button>
             </div>
           </div>
 
@@ -298,382 +265,373 @@
 
       </section>
 
-      <!-- SEÇÃO 2: EXECUÇÃO DO CHECKLIST -->
-      <section id="view-rotinas" class="view-page">
-        
-        <div class="checklist-execution-container">
-          <div class="execution-header-bar">
-            <button class="btn-icon-back" onclick="navigate('dashboard')"><i data-lucide="arrow-left"></i></button>
+      <!-- VIEW 2: EXECUÇÃO DE AUDITORIA -->
+      <section id="view-rotinas" class="page-view">
+        <div class="exec-card">
+          <div class="exec-header">
+            <button class="btn-back" onclick="navigate('dashboard')"><i data-lucide="arrow-left"></i></button>
             <div>
-              <h2 id="exec-title">Execução: Vistoria Açougue & Câmaras Frias</h2>
+              <h2 id="exec-title">Vistoria Açougue & Câmaras Frias</h2>
               <span id="exec-subtitle">Unidade: Loja 1 — Centro | Setor 04</span>
             </div>
-            <div class="exec-progress-box">
-              <span id="exec-progress-num">1 de 4 respondidos</span>
-              <div class="exec-progress-bar"><div id="exec-progress-fill" style="width: 25%;"></div></div>
-            </div>
           </div>
 
-          <!-- Form Questions -->
-          <div class="questions-list" id="questions-list">
-
-            <!-- Question 1 -->
-            <div class="question-card" id="q-1">
-              <div class="q-head">
-                <span class="q-number">01</span>
-                <div class="q-title-box">
-                  <h3>Temperatura da Câmara Fria 02 está dentro do padrão (0°C a 4°C)?</h3>
+          <div class="questions-wrapper" id="questions-container">
+            
+            <div class="q-card" id="qcard-1">
+              <div class="q-top">
+                <span class="q-num">01</span>
+                <div>
+                  <h3>Temperatura da Câmara Fria 02 está dentro da margem (0°C a 4°C)?</h3>
                   <p>Verifique o indicador digital ou termômetro espeto Bluetooth.</p>
                 </div>
-                <button class="btn-pop-hint" onclick="openMicrolearningModal('refrigeracao')">
-                  <i data-lucide="play-circle"></i> POP 15s
-                </button>
+                <button class="btn-pop" onclick="openPOPModal()"><i data-lucide="play-circle"></i> Treinamento POP 15s</button>
               </div>
 
-              <div class="q-actions-row">
-                <div class="choice-buttons">
-                  <button class="btn-choice choice-conform" onclick="answerQuestion(1, 'conform')"><i data-lucide="check"></i> Conforme</button>
-                  <button class="btn-choice choice-nonconform" onclick="answerQuestion(1, 'nonconform')"><i data-lucide="x"></i> Não Conforme</button>
-                  <button class="btn-choice choice-na" onclick="answerQuestion(1, 'na')">N/A</button>
+              <div class="q-controls">
+                <div class="btn-group-resp">
+                  <button class="btn-resp resp-conform" onclick="answerQuestion(1, 'conform')"><i data-lucide="check"></i> Conforme</button>
+                  <button class="btn-resp resp-nonconform" onclick="answerQuestion(1, 'nonconform')"><i data-lucide="x"></i> Não Conforme</button>
+                  <button class="btn-resp resp-na" onclick="answerQuestion(1, 'na')">N/A</button>
                 </div>
 
-                <button class="btn-ai-scan" onclick="triggerAIScan(1)">
-                  <i data-lucide="camera"></i> Escanear IA
-                </button>
+                <button class="btn-scan-ia" onclick="simulateAIScan(1)"><i data-lucide="camera"></i> Escanear com IA Visual</button>
               </div>
 
-              <!-- AI Visual Photo Output -->
-              <div class="ai-result-area hidden" id="ai-result-1">
-                <div class="ai-image-wrapper">
-                  <img src="https://images.unsplash.com/photo-1551028150-64b9f398f678?w=600&auto=format&fit=crop&q=60" alt="Termometro IA">
-                  <div class="ai-bounding-box">
-                    <span class="box-label">DETECTADO 6.8°C</span>
-                  </div>
+              <div class="ai-box hidden" id="ai-box-1">
+                <div class="ai-img-wrapper">
+                  <img src="https://images.unsplash.com/photo-1551028150-64b9f398f678?w=600&auto=format&fit=crop&q=60" alt="Câmara Fria Termômetro">
+                  <div class="bounding-tag">DETECTADO 6.8°C</div>
                 </div>
-                <div class="ai-diagnosis">
-                  <strong><i data-lucide="sparkles"></i> Análise da IA Visual:</strong>
-                  <p>Leitura no display digital: <strong>6.8°C</strong>. Fora do limite de 4.0°C. Risco sanitário.</p>
+                <div class="ai-txt">
+                  <strong><i data-lucide="sparkles"></i> Análise de Visão Computacional:</strong>
+                  <p>Leitura no display digital: <strong>6.8°C</strong>. Limite máximo permitido: 4.0°C. Risco sanitário acionado.</p>
                 </div>
               </div>
 
-              <!-- 5W2H Trigger Card -->
-              <div class="auto-5w2h-card hidden" id="card-5w2h-trigger-1">
-                <div class="trigger-head">
-                  <i data-lucide="alert-octagon"></i> Plano 5W2H Gerado
-                </div>
-                <p>Ocorrência criada e enviada no WhatsApp da Manutenção.</p>
-                <button class="btn-edit-5w2h" onclick="edit5W2H(1)">Editar Plano 5W2H</button>
+              <div class="trigger-5w2h-box hidden" id="trigger-5w2h-1">
+                <div class="trigger-title"><i data-lucide="alert-octagon"></i> Plano 5W2H Gerado Automaticamente</div>
+                <p>Ocorrência enviada no WhatsApp do Encarregado de Manutenção.</p>
+                <button class="btn-sm-red" onclick="open5W2HModal(1)">Editar Responsável & Prazo 5W2H</button>
               </div>
             </div>
 
-            <!-- Question 2 -->
-            <div class="question-card" id="q-2">
-              <div class="q-head">
-                <span class="q-number">02</span>
-                <div class="q-title-box">
+            <div class="q-card" id="qcard-2">
+              <div class="q-top">
+                <span class="q-num">02</span>
+                <div>
                   <h3>Organização FIFO e Validades no Balcão de Exposição?</h3>
-                  <p>Garantir que as peças mais antigas estejam na frente para venda rápida.</p>
+                  <p>Garantir peças mais antigas na frente para venda acelerada.</p>
                 </div>
               </div>
-              <div class="q-actions-row">
-                <div class="choice-buttons">
-                  <button class="btn-choice choice-conform" onclick="answerQuestion(2, 'conform')"><i data-lucide="check"></i> Conforme</button>
-                  <button class="btn-choice choice-nonconform" onclick="answerQuestion(2, 'nonconform')"><i data-lucide="x"></i> Não Conforme</button>
-                  <button class="btn-choice choice-na" onclick="answerQuestion(2, 'na')">N/A</button>
+              <div class="q-controls">
+                <div class="btn-group-resp">
+                  <button class="btn-resp resp-conform" onclick="answerQuestion(2, 'conform')"><i data-lucide="check"></i> Conforme</button>
+                  <button class="btn-resp resp-nonconform" onclick="answerQuestion(2, 'nonconform')"><i data-lucide="x"></i> Não Conforme</button>
+                  <button class="btn-resp resp-na" onclick="answerQuestion(2, 'na')">N/A</button>
                 </div>
               </div>
             </div>
 
-            <!-- Question 3 -->
-            <div class="question-card" id="q-3">
-              <div class="q-head">
-                <span class="q-number">03</span>
-                <div class="q-title-box">
-                  <h3>Conferência de Preço de Gôndola vs VR Software?</h3>
-                  <p>Bipe a etiqueta de oferta e confirme a integridade com o caixa.</p>
+            <div class="q-card" id="qcard-3">
+              <div class="q-top">
+                <span class="q-num">03</span>
+                <div>
+                  <h3>Conferência de Preço de Gôndola vs VR Software (Divergência)?</h3>
+                  <p>Bipe a etiqueta da prateleira e valide com a tabela do caixa.</p>
                 </div>
               </div>
-              <div class="q-actions-row">
-                <div class="choice-buttons">
-                  <button class="btn-choice choice-conform" onclick="answerQuestion(3, 'conform')"><i data-lucide="check"></i> Conforme</button>
-                  <button class="btn-choice choice-nonconform" onclick="answerQuestion(3, 'nonconform')"><i data-lucide="x"></i> Não Conforme</button>
-                  <button class="btn-choice choice-na" onclick="answerQuestion(3, 'na')">N/A</button>
+              <div class="q-controls">
+                <div class="btn-group-resp">
+                  <button class="btn-resp resp-conform" onclick="answerQuestion(3, 'conform')"><i data-lucide="check"></i> Conforme</button>
+                  <button class="btn-resp resp-nonconform" onclick="answerQuestion(3, 'nonconform')"><i data-lucide="x"></i> Não Conforme</button>
+                  <button class="btn-resp resp-na" onclick="answerQuestion(3, 'na')">N/A</button>
                 </div>
               </div>
             </div>
 
           </div>
 
-          <div class="execution-footer-bar">
-            <button class="btn-primary-lg" onclick="finishChecklistSubmission()">
-              <i data-lucide="check-check"></i> Finalizar & Notificar WhatsApp
-            </button>
+          <div class="exec-submit-bar">
+            <button class="btn-action-primary" onclick="submitChecklist()"><i data-lucide="check-check"></i> Finalizar Vistoria & Disparar Notificação no WhatsApp</button>
           </div>
         </div>
-
       </section>
 
-      <!-- SEÇÃO 3: GERENCIADOR DE PLANOS 5W2H -->
-      <section id="view-5w2h" class="view-page">
-        <div class="section-header-bar">
-          <h3><i data-lucide="check-square"></i> Planos de Ação 5W2H</h3>
-          <span class="tag-info orange">3 Pendentes</span>
+      <!-- VIEW 3: CRIADOR DE CHECKLISTS (FORM BUILDER) -->
+      <section id="view-builder" class="page-view">
+        <div class="builder-card">
+          <div class="section-title">
+            <h3><i data-lucide="sliders"></i> Criador de Checklists (Form Builder)</h3>
+            <span class="badge-vr">Personalização Livre por Setor</span>
+          </div>
+
+          <div class="builder-form-grid">
+            <div class="form-group">
+              <label>Nome do Novo Checklist</label>
+              <input type="text" id="builder-name" placeholder="Ex: Auditoria de Padaria & Higiene">
+            </div>
+
+            <div class="form-group">
+              <label>Setor da Loja</label>
+              <select id="builder-sector">
+                <option value="Açougue">Açougue & Frios</option>
+                <option value="Hortifrúti">Hortifrúti / FLV</option>
+                <option value="Padaria">Padaria & Confeitaria</option>
+                <option value="Caixa">Frente de Caixa</option>
+                <option value="Depósito">Depósito & Recebimento</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="builder-questions-area">
+            <h4>Perguntas do Form:</h4>
+            <div id="builder-questions-list">
+              <div class="builder-q-item">
+                <input type="text" value="Limpeza e higienização dos cortadores de frios?" placeholder="Digite a pergunta...">
+                <button class="btn-del">&times;</button>
+              </div>
+            </div>
+            <button class="btn-action secondary mt-10" onclick="addBuilderQuestion()"><i data-lucide="plus"></i> Adicionar Pergunta</button>
+          </div>
+
+          <div class="mt-20 text-right">
+            <button class="btn-action-primary" onclick="saveCustomChecklist()"><i data-lucide="save"></i> Salvar Novo Checklist no Sistema</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- VIEW 4: PLANOS 5W2H -->
+      <section id="view-5w2h" class="page-view">
+        <div class="section-title">
+          <h3><i data-lucide="check-square"></i> Matriz de Planos de Ação 5W2H</h3>
+          <span class="tag-orange" id="tag-5w2h-active">3 Tarefas Pendentes</span>
         </div>
 
-        <div class="5w2h-cards-grid" id="container-5w2h">
+        <div class="cards-5w2h-grid" id="grid-5w2h-container">
           
-          <!-- Card 1 -->
-          <div class="card-5w2h-item priority-high" id="item-5w2h-1">
-            <div class="card-5w2h-header">
-              <span class="badge-priority high">URGENTE</span>
-              <span class="sector-tag">Açougue • Loja 1</span>
+          <div class="item-5w2h high-priority" id="card-5w2h-1">
+            <div class="head-5w2h">
+              <span class="badge-prio red">URGENTE</span>
+              <span class="tag-sec">Açougue • Loja 1</span>
+            </div>
+            <h4>Manutenção da Câmara Fria 02</h4>
+            <p class="desc-5w2h">Temperatura registrada em 6.8°C pela IA Visual.</p>
+
+            <div class="details-5w2h">
+              <div><strong>WHAT:</strong> Manutenção do compressor e transferência das carnes nobres.</div>
+              <div><strong>WHY:</strong> Evitar contaminação sanitária e perda da mercadoria.</div>
+              <div><strong>WHO:</strong> Ricardo Silva (Manutenção)</div>
+              <div><strong>WHEN:</strong> Hoje até 14:00</div>
             </div>
 
-            <h4>Ajuste de Refrigeração da Câmara Fria 02</h4>
-            <p class="problem-summary">Temperatura detectada em 6.8°C pela IA Visual.</p>
-
-            <div class="matrix-5w2h-details">
-              <div class="detail-cell"><strong>WHAT (O quê):</strong> Manutenção do compressor e transferência das carnes.</div>
-              <div class="detail-cell"><strong>WHY (Por quê):</strong> Evitar degradação da carne e multa da Anvisa.</div>
-              <div class="detail-cell"><strong>WHO (Quem):</strong> Ricardo Silva (Manutenção)</div>
-              <div class="detail-cell"><strong>WHEN (Quando):</strong> Hoje até as 14:00</div>
-            </div>
-
-            <div class="card-5w2h-footer">
-              <span class="sla-timer"><i data-lucide="clock"></i> Restam 2h 15min</span>
-              <button class="btn-resolve-5w2h" onclick="resolve5W2H('item-5w2h-1')">
-                <i data-lucide="check-circle"></i> Concluir
-              </button>
+            <div class="foot-5w2h">
+              <span class="sla-text"><i data-lucide="clock"></i> SLA: 2h 15min restantes</span>
+              <button class="btn-resolve" onclick="resolve5W2H('card-5w2h-1')"><i data-lucide="check-circle"></i> Concluir</button>
             </div>
           </div>
 
-          <!-- Card 2 -->
-          <div class="card-5w2h-item priority-medium" id="item-5w2h-2">
-            <div class="card-5w2h-header">
-              <span class="badge-priority medium">MÉDIA</span>
-              <span class="sector-tag">Hortifrúti • Loja 2</span>
+          <div class="item-5w2h med-priority" id="card-5w2h-2">
+            <div class="head-5w2h">
+              <span class="badge-prio orange">MÉDIA</span>
+              <span class="tag-sec">Hortifrúti • Loja 2</span>
+            </div>
+            <h4>Devolução de Tomate (#Lote4091)</h4>
+            <p class="desc-5w2h">Amostragem na doca indicou 20% de avaria por impacto.</p>
+
+            <div class="details-5w2h">
+              <div><strong>WHAT:</strong> Aceite com ressalva e emissão de nota de devolução no VR.</div>
+              <div><strong>WHY:</strong> Evitar prejuízo na perda de hortifrúti.</div>
+              <div><strong>WHO:</strong> Juliano (Encarregado Doca)</div>
+              <div><strong>WHEN:</strong> Amanhã 09:00</div>
             </div>
 
-            <h4>Devolução Lote Tomate (#Lote4091)</h4>
-            <p class="problem-summary">Amostragem de recebimento na doca indicou 20% de avaria por amassamento.</p>
-
-            <div class="matrix-5w2h-details">
-              <div class="detail-cell"><strong>WHAT (O quê):</strong> Emissão de nota de devolução parcial no VR Software.</div>
-              <div class="detail-cell"><strong>WHY (Por quê):</strong> Evitar prejuízo no descarte do hortifrúti.</div>
-              <div class="detail-cell"><strong>WHO (Quem):</strong> Juliano (Encarregado de Doca)</div>
-              <div class="detail-cell"><strong>WHEN (Quando):</strong> Amanhã às 09:00</div>
-            </div>
-
-            <div class="card-5w2h-footer">
-              <span class="sla-timer"><i data-lucide="clock"></i> Restam 18h</span>
-              <button class="btn-resolve-5w2h" onclick="resolve5W2H('item-5w2h-2')">
-                <i data-lucide="check-circle"></i> Concluir
-              </button>
+            <div class="foot-5w2h">
+              <span class="sla-text"><i data-lucide="clock"></i> SLA: 18h restantes</span>
+              <button class="btn-resolve" onclick="resolve5W2H('card-5w2h-2')"><i data-lucide="check-circle"></i> Concluir</button>
             </div>
           </div>
 
         </div>
       </section>
 
-      <!-- SEÇÃO 4: PREVENÇÃO DE PERDAS & REBAIXE VR SOFTWARE COM PREÇO DE CUSTO -->
-      <section id="view-perdas" class="view-page">
-        <div class="section-header-bar">
-          <h3><i data-lucide="shield-alert"></i> Prevenção & Margem de Custo</h3>
-          <span class="tag-info green">VR API Conectado</span>
+      <!-- VIEW 5: PREVENÇÃO DE PERDAS & PREÇO DE CUSTO EDITÁVEL -->
+      <section id="view-perdas" class="page-view">
+        <div class="perdas-container">
+          <div class="section-title">
+            <h3><i data-lucide="trending-down"></i> Prevenção de Perdas & Margem de Custo</h3>
+            <span class="badge-vr">VR Software API Conectado</span>
+          </div>
+
+          <p class="sub-text mb-15">Confira o **Preço de Custo** importado do VR Software e **ajuste livremente o Preço Sugerido** do produto antes de disparar o rebaixe para os caixas da loja.</p>
+
+          <div class="table-scroll-wrapper">
+            <table class="perdas-table">
+              <thead>
+                <tr>
+                  <th>Produto / Descrição</th>
+                  <th>Estoque</th>
+                  <th>Vencimento</th>
+                  <th>Preço Custo (VR)</th>
+                  <th>Venda Atual</th>
+                  <th>Preço Sugerido (Gerente)</th>
+                  <th>Margem %</th>
+                  <th>Ação VR Software</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr id="perdas-row-1">
+                  <td>
+                    <strong>Iogurte Grego 400g</strong>
+                    <small>Cod: 78910001 • Laticínios</small>
+                  </td>
+                  <td>42 un.</td>
+                  <td><span class="tag-red">3 dias</span></td>
+                  <td><strong class="txt-cost">R$ 3,20</strong></td>
+                  <td><span class="old-price">R$ 8,90</span></td>
+                  <td>
+                    <div class="price-input-box">
+                      <span>R$</span>
+                      <input type="number" step="0.01" value="4.99" id="price-in-1" oninput="calcMargin(1, 3.20)">
+                    </div>
+                  </td>
+                  <td><span class="margin-pill green" id="margin-pill-1">+35.8%</span></td>
+                  <td>
+                    <button class="btn-send-vr" id="btn-vr-send-1" onclick="sendToVR(1, 'Iogurte Grego 400g')"><i data-lucide="send"></i> Enviar p/ VR</button>
+                  </td>
+                </tr>
+
+                <tr id="perdas-row-2">
+                  <td>
+                    <strong>Queijo Mussarela 200g</strong>
+                    <small>Cod: 78910088 • Frios</small>
+                  </td>
+                  <td>18 un.</td>
+                  <td><span class="tag-orange">4 dias</span></td>
+                  <td><strong class="txt-cost">R$ 7,50</strong></td>
+                  <td><span class="old-price">R$ 14,50</span></td>
+                  <td>
+                    <div class="price-input-box">
+                      <span>R$</span>
+                      <input type="number" step="0.01" value="9.90" id="price-in-2" oninput="calcMargin(2, 7.50)">
+                    </div>
+                  </td>
+                  <td><span class="margin-pill green" id="margin-pill-2">+24.2%</span></td>
+                  <td>
+                    <button class="btn-send-vr" id="btn-vr-send-2" onclick="sendToVR(2, 'Queijo Mussarela 200g')"><i data-lucide="send"></i> Enviar p/ VR</button>
+                  </td>
+                </tr>
+
+                <tr id="perdas-row-3">
+                  <td>
+                    <strong>Peito de Frango 1kg</strong>
+                    <small>Cod: 78910405 • Açougue</small>
+                  </td>
+                  <td>25 un.</td>
+                  <td><span class="tag-red">2 dias</span></td>
+                  <td><strong class="txt-cost">R$ 12,80</strong></td>
+                  <td><span class="old-price">R$ 21,90</span></td>
+                  <td>
+                    <div class="price-input-box">
+                      <span>R$</span>
+                      <input type="number" step="0.01" value="14.90" id="price-in-3" oninput="calcMargin(3, 12.80)">
+                    </div>
+                  </td>
+                  <td><span class="margin-pill green" id="margin-pill-3">+14.0%</span></td>
+                  <td>
+                    <button class="btn-send-vr" id="btn-vr-send-3" onclick="sendToVR(3, 'Peito de Frango 1kg')"><i data-lucide="send"></i> Enviar p/ VR</button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- VIEW 6: WHATSAPP BOT -->
+      <section id="view-whatsapp" class="page-view">
+        <div class="section-title">
+          <h3><i data-lucide="message-square"></i> Notificação WhatsApp (Servidor Bot)</h3>
+          <span class="badge-vr">Meta Graph API</span>
         </div>
 
-        <div class="perdas-banner">
-          <div class="perdas-main-card">
-            <div class="perdas-card-header">
+        <div class="whatsapp-layout-grid">
+          <div class="wa-card">
+            <h4>Grupos de Gestores Ativos</h4>
+            <div class="group-item">
               <div>
-                <h3><i data-lucide="zap" style="color: var(--orange);"></i> Rebaixe de Preço de Validade (VR Software)</h3>
-                <p>Confira o **Preço de Custo** e **ajuste o Preço Sugerido** antes de enviar para os caixas da loja.</p>
-              </div>
-            </div>
-
-            <div class="table-container mt-15">
-              <table class="data-table perdas-table">
-                <thead>
-                  <tr>
-                    <th>Produto</th>
-                    <th>Vencimento</th>
-                    <th>Custo</th>
-                    <th>Venda</th>
-                    <th>Preço Sugerido</th>
-                    <th>Margem</th>
-                    <th>Ação VR</th>
-                  </tr>
-                </thead>
-                <tbody>
-
-                  <!-- Row 1 -->
-                  <tr id="row-prod-1">
-                    <td>
-                      <strong>Iogurte Grego 400g</strong>
-                      <small class="block-sub">Cod: 78910001 • 42 un</small>
-                    </td>
-                    <td><span class="text-red">3 dias</span></td>
-                    <td><strong class="text-cost">R$ 3,20</strong></td>
-                    <td><span class="line-through">R$ 8,90</span></td>
-                    <td>
-                      <div class="price-input-wrapper">
-                        <span>R$</span>
-                        <input type="number" step="0.01" value="4.99" class="input-price-edit" id="price-input-1" oninput="calculateMargin(1, 3.20)">
-                      </div>
-                    </td>
-                    <td>
-                      <span class="margin-badge positive" id="margin-badge-1">+35.8%</span>
-                    </td>
-                    <td>
-                      <button class="btn-apply-vr" id="btn-vr-1" onclick="submitPriceToVR(1, 'Iogurte Grego Tradicional 400g')">
-                        <i data-lucide="send"></i> Enviar VR
-                      </button>
-                    </td>
-                  </tr>
-
-                  <!-- Row 2 -->
-                  <tr id="row-prod-2">
-                    <td>
-                      <strong>Queijo Mussarela 200g</strong>
-                      <small class="block-sub">Cod: 78910088 • 18 un</small>
-                    </td>
-                    <td><span class="text-orange">4 dias</span></td>
-                    <td><strong class="text-cost">R$ 7,50</strong></td>
-                    <td><span class="line-through">R$ 14,50</span></td>
-                    <td>
-                      <div class="price-input-wrapper">
-                        <span>R$</span>
-                        <input type="number" step="0.01" value="9.90" class="input-price-edit" id="price-input-2" oninput="calculateMargin(2, 7.50)">
-                      </div>
-                    </td>
-                    <td>
-                      <span class="margin-badge positive" id="margin-badge-2">+24.2%</span>
-                    </td>
-                    <td>
-                      <button class="btn-apply-vr" id="btn-vr-2" onclick="submitPriceToVR(2, 'Queijo Mussarela Fatiado 200g')">
-                        <i data-lucide="send"></i> Enviar VR
-                      </button>
-                    </td>
-                  </tr>
-
-                  <!-- Row 3 -->
-                  <tr id="row-prod-3">
-                    <td>
-                      <strong>Peito de Frango 1kg</strong>
-                      <small class="block-sub">Cod: 78910405 • 25 un</small>
-                    </td>
-                    <td><span class="text-red">2 dias</span></td>
-                    <td><strong class="text-cost">R$ 12,80</strong></td>
-                    <td><span class="line-through">R$ 21,90</span></td>
-                    <td>
-                      <div class="price-input-wrapper">
-                        <span>R$</span>
-                        <input type="number" step="0.01" value="14.90" class="input-price-edit" id="price-input-3" oninput="calculateMargin(3, 12.80)">
-                      </div>
-                    </td>
-                    <td>
-                      <span class="margin-badge positive" id="margin-badge-3">+14.0%</span>
-                    </td>
-                    <td>
-                      <button class="btn-apply-vr" id="btn-vr-3" onclick="submitPriceToVR(3, 'Bandeja Peito de Frango 1kg')">
-                        <i data-lucide="send"></i> Enviar VR
-                      </button>
-                    </td>
-                  </tr>
-
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- SEÇÃO 5: CENTRAL DE NOTIFICAÇÕES WHATSAPP -->
-      <section id="view-whatsapp" class="view-page">
-        <div class="section-header-bar">
-          <h3><i data-lucide="message-square"></i> Automação WhatsApp</h3>
-          <span class="tag-info">Meta API / Webhooks</span>
-        </div>
-
-        <div class="whatsapp-config-grid">
-          <div class="config-card">
-            <h4><i data-lucide="settings"></i> Grupos Configurados</h4>
-            <div class="group-row">
-              <div class="group-info">
                 <strong>Grupo Gestores — Loja 1 (Centro)</strong>
-                <small>ID: 5511999887766-group@wa</small>
+                <small>ID: 5511999887766-group</small>
               </div>
-              <span class="status-active">Ativo</span>
+              <span class="wa-status-pill">Ativo</span>
             </div>
-            <div class="group-row">
-              <div class="group-info">
+            <div class="group-item">
+              <div>
                 <strong>Grupo Gestores — Loja 2 (Bairro)</strong>
-                <small>ID: 5511888776655-group@wa</small>
+                <small>ID: 5511888776655-group</small>
               </div>
-              <span class="status-active">Ativo</span>
+              <span class="wa-status-pill">Ativo</span>
             </div>
 
-            <button class="btn-primary full-width mt-15" onclick="triggerWhatsAppModal()">
-              <i data-lucide="send"></i> Disparar Notificação Teste
-            </button>
+            <button class="btn-action-primary mt-15 full" onclick="openWhatsAppModal()"><i data-lucide="send"></i> Disparar Notificação de Teste</button>
           </div>
 
-          <div class="config-card">
-            <h4><i data-lucide="clock"></i> Horários dos Resumos</h4>
-            <ul class="schedule-list">
-              <li><i data-lucide="sun"></i> <strong>Resumo Matutino (12:00)</strong></li>
-              <li><i data-lucide="moon"></i> <strong>Resumo Noturno (18:30)</strong></li>
-              <li><i data-lucide="alert-circle"></i> <strong>Alertas Imediatos (Urgentes)</strong></li>
+          <div class="wa-card">
+            <h4>Agendamentos Programados</h4>
+            <ul class="wa-schedule">
+              <li><i data-lucide="sun"></i> <strong>Resumo Matutino (12:00)</strong> — Parcial de vistorias</li>
+              <li><i data-lucide="moon"></i> <strong>Resumo Noturno (18:30)</strong> — Fechamento do ISL</li>
+              <li><i data-lucide="zap"></i> <strong>Push Crítico (Instantâneo)</strong> — Câmaras frias e validades</li>
             </ul>
           </div>
         </div>
       </section>
 
-      <!-- SEÇÃO 6: GAMIFICAÇÃO & RANKING -->
-      <section id="view-ranking" class="view-page">
-        <div class="section-header-bar">
-          <h3><i data-lucide="trophy"></i> Gamificação da Rede</h3>
-          <span class="tag-info">Ranking de Lojas</span>
+      <!-- VIEW 7: GAMIFICAÇÃO & RANKING -->
+      <section id="view-ranking" class="page-view">
+        <div class="section-title">
+          <h3><i data-lucide="trophy"></i> Gamificação & Ranking da Rede</h3>
+          <span class="badge-vr">Competição Saudável</span>
         </div>
 
-        <div class="ranking-grid">
-          <div class="ranking-podium-card gold">
-            <div class="podium-badge">🏆 1º LUGAR</div>
+        <div class="podium-grid">
+          <div class="podium-box gold">
+            <span class="crown">🏆 1º LUGAR</span>
             <h3>Loja 1 — Centro</h3>
-            <div class="score-large">94%</div>
-            <p>Saúde da Loja (ISL)</p>
+            <div class="big-score-podium">94%</div>
+            <p>Índice de Saúde da Loja (ISL)</p>
           </div>
 
-          <div class="ranking-podium-card silver">
-            <div class="podium-badge">🥈 2º LUGAR</div>
+          <div class="podium-box silver">
+            <span class="crown">🥈 2º LUGAR</span>
             <h3>Loja 2 — Bairro</h3>
-            <div class="score-large">88%</div>
-            <p>Saúde da Loja (ISL)</p>
+            <div class="big-score-podium">88%</div>
+            <p>Índice de Saúde da Loja (ISL)</p>
           </div>
         </div>
       </section>
 
     </main>
 
-    <!-- MOBILE BOTTOM NAVIGATION TAB BAR -->
+    <!-- MOBILE BOTTOM TAB NAVIGATION BAR (FIXED ON SMARTPHONES) -->
     <nav class="mobile-bottom-nav">
-      <button class="mob-nav-btn active" id="mob-dashboard" onclick="navigate('dashboard')">
+      <button class="mob-tab active" id="mobtab-dashboard" onclick="navigate('dashboard')">
         <i data-lucide="layout-dashboard"></i>
         <span>Início</span>
       </button>
-      <button class="mob-nav-btn" id="mob-rotinas" onclick="navigate('rotinas')">
-        <i data-lucide="clipboard-list"></i>
+      <button class="mob-tab" id="mobtab-rotinas" onclick="navigate('rotinas')">
+        <i data-lucide="clipboard-check"></i>
         <span>Rotinas</span>
       </button>
-      <button class="mob-nav-btn" id="mob-5w2h" onclick="navigate('5w2h')">
+      <button class="mob-tab" id="mobtab-5w2h" onclick="navigate('5w2h')">
         <i data-lucide="check-square"></i>
         <span>5W2H</span>
       </button>
-      <button class="mob-nav-btn" id="mob-perdas" onclick="navigate('perdas')">
-        <i data-lucide="shield-alert"></i>
+      <button class="mob-tab" id="mobtab-perdas" onclick="navigate('perdas')">
+        <i data-lucide="trending-down"></i>
         <span>Perdas</span>
       </button>
-      <button class="mob-nav-btn" id="mob-whatsapp" onclick="navigate('whatsapp')">
+      <button class="mob-tab" id="mobtab-whatsapp" onclick="navigate('whatsapp')">
         <i data-lucide="message-square"></i>
         <span>WhatsApp</span>
       </button>
@@ -681,90 +639,91 @@
 
   </div>
 
-  <!-- MODAL 5W2H EDITAR -->
-  <div class="modal-overlay hidden" id="modal-edit-5w2h">
-    <div class="modal-card">
-      <div class="modal-header">
-        <h3><i data-lucide="sliders"></i> Ajustar Plano de Ação 5W2H</h3>
-        <button class="btn-close" onclick="closeModals()">&times;</button>
+  <!-- MODAL EDITAR 5W2H -->
+  <div class="modal-backdrop hidden" id="modal-5w2h-edit">
+    <div class="modal-dialog">
+      <div class="modal-head">
+        <h3><i data-lucide="sliders"></i> Editar Plano 5W2H</h3>
+        <button class="btn-x" onclick="closeModals()">&times;</button>
       </div>
       <div class="modal-body">
         <label>O quê fazer? (What)</label>
-        <input type="text" id="input-5w2h-what" value="Manutenção preventiva do compressor e transferência de carnes">
+        <input type="text" id="m5w2h-what" value="Manutenção preventiva do compressor e transferência de carnes">
         
         <label>Por que fazer? (Why)</label>
-        <input type="text" id="input-5w2h-why" value="Evitar contaminação sanitária e perda da mercadoria">
+        <input type="text" id="m5w2h-why" value="Evitar contaminação sanitária e prejuízo em mercadorias">
 
         <label>Quem é o responsável? (Who)</label>
-        <select id="input-5w2h-who">
+        <select id="m5w2h-who">
           <option>Ricardo Silva — Encarregado Manutenção</option>
           <option>Carlos Roberto — Gerente de Loja</option>
           <option>Marcos — Encarregado de Açougue</option>
         </select>
 
         <label>Prazo Limite (When)</label>
-        <input type="datetime-local" id="input-5w2h-when" value="2026-07-23T14:00">
+        <input type="datetime-local" id="m5w2h-when" value="2026-07-23T14:00">
       </div>
-      <div class="modal-footer">
-        <button class="btn-secondary" onclick="closeModals()">Cancelar</button>
-        <button class="btn-primary" onclick="save5W2HModal()">Salvar & Notificar</button>
+      <div class="modal-foot">
+        <button class="btn-action secondary" onclick="closeModals()">Cancelar</button>
+        <button class="btn-action-primary" onclick="save5W2HModal()">Salvar 5W2H</button>
       </div>
     </div>
   </div>
 
   <!-- MODAL WHATSAPP SIMULADOR -->
-  <div class="modal-overlay hidden" id="modal-wa-simulation">
-    <div class="modal-card wa-modal">
-      <div class="modal-header">
-        <h3><i data-lucide="message-square" style="color: #25D366;"></i> Simulação de Disparo WhatsApp</h3>
-        <button class="btn-close" onclick="closeModals()">&times;</button>
+  <div class="modal-backdrop hidden" id="modal-wa">
+    <div class="modal-dialog">
+      <div class="modal-head">
+        <h3><i data-lucide="message-square" style="color: #25D366;"></i> Simulação WhatsApp Bot</h3>
+        <button class="btn-x" onclick="closeModals()">&times;</button>
       </div>
-      <div class="wa-chat-container">
-        <div class="wa-chat-header">
-          <span class="wa-group-title" id="wa-modal-group-title">Grupo Gestores — Loja 1 (Centro)</span>
-          <span class="wa-members">Carlos, Ricardo, Marcos, Diretoria</span>
+      <div class="wa-box">
+        <div class="wa-head">
+          <strong id="wa-grp-title">Grupo Gestores — Loja 1 (Centro)</strong>
+          <small>Carlos, Ricardo, Marcos, Diretoria</small>
         </div>
-        <div class="wa-message-bubble">
-          <div class="wa-msg-content" id="wa-modal-msg-body">
+        <div class="wa-bubble">
+          <div id="wa-body-txt">
             📱 *RESUMO OPERACIONAL - LOJA 1 (CENTRO)*<br>
             🗓️ _Data: 23/07/2026 - 12:00_<br><br>
             📊 *Saúde da Loja (ISL):* 94% (Excelente)<br>
             ✅ *Checklists Concluídos:* 8 de 10<br><br>
             🚨 *Planos 5W2H Ativos (1):*<br>
-            • *Açougue:* Temp. Câmara Fria 02 em 6.8°C.<br>
+            • *Açougue:* Temp. Câmara Fria em 6.8°C.<br>
             └ 👤 Responsável: Ricardo Silva | ⏰ Prazo: 14:00<br><br>
             _Disparado via Super Sistema Paranaíba Server_
           </div>
-          <span class="wa-time">12:00 ✓✓</span>
+          <span class="wa-ticks">12:00 ✓✓</span>
         </div>
       </div>
-      <div class="modal-footer">
-        <button class="btn-primary full-width" style="background: #25D366;" onclick="closeModals()">Notificação Enviada!</button>
+      <div class="modal-foot">
+        <button class="btn-action-primary full" style="background: #25D366;" onclick="closeModals()">Notificação Entregue!</button>
       </div>
     </div>
   </div>
 
-  <!-- MODAL MICROLEARNING (POP 15s) -->
-  <div class="modal-overlay hidden" id="modal-pop">
-    <div class="modal-card">
-      <div class="modal-header">
-        <h3><i data-lucide="play-circle" style="color: #a78bfa;"></i> Microlearning POP — Refrigeração</h3>
-        <button class="btn-close" onclick="closeModals()">&times;</button>
+  <!-- MODAL MICROLEARNING POP -->
+  <div class="modal-backdrop hidden" id="modal-pop">
+    <div class="modal-dialog">
+      <div class="modal-head">
+        <h3><i data-lucide="play-circle" style="color: #a78bfa;"></i> Microlearning POP 15s</h3>
+        <button class="btn-x" onclick="closeModals()">&times;</button>
       </div>
       <div class="modal-body text-center">
-        <div class="pop-video-placeholder">
+        <div class="pop-video-box">
           <i data-lucide="film"></i>
           <span>Vídeo Educativo 15s — Padrão Anvisa</span>
         </div>
-        <p class="pop-desc">Em caso de oscilação térmica em câmaras frias, isole o setor imediatamente e transfira peças para a câmara de contingência em até 20 minutos.</p>
+        <p class="pop-txt">Em caso de oscilação térmica na câmara fria, isole o setor e transfira as peças para a câmara de contingência em até 20 minutos.</p>
       </div>
-      <div class="modal-footer">
-        <button class="btn-primary full-width" onclick="closeModals()">Ciente do Procedimento</button>
+      <div class="modal-foot">
+        <button class="btn-action-primary full" onclick="closeModals()">Ciente do Procedimento</button>
       </div>
     </div>
   </div>
 
-  <script src="app.js?v=2.0"></script>
+  <!-- JS Engine -->
+  <script src="app.js?v=3.0"></script>
   <script>
     lucide.createIcons();
   </script>
