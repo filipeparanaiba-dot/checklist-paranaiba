@@ -18,7 +18,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   
   <!-- CSS Design System -->
-  <link rel="stylesheet" href="styles.css?v=8.0">
+  <link rel="stylesheet" href="styles.css?v=9.0">
   
   <!-- Lucide Icons -->
   <script src="https://unpkg.com/lucide@latest"></script>
@@ -61,6 +61,10 @@
         <button class="nav-item" id="nav-rotinas" onclick="navigate('rotinas')">
           <i data-lucide="clipboard-check"></i>
           <span>Auditorias & Setores</span>
+        </button>
+        <button class="nav-item" id="nav-epi" onclick="navigate('epi')">
+          <i data-lucide="hard-hat"></i>
+          <span>Segurança & EPIs (CIPA)</span>
         </button>
         <button class="nav-item" id="nav-fornecedores" onclick="navigate('fornecedores')">
           <i data-lucide="truck"></i>
@@ -290,7 +294,135 @@
 
       </section>
 
-      <!-- VIEW NOVO: AUDITORIA DE FORNECEDORES & LAUDOS DE DOCA -->
+      <!-- VIEW NOVO: SEGURANÇA DO TRABALHO & CONTROLE DE EPIS (CIPA / NR-36) -->
+      <section id="view-epi" class="page-view">
+        <div class="manutencao-card">
+          
+          <div class="section-title">
+            <h3><i data-lucide="hard-hat"></i> Segurança do Trabalho & Entrega de EPIs (CIPA / NR-36)</h3>
+            <button class="btn-action-primary" onclick="toggleEPIForm()">
+              <i data-lucide="user-check"></i> + Registrar Entrega de EPI ao Colaborador
+            </button>
+          </div>
+
+          <!-- FORMULÁRIO DE ENTREGA DE EPI COM TERMO DIGITAL -->
+          <div class="ticket-form-card hidden mb-20" id="panel-epi-form">
+            <div class="add-prod-header">
+              <h4><i data-lucide="shield-alert"></i> Ficha de Entrega de Equipamento de Proteção Individual</h4>
+              <button class="btn-x" onclick="toggleEPIForm()">&times;</button>
+            </div>
+
+            <div class="add-prod-grid">
+              <div class="form-group">
+                <label>Nome do Colaborador</label>
+                <input type="text" id="epi-employee" placeholder="Ex: Marcos Silva (Açougueiro)">
+              </div>
+
+              <div class="form-group">
+                <label>Equipamento (EPI / C.A.)</label>
+                <select id="epi-item-select">
+                  <option value="Luva de Malha de Aço (C.A. 14091)">Luva de Malha de Aço (C.A. 14091) — Açougue</option>
+                  <option value="Jaleco Térmico Frigorífico (C.A. 28901)">Jaleco Térmico Frigorífico (C.A. 28901) — Câmara Fria</option>
+                  <option value="Bota Antiderrapante de PVC (C.A. 11092)">Bota Antiderrapante de PVC (C.A. 11092) — Doca</option>
+                  <option value="Protetor Auricular Plug (C.A. 9812)">Protetor Auricular Plug (C.A. 9812) — Padaria/Moedor</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label>Validade da Entrega / Troca</label>
+                <input type="date" id="epi-expiry-date">
+              </div>
+
+              <div class="form-group">
+                <label>Assinatura Digital do Funcional</label>
+                <input type="text" id="epi-signature" placeholder="Digite a matrícula do colaborador (Ex: 4091)">
+              </div>
+            </div>
+
+            <div class="text-right mt-15">
+              <button class="btn-action-primary" onclick="saveEPIDelivery()">
+                <i data-lucide="check"></i> Salvar na Ficha do Colaborador & Gerar Recibo
+              </button>
+            </div>
+          </div>
+
+          <!-- PAINEL CIPA: FISCALIZAÇÃO NR-36 NO AÇOUGUE & CÂMARA FRIA -->
+          <div class="equip-status-grid mb-20">
+            
+            <div class="equip-card status-ok">
+              <div class="equip-head">
+                <span class="status-pill green">100% EM CONFORMIDADE</span>
+                <small>NR-36 • Açougue</small>
+              </div>
+              <h4>Açougue — Luva de Aço & Avental Impermeável</h4>
+              <p class="equip-desc">Todos os 4 açougueiros do turno estão com luva de malha de aço no corte e avental higienizado.</p>
+              <div class="equip-foot">
+                <span>Técnico CIPA: Carlos Roberto</span>
+                <span class="text-green">Auditado Hoje</span>
+              </div>
+            </div>
+
+            <div class="equip-card status-danger">
+              <div class="equip-head">
+                <span class="status-pill red">TROCA DE EPI PENDENTE</span>
+                <small>NR-15 • Câmaras Frias</small>
+              </div>
+              <h4>Jaleco Térmico — Ricardo Silva</h4>
+              <p class="equip-desc">Validade do C.A. vence em 3 dias. Necessária substituição imediata antes do acesso às câmaras.</p>
+              <div class="equip-foot">
+                <span>C.A. 28901 • Vence 26/07</span>
+                <button class="btn-sm-action" onclick="toggleEPIForm()">Registrar Troca</button>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- HISTÓRICO DE ENTREGAS DE EPIS -->
+          <div class="section-title mt-20">
+            <h4><i data-lucide="file-badge"></i> Ficha Digital de Entrega de EPIs por Colaborador</h4>
+          </div>
+
+          <div class="table-scroll-wrapper">
+            <table class="perdas-table">
+              <thead>
+                <tr>
+                  <th>Colaborador</th>
+                  <th>Setor</th>
+                  <th>Equipamento (EPI)</th>
+                  <th>C.A. (Certificado)</th>
+                  <th>Data Entrega</th>
+                  <th>Próxima Troca</th>
+                  <th>Recibo CIPA</th>
+                </tr>
+              </thead>
+              <tbody id="epi-table-body">
+                <tr>
+                  <td><strong>Marcos Silva</strong></td>
+                  <td>Açougue</td>
+                  <td>Luva de Malha de Aço</td>
+                  <td>C.A. 14091</td>
+                  <td>10/01/2026</td>
+                  <td><span class="tag-green">10/01/2027</span></td>
+                  <td><button class="btn-sm-action" onclick="alert('📄 FICHA CIPA GERADA!\n\nRecibo de entrega de EPI assinado digitalmente por Marcos Silva.')"><i data-lucide="file-text"></i> Ver Ficha</button></td>
+                </tr>
+
+                <tr>
+                  <td><strong>Ricardo Silva</strong></td>
+                  <td>Câmara Fria</td>
+                  <td>Jaleco Térmico Frigorífico</td>
+                  <td>C.A. 28901</td>
+                  <td>26/01/2025</td>
+                  <td><span class="tag-red">26/07/2026 (Crítico)</span></td>
+                  <td><button class="btn-sm-action" onclick="alert('📄 FICHA CIPA GERADA!\n\nRecibo de entrega de EPI assinado digitalmente por Ricardo Silva.')"><i data-lucide="file-text"></i> Ver Ficha</button></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- VIEW AUDITORIA DE FORNECEDORES -->
       <section id="view-fornecedores" class="page-view">
         <div class="fornecedores-card">
           
@@ -301,7 +433,6 @@
             </button>
           </div>
 
-          <!-- PAINEL DE ABERTURA DE LAUDO DE RECEBIMENTO -->
           <div class="ticket-form-card hidden mb-20" id="panel-receiving-form">
             <div class="add-prod-header">
               <h4><i data-lucide="clipboard"></i> Check-in de Carga & Inspeção na Doca</h4>
@@ -313,7 +444,7 @@
                 <label>Fornecedor</label>
                 <select id="rec-supplier">
                   <option value="BRF / Sadia">BRF / Sadia (Frios & Embutidos)</option>
-                  <option value="JBS / Friboi">JBS / Friboi (Carnes Fressas)</option>
+                  <option value="JBS / Friboi">JBS / Friboi (Carnes Frescas)</option>
                   <option value="Ambev">Ambev (Bebidas & Cervejas)</option>
                   <option value="Nestlé">Nestlé (Laticínios & Chocolates)</option>
                   <option value="Unilever">Unilever (Higiene & Limpeza)</option>
@@ -353,7 +484,6 @@
             </div>
           </div>
 
-          <!-- SCORECARD DE FORNECEDORES -->
           <div class="supplier-hero-grid mb-20">
             
             <div class="supplier-card">
@@ -394,7 +524,6 @@
 
           </div>
 
-          <!-- HISTÓRICO DE RECEBIMENTOS & LAUDOS DE DEVOLUÇÃO -->
           <div class="section-title mt-20">
             <h4><i data-lucide="history"></i> Últimos Laudos de Recebimento Emitidos na Doca</h4>
           </div>
@@ -434,230 +563,6 @@
                 </tr>
               </tbody>
             </table>
-          </div>
-
-        </div>
-      </section>
-
-      <!-- VIEW 2: EXECUÇÃO DE AUDITORIA -->
-      <section id="view-rotinas" class="page-view">
-        <div class="exec-card">
-          <div class="exec-header">
-            <button class="btn-back" onclick="navigate('dashboard')"><i data-lucide="arrow-left"></i></button>
-            <div>
-              <h2 id="exec-title">Vistoria Açougue & Câmaras Frias</h2>
-              <span id="exec-subtitle">Unidade: Loja 1 — Centro | Setor 04</span>
-            </div>
-          </div>
-
-          <div class="questions-wrapper" id="questions-container">
-            
-            <div class="q-card" id="qcard-1">
-              <div class="q-top">
-                <span class="q-num">01</span>
-                <div>
-                  <h3>Temperatura da Câmara Fria 02 está dentro da margem (0°C a 4°C)?</h3>
-                  <p>Verifique o indicador digital ou termômetro espeto Bluetooth.</p>
-                </div>
-                <button class="btn-pop" onclick="openPOPModal()"><i data-lucide="play-circle"></i> Treinamento POP 15s</button>
-              </div>
-
-              <div class="q-controls">
-                <div class="btn-group-resp">
-                  <button class="btn-resp resp-conform" onclick="answerQuestion(1, 'conform')"><i data-lucide="check"></i> Conforme</button>
-                  <button class="btn-resp resp-nonconform" onclick="answerQuestion(1, 'nonconform')"><i data-lucide="x"></i> Não Conforme</button>
-                  <button class="btn-resp resp-na" onclick="answerQuestion(1, 'na')">N/A</button>
-                </div>
-
-                <button class="btn-scan-ia" onclick="simulateAIScan(1)"><i data-lucide="camera"></i> Escanear com IA Visual</button>
-              </div>
-
-              <div class="ai-box hidden" id="ai-box-1">
-                <div class="ai-img-wrapper">
-                  <img src="https://images.unsplash.com/photo-1551028150-64b9f398f678?w=600&auto=format&fit=crop&q=60" alt="Câmara Fria Termômetro">
-                  <div class="bounding-tag">DETECTADO 6.8°C</div>
-                </div>
-                <div class="ai-txt">
-                  <strong><i data-lucide="sparkles"></i> Análise de Visão Computacional:</strong>
-                  <p>Leitura no display digital: <strong>6.8°C</strong>. Limite máximo permitido: 4.0°C. Risco sanitário acionado.</p>
-                </div>
-              </div>
-
-              <div class="trigger-5w2h-box hidden" id="trigger-5w2h-1">
-                <div class="trigger-title"><i data-lucide="alert-octagon"></i> Plano 5W2H Gerado Automaticamente</div>
-                <p>Ocorrência enviada no WhatsApp do Encarregado de Manutenção.</p>
-                <button class="btn-sm-red" onclick="open5W2HModal(1)">Editar Responsável & Prazo 5W2H</button>
-              </div>
-            </div>
-
-            <div class="q-card" id="qcard-2">
-              <div class="q-top">
-                <span class="q-num">02</span>
-                <div>
-                  <h3>Organização FIFO e Validades no Balcão de Exposição?</h3>
-                  <p>Garantir peças mais antigas na frente para venda acelerada.</p>
-                </div>
-              </div>
-              <div class="q-controls">
-                <div class="btn-group-resp">
-                  <button class="btn-resp resp-conform" onclick="answerQuestion(2, 'conform')"><i data-lucide="check"></i> Conforme</button>
-                  <button class="btn-resp resp-nonconform" onclick="answerQuestion(2, 'nonconform')"><i data-lucide="x"></i> Não Conforme</button>
-                  <button class="btn-resp resp-na" onclick="answerQuestion(2, 'na')">N/A</button>
-                </div>
-              </div>
-            </div>
-
-            <div class="q-card" id="qcard-3">
-              <div class="q-top">
-                <span class="q-num">03</span>
-                <div>
-                  <h3>Conferência de Preço de Gôndola vs VR Software (Divergência)?</h3>
-                  <p>Bipe a etiqueta da prateleira e valide com a tabela do caixa.</p>
-                </div>
-              </div>
-              <div class="q-controls">
-                <div class="btn-group-resp">
-                  <button class="btn-resp resp-conform" onclick="answerQuestion(3, 'conform')"><i data-lucide="check"></i> Conforme</button>
-                  <button class="btn-resp resp-nonconform" onclick="answerQuestion(3, 'nonconform')"><i data-lucide="x"></i> Não Conforme</button>
-                  <button class="btn-resp resp-na" onclick="answerQuestion(3, 'na')">N/A</button>
-                </div>
-              </div>
-            </div>
-
-          </div>
-
-          <div class="exec-submit-bar">
-            <button class="btn-action-primary" onclick="submitChecklist()"><i data-lucide="check-check"></i> Finalizar Vistoria & Disparar Notificação no WhatsApp</button>
-          </div>
-        </div>
-      </section>
-
-      <!-- VIEW NOVO: MANUTENÇÃO PREVENTIVA DE EQUIPAMENTOS & REGISTRO ANTES/DEPOIS -->
-      <section id="view-manutencao" class="page-view">
-        <div class="manutencao-card">
-          
-          <div class="section-title">
-            <h3><i data-lucide="wrench"></i> Manutenção Preventiva de Equipamentos & Chamados</h3>
-            <button class="btn-action-primary" onclick="toggleNewTicketForm()">
-              <i data-lucide="plus-circle"></i> + Abrir Chamado Técnico de Maquinário
-            </button>
-          </div>
-
-          <div class="ticket-form-card hidden mb-20" id="panel-new-ticket">
-            <div class="add-prod-header">
-              <h4><i data-lucide="alert-triangle"></i> Novo Chamado Técnico de Equipamento</h4>
-              <button class="btn-x" onclick="toggleNewTicketForm()">&times;</button>
-            </div>
-
-            <div class="add-prod-grid">
-              <div class="form-group">
-                <label>Equipamento / Maquinário</label>
-                <select id="ticket-equip-select">
-                  <option>Câmara Fria 02 — Açougue (Compressor Bitzer)</option>
-                  <option>Ilha de Congelados 03 — Frios (Expositor Gelopar)</option>
-                  <option>Balança Filizola Doca — Recebimento</option>
-                  <option>Gerador Diesel Principal — Matriz</option>
-                  <option>Ar Condicionado Central — Salão de Vendas</option>
-                </select>
-              </div>
-
-              <div class="form-group">
-                <label>Severidade / Urgência</label>
-                <select id="ticket-urgency">
-                  <option value="URGENTE">🚨 Crítica (Risco de Perda de Alimento)</option>
-                  <option value="MÉDIA">⚠️ Média (Prevenção)</option>
-                  <option value="BAIXA">🟢 Baixa (Manutenção de Rotina)</option>
-                </select>
-              </div>
-
-              <div class="form-group">
-                <label>Técnico Responsável</label>
-                <input type="text" id="ticket-tech" placeholder="Ex: Ricardo Silva (Refrigeração Frio-Tech)">
-              </div>
-
-              <div class="form-group">
-                <label>Custo Estimado do Reparo (R$)</label>
-                <input type="number" step="0.01" id="ticket-cost" placeholder="Ex: 450.00">
-              </div>
-            </div>
-
-            <div class="photos-before-after-grid mt-15">
-              <div class="photo-upload-box">
-                <label><i data-lucide="camera"></i> Foto ANTES (Defeito Identificado)</label>
-                <div class="photo-preview" id="preview-before">
-                  <img src="https://images.unsplash.com/photo-1581092160607-ee22621dd758?w=600&auto=format&fit=crop&q=60" alt="Defeito Maquinario">
-                  <span class="photo-badge red">ANTES (Fuga de Gás / Gelo)</span>
-                </div>
-              </div>
-
-              <div class="photo-upload-box">
-                <label><i data-lucide="check-circle"></i> Foto DEPOIS (Consertado / Liberado)</label>
-                <div class="photo-preview" id="preview-after">
-                  <img src="https://images.unsplash.com/photo-1581092335397-9583fe92d232?w=600&auto=format&fit=crop&q=60" alt="Consertado">
-                  <span class="photo-badge green">DEPOIS (Ajustado / Selado)</span>
-                </div>
-              </div>
-            </div>
-
-            <div class="text-right mt-15">
-              <button class="btn-action-primary" onclick="saveNewMaintenanceTicket()">
-                <i data-lucide="check-check"></i> Registrar Chamado & Notificar WhatsApp da Manutenção
-              </button>
-            </div>
-          </div>
-
-          <div class="equip-status-grid mb-20">
-            
-            <div class="equip-card status-danger">
-              <div class="equip-head">
-                <span class="status-pill red">ALERTA TÉCNICO</span>
-                <small>Setor 04 • Açougue</small>
-              </div>
-              <h4>Câmara Fria 02 (Compressor Bitzer)</h4>
-              <p class="equip-desc">Oscilação de temperatura em 6.8°C. Congelamento excessivo no evaporador.</p>
-
-              <div class="equip-photo-comparison">
-                <div class="thumb-photo">
-                  <img src="https://images.unsplash.com/photo-1581092160607-ee22621dd758?w=300&auto=format&fit=crop&q=60" alt="Antes">
-                  <span>Antes</span>
-                </div>
-                <div class="thumb-photo empty">
-                  <i data-lucide="clock"></i>
-                  <span>Aguardando Reparo</span>
-                </div>
-              </div>
-
-              <div class="equip-foot">
-                <span>Técnico: Ricardo Silva</span>
-                <button class="btn-sm-action" onclick="toggleNewTicketForm()">Resolver Chamado</button>
-              </div>
-            </div>
-
-            <div class="equip-card status-ok">
-              <div class="equip-head">
-                <span class="status-pill green">EM OPERAÇÃO</span>
-                <small>Setor 02 • Doca</small>
-              </div>
-              <h4>Balança Filizola 500kg (Recebimento)</h4>
-              <p class="equip-desc">Calibração anual IPEM realizada com selo de aprovação.</p>
-
-              <div class="equip-photo-comparison">
-                <div class="thumb-photo">
-                  <img src="https://images.unsplash.com/photo-1581092335397-9583fe92d232?w=300&auto=format&fit=crop&q=60" alt="Consertado">
-                  <span>Selo IPEM OK</span>
-                </div>
-                <div class="thumb-photo">
-                  <img src="https://images.unsplash.com/photo-1581092335397-9583fe92d232?w=300&auto=format&fit=crop&q=60" alt="Liberado">
-                  <span>Liberado</span>
-                </div>
-              </div>
-
-              <div class="equip-foot">
-                <span>Próxima Vistoria: Out/2026</span>
-                <span class="text-green">100% Calibrado</span>
-              </div>
-            </div>
-
           </div>
 
         </div>
@@ -1126,13 +1031,13 @@
         <i data-lucide="clipboard-check"></i>
         <span>Rotinas</span>
       </button>
+      <button class="mob-tab" id="mobtab-epi" onclick="navigate('epi')">
+        <i data-lucide="hard-hat"></i>
+        <span>EPIs</span>
+      </button>
       <button class="mob-tab" id="mobtab-fornecedores" onclick="navigate('fornecedores')">
         <i data-lucide="truck"></i>
         <span>Doca</span>
-      </button>
-      <button class="mob-tab" id="mobtab-manutencao" onclick="navigate('manutencao')">
-        <i data-lucide="wrench"></i>
-        <span>Maquinário</span>
       </button>
       <button class="mob-tab" id="mobtab-perdas" onclick="navigate('perdas')">
         <i data-lucide="trending-down"></i>
@@ -1226,7 +1131,7 @@
   </div>
 
   <!-- JS Engine -->
-  <script src="app.js?v=8.0"></script>
+  <script src="app.js?v=9.0"></script>
   <script>
     lucide.createIcons();
     
