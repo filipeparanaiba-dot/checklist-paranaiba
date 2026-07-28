@@ -83,6 +83,30 @@ Validação:
 
 ## Próximas etapas
 
-1. Atualizar documentação operacional, segurança e roadmap.
-2. Adicionar integração contínua e validação completa do pacote.
-3. Publicar os commits e abrir a pull request com os limites externos.
+## Etapa 3 — GitHub como fonte confiável
+
+**Objetivo:** documentar o estado real, as decisões e os limites do projeto no
+mesmo repositório do código.
+
+Alterações:
+
+- README reescrito com matriz “situação atual × requisito de produção”;
+- arquitetura atual e arquitetura-alvo documentadas;
+- guia operacional com backup, modo offline e solução de problemas;
+- política de segurança com limites e requisitos antes do piloto;
+- changelog da versão 21;
+- guia de contribuição com regras de segurança e acessibilidade;
+- template de pull request;
+- workflow de integração contínua para sintaxe e testes;
+- testes dos links e documentos obrigatórios.
+
+Fontes externas verificadas:
+
+- versões atuais das ações oficiais `actions/checkout` e
+  `actions/setup-node` foram conferidas antes da criação do workflow.
+
+## Próximas etapas
+
+1. Executar a validação completa.
+2. Publicar a branch no GitHub.
+3. Abrir a pull request com resumo, impacto, testes e limites.

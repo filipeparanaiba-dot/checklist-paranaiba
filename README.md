@@ -1,136 +1,171 @@
-# 🚀 Super Sistema de Checklist & Prevenção de Perdas — Supermercado Paranaíba
+# Super Checklist Paranaíba
 
-[![Status](https://img.shields.io/badge/status-active-emerald.svg)]()
-[![VR Software](https://img.shields.io/badge/integration-VR%20Software-blue.svg)]()
-[![WhatsApp Bot](https://img.shields.io/badge/bot-WhatsApp%20API-25D366.svg)]()
-[![AI Vision](https://img.shields.io/badge/AI-Computer%20Vision-purple.svg)]()
+![Super Checklist Paranaíba](assets/og.png)
 
-Plano de ação e sistema de auditoria operacional, controle de qualidade de perecíveis e prevenção de perdas customizado para a rede **Supermercado Paranaíba** (2 Unidades: Loja 1 Centro e Loja 2 Bairro).
+Aplicação web offline-first para demonstrar rotinas operacionais, auditorias,
+planos de ação e prevenção de perdas nas duas unidades do Supermercado
+Paranaíba.
 
-A solução reúne as melhores funcionalidades dos líderes de mercado:
-- **Parla** *(antigo Checklist Fácil)*: Workflows auditáveis de Não Conformidades (Planos de Ação 5W2H) e matriz de rotinas diárias.
-- **PariPassu** *(CLIC)*: Controle de qualidade em perecíveis (FLV/Açougue), laudos de recebimento na doca e amostragem.
-- **Mvisia**: Visão computacional e Inteligência Artificial para leitura de termômetros, gôndolas e etiquetas.
+> **Status:** demonstração local segura. Os dados gravados no navegador não são
+> registros corporativos. VR Software, WhatsApp, autenticação e assinatura
+> digital ainda não possuem backend autorizado.
 
----
+## O que existe na versão 21
 
-## 📑 Sumário
+- 13 módulos navegáveis em desktop e celular;
+- auditorias com respostas obrigatórias e geração de planos de ação;
+- cadastro local de ocorrências, EPI, recebimentos, manutenção e produtos
+  críticos;
+- criador de checklists que salva todas as perguntas;
+- indicadores calculados por unidade;
+- margem residual em formato brasileiro;
+- planos 5W2H com conclusão e contadores consistentes;
+- rascunhos locais de avisos;
+- exportação CSV e backup JSON;
+- cache offline versionado;
+- interface sem dependências executáveis externas;
+- foco visível, zoom permitido, formulários associados e suporte a redução de
+  movimento;
+- servidor local portátil com cabeçalhos de segurança;
+- testes automatizados e integração contínua.
 
-- [Visão Geral e Arquitetura](#-visão-geral-e-arquitetura)
-- [Funcionalidades Principais](#-funcionalidades-principais)
-- [Módulos do Sistema](#-módulos-do-sistema)
-- [Benchmark Comparativo](#-benchmark-comparativo)
-- [Estrutura de Arquivos](#-estrutura-de-arquivos)
-- [Como Executar Localmente](#-como-executar-localmente)
-- [Roadmap de Desenvolvimento](#-roadmap-de-desenvolvimento)
+## Matriz de capacidades
 
----
+| Capacidade | Situação atual | O que falta para produção |
+| --- | --- | --- |
+| Auditorias e 5W2H | Funcional no dispositivo | API, banco corporativo e trilha de auditoria |
+| Rascunhos offline | IndexedDB local | Outbox de servidor com idempotência e reconciliação |
+| Alteração de preço | Apenas preparação local | Contrato e credenciais da API VR, aprovação e confirmação |
+| WhatsApp | Apenas rascunho local | Provedor autorizado, templates, consentimento e recibos |
+| EPI | Rascunho local | Identidade, reautenticação, evidência e assinatura válida |
+| Treinamento | Conteúdo textual demonstrativo | Conteúdo aprovado, mídia, legendas e gestão de versões |
+| PDF | Não implementado | Gerador de documentos e validação do modelo |
+| Autenticação | Não implementada | Provedor de identidade e perfis por unidade/função |
+| IA visual | Não implementada | Dataset, modelo validado, consentimento e monitoramento |
 
-## 📐 Visão Geral e Arquitetura
+Mensagens da interface seguem essa matriz: nenhuma ação externa é apresentada
+como concluída sem confirmação real.
 
-O sistema conecta gerentes de loja, encarregados de setor e a diretoria geral em uma única plataforma intuitiva e otimizada para smartphones e desktop.
+## Executar localmente
 
-```
-                               ┌──────────────────────────────────────────────┐
-                               │   SUPER SISTEMA DE CHECKLIST PARANAÍBA       │
-                               └──────────────────────┬───────────────────────┘
-                                                      │
-         ┌────────────────────────────────────────────┼────────────────────────────────────────────┐
-         ▼                                            ▼                                            ▼
-┌──────────────────┐                         ┌──────────────────┐                         ┌──────────────────┐
-│  MÓDULO LOJA 1   │                         │  MÓDULO LOJA 2   │                         │ INTEGRADOR ERP   │
-│  (Centro)        │                         │  (Bairro)        │                         │  (VR Software)   │
-└────────┬─────────┘                         └────────┬─────────┘                         └────────┬─────────┘
-         │                                            │                                            │
-         └────────────────────────────────────────────┼────────────────────────────────────────────┘
-                                                      │
-                                                      ▼
-                                       ┌──────────────────────────────┐
-                                       │ GRUPOS DE WHATSAPP GESTORES  │
-                                       │ • Resumos às 12:00 e 18:30    │
-                                       │ • Alertas Críticos Imediatos │
-                                       └──────────────────────────────┘
-```
+### Requisitos
 
----
+- Node.js 22 ou superior;
+- navegador atualizado.
 
-## 🔥 Funcionalidades Principais
+### Servidor recomendado
 
-### 1. 🛡️ Prevenção de Perdas com Preço de Custo & Margem Editável
-- **Preço de Custo VR Software**: Exibe o preço de custo real do produto importado do ERP.
-- **Sugestão Editável pelo Gerente**: Campo de entrada `R$ Input` permitindo que o gerente ajuste livremente a oferta promocional de queima de estoque.
-- **Margem Residual % em Tempo Real**: Cálculo instantâneo `((Preço - Custo) / Preço) * 100` conforme o gerente digita o valor.
-- **Disparo Direto para o VR Software**: Atualização imediata dos caixas ao autorizar o desconto.
-
-### 2. 💬 Automação de WhatsApp para Grupos de Gestores
-- **Resumos Periódicos (Daily Digest)**: Disparo automático de relatórios consolidados às 12:00 e às 18:30 no grupo da Loja 1, Loja 2 ou Diretoria.
-- **Push de Alertas Críticos**: Disparo imediato com foto e detalhes em caso de falha sanitária (ex: câmara fria > 4°C).
-
-### 3. 👁️ Visão Computacional (IA Visual)
-- **Leitura de Termômetros e Gôndola**: Análise de foto tirada no smartphone com *bounding box* automático e diagnóstico de não conformidade.
-
-### 4. 📋 Matriz de Planos de Ação 5W2H
-- Criação automática de tarefas (*What, Why, Who, When, How*) atribuídas ao responsável com controle de SLA.
-
-### 5. 🎓 Microlearning POP (15 Segundos)
-- Pop-ups de treinamento rápido em vídeo/infográfico exibidos quando ocorre uma falha operacional no açougue ou doca.
-
-### 6. 🏆 Gamificação entre Lojas
-- Ranking público do **Índice de Saúde da Loja (ISL)** estimulando a competição saudável entre Loja 1 e Loja 2.
-
----
-
-## 📊 Benchmark Comparativo
-
-| Funcionalidade | Parla | PariPassu | Mvisia | **Super Sistema Paranaíba** |
-| :--- | :---: | :---: | :---: | :---: |
-| Planos de Ação 5W2H | ✅ | ❌ | ❌ | **✅ Completo** |
-| Laudos de Recebimento Perecíveis | ❌ | ✅ | ❌ | **✅ Completo** |
-| IA Visual & OCR | ❌ | ❌ | ✅ | **✅ Completo** |
-| Notificação Grupo WhatsApp | ❌ | ❌ | ❌ | **✅ Exclusivo** |
-| Rebaixe com Margem de Custo VR | ❌ | ❌ | ❌ | **✅ Exclusivo** |
-| Gamificação entre Lojas | ❌ | ❌ | ❌ | **✅ Exclusivo** |
-
----
-
-## 📁 Estrutura de Arquivos
-
-```text
-Checklist Paranaiba/
-├── index.html         # Interface Web Responsiva Desktop & Mobile UI
-├── styles.css         # Design System Glassmorphic Dark Mode
-├── app.js             # Lógica de Estado, Cálculo de Margem e Sincronização
-├── server.ps1         # Servidor HTTP nativo em PowerShell (Porta 8085)
-└── README.md          # Documentação Completa do Repositório GitHub
+```powershell
+node server.mjs
 ```
 
----
-
-## 💻 Como Executar Localmente
-
-### Opção 1: Servidor Local PowerShell (Recomendado)
-Execute o comando abaixo no terminal da pasta do projeto:
+No Windows também é possível usar:
 
 ```powershell
 powershell -ExecutionPolicy Bypass -File server.ps1
 ```
 
-Acesse no navegador:
-👉 **`http://localhost:8085`**
+Abra `http://127.0.0.1:8085`.
 
-### Opção 2: Abertura Direta do Arquivo
-Abra o arquivo `index.html` em qualquer navegador web.
+O servidor usa apenas módulos nativos do Node.js. Não há dependências para
+instalar.
 
----
+## Validar
 
-## 🗺️ Roadmap de Desenvolvimento
+```powershell
+node --check app.js
+node tests/core.test.js
+node tests/structure.test.js
+```
 
-- [x] **Fase 1**: Protótipo UI/UX, Telas Mobile & Matriz 5W2H.
-- [x] **Fase 2**: Módulo de Prevenção de Perdas com Margem de Custo & Sugestão Editável.
-- [x] **Fase 3**: Simulação do Bot de WhatsApp para Grupos de Gestores.
-- [ ] **Fase 4**: Conexão com a API GraphQL do VR Software oficial.
-- [ ] **Fase 5**: Treinamento do Modelo YOLOv8 para Visão Computacional em câmeras fixas da loja.
+Ou, quando `npm` estiver disponível:
 
----
+```powershell
+npm run validate
+```
 
-*Desenvolvido para o Supermercado Paranaíba.*
+Os testes verificam regras financeiras, EAN-13, classificação do índice,
+isolamento por loja, presença dos 13 módulos, ausência de handlers inline,
+recursos executáveis locais, PWA e cabeçalhos defensivos.
+
+## Dados locais e backup
+
+O ambiente usa IndexedDB exclusivamente como espaço de demonstração do
+dispositivo. A barra lateral permite:
+
+- exportar um backup JSON;
+- importar um backup compatível;
+- reiniciar os dados de demonstração.
+
+Não utilize esse armazenamento como fonte oficial. Registros corporativos
+precisam de backend, controle de acesso, retenção, logs e cópias de segurança.
+
+## PWA e modo offline
+
+O service worker armazena somente o shell local da aplicação e remove apenas
+caches com o prefixo do próprio projeto. Ao ficar sem conexão:
+
+- os módulos continuam abrindo;
+- rascunhos continuam sendo salvos no dispositivo;
+- nenhuma mensagem de “sincronização concluída” é exibida;
+- integrações externas permanecem bloqueadas.
+
+O sistema não confunde `navigator.onLine` com disponibilidade de uma API.
+
+## Segurança
+
+As principais proteções da versão atual são:
+
+- nenhuma entrada do usuário é interpolada com `innerHTML`;
+- eventos são registrados em JavaScript, sem `onclick` inline;
+- não há scripts `@latest` ou CDNs executáveis;
+- Content Security Policy restrita a recursos locais;
+- caminhos do servidor são normalizados e contidos na pasta do projeto;
+- `.git` e outros caminhos ocultos não são publicados;
+- campos críticos possuem limites e validação;
+- ações externas são bloqueadas ou rotuladas como rascunho.
+
+Consulte [SECURITY.md](SECURITY.md) para limites e reporte responsável.
+
+## Arquitetura
+
+```text
+index.html        Interface semântica e todos os módulos
+styles.css        Design system responsivo e acessível
+app.js            Controladores, renderização segura e fluxos
+core.js           Regras de negócio puras e testáveis
+db.js             Rascunhos locais e backup
+sw.js             Cache offline versionado
+server.mjs        Servidor estático portátil
+assets/           Ícones e imagem social locais
+tests/            Testes de regras e estrutura
+docs/             Arquitetura, operação e diário de implementação
+```
+
+Detalhes e fronteiras estão em [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md).
+
+## Documentação da modernização
+
+- [Diário de implementação](docs/IMPLEMENTATION_LOG.md)
+- [Arquitetura e decisões](docs/ARCHITECTURE.md)
+- [Guia operacional](docs/OPERATIONS.md)
+- [Histórico de versões](CHANGELOG.md)
+- [Como contribuir](CONTRIBUTING.md)
+- [Política de segurança](SECURITY.md)
+
+## Roadmap para produção
+
+1. Definir proprietário de dados, política LGPD e matriz de acesso.
+2. Implementar backend com banco transacional e trilha append-only.
+3. Integrar um provedor de identidade e RBAC por unidade/função.
+4. Criar outbox idempotente para operação offline e reconciliação.
+5. Integrar VR Software em sandbox, com dupla aprovação de preço.
+6. Integrar o provedor de mensagens com templates e recibos.
+7. Aprovar conteúdo POP, mídia, legendas e regras de conclusão.
+8. Adicionar observabilidade, backup, recuperação e testes de carga.
+9. Realizar avaliação de segurança e acessibilidade antes do piloto.
+
+## Licença
+
+O repositório ainda não declara uma licença. O proprietário deve escolher e
+publicar os termos antes de permitir reutilização externa.

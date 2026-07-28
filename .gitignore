@@ -9,3 +9,18 @@ Thumbs.db
 
 # Temporary files
 *.tmp
+
+# Node & build outputs
+node_modules/
+dist/
+coverage/
+.wrangler/
+
+# Local environment
+.env
+.env.*
+!.env.example
+
+# Local data and backups
+*.local.json
+checklist-paranaiba-backup-*.json
