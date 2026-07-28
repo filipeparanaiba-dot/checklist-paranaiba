@@ -125,8 +125,33 @@ Resultados:
 
 Total: **19 testes aprovados**, além das verificações de sintaxe e HTTP.
 
+## Etapa 5 — Build reproduzível e publicação
+
+**Objetivo:** tornar a demonstração publicável sem alterar as fronteiras de
+segurança e sem depender de um servidor local.
+
+Alterações:
+
+- criação de um build reproduzível que incorpora apenas os onze recursos
+  públicos declarados;
+- geração de um worker estático com os mesmos cabeçalhos defensivos do servidor
+  local;
+- respostas `HEAD`, `404` e `405` tratadas explicitamente;
+- HTML e service worker publicados sem cache persistente;
+- configuração do projeto de hospedagem versionada em
+  `.openai/hosting.json`;
+- artefatos gerados mantidos fora do Git para evitar divergência entre fonte e
+  produto do build.
+
+Validação:
+
+- build executado a partir de uma árvore limpa;
+- sintaxe do worker gerado verificada pelo Node.js;
+- suíte completa executada antes do envio;
+- o commit publicado é o mesmo usado para gerar e salvar a versão hospedada.
+
 ## Próximas etapas
 
-1. Publicar a branch no GitHub.
-2. Abrir a pull request com resumo, impacto, testes e limites.
-3. Aguardar as verificações do GitHub Actions.
+1. Aguardar as verificações do GitHub Actions.
+2. Revisar a pull request antes de integrar na branch principal.
+3. Executar os itens do roadmap de produção antes de usar dados reais.

@@ -8,8 +8,9 @@
   },
   "scripts": {
     "start": "node server.mjs",
+    "build": "node scripts/build.mjs",
     "check": "node --check app.js && node --check core.js && node --check db.js && node --check server.mjs && node --check sw.js",
     "test": "node tests/core.test.js && node tests/structure.test.js && node tests/documentation.test.js",
-    "validate": "npm run check && npm test"
+    "validate": "npm run check && npm test && npm run build"
   }
 }
