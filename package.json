@@ -1,0 +1,16 @@
+{
+  "name": "checklist-paranaiba",
+  "version": "21.0.0",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "start": "node server.mjs",
+    "check": "node --check app.js && node --check core.js && node --check db.js && node --check server.mjs && node --check sw.js",
+    "test": "node --test",
+    "validate": "npm run check && npm test"
+  }
+}
+
