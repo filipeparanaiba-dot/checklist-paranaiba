@@ -71,6 +71,11 @@ test("código não injeta dados com innerHTML", () => {
   assert.doesNotMatch(app, /insertAdjacentHTML/);
 });
 
+test("interações não dependem de Element.closest", () => {
+  assert.doesNotMatch(app, /\.closest\(/);
+  assert.match(app, /function findDataTarget/);
+});
+
 test("scripts e estilos executáveis são locais", () => {
   const executableUrls = [
     ...html.matchAll(/<(?:script|link)[^>]+(?:src|href)=["']([^"']+)["']/gi),

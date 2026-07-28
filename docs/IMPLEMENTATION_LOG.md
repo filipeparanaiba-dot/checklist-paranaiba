@@ -155,3 +155,22 @@ Validação:
 1. Aguardar as verificações do GitHub Actions.
 2. Revisar a pull request antes de integrar na branch principal.
 3. Executar os itens do roadmap de produção antes de usar dados reais.
+
+## Etapa 6 — Compatibilidade da navegação
+
+**Problema relatado:** a interface carregava, mas os tópicos não respondiam em
+alguns ambientes de navegação.
+
+Correções:
+
+- substituição da dependência em `Element.closest` por busca compatível na
+  árvore de elementos;
+- alternativas para foco e rolagem em navegadores incorporados mais antigos;
+- incremento da versão do aplicativo e do cache offline para `21.0.1`;
+- teste de regressão que impede a reintrodução de `Element.closest`.
+
+Validação:
+
+- clique real na navegação confirmou a troca de módulo;
+- os treze destinos continuam presentes;
+- suíte ampliada para **20 testes automatizados**.

@@ -1,5 +1,5 @@
 const CACHE_PREFIX = "super-checklist-paranaiba";
-const CACHE_VERSION = "v21.0.0";
+const CACHE_VERSION = "v21.0.1";
 const CACHE_NAME = `${CACHE_PREFIX}-${CACHE_VERSION}`;
 const APP_SHELL = [
   "./",

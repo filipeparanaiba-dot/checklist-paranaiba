@@ -1,4 +1,4 @@
-export const APP_VERSION = "21.0.0";
+export const APP_VERSION = "21.0.1";
 export const DATA_SCHEMA_VERSION = 1;
 
 export const STORES = Object.freeze({
@@ -240,4 +240,3 @@ export function deriveStoreMetrics(workspace, storeId) {
     protectedValue,
   };
 }
-

@@ -2,6 +2,16 @@
 
 Todas as mudanças relevantes deste projeto são registradas aqui.
 
+## 21.0.1 — 2026-07-28
+
+### Corrigido
+
+- navegação e ações agora funcionam em navegadores incorporados que não
+  oferecem `Element.closest`;
+- foco e rolagem possuem alternativas compatíveis com implementações mais
+  antigas;
+- cache offline atualizado para distribuir imediatamente a correção.
+
 ## 21.0.0 — 2026-07-28
 
 ### Adicionado

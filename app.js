@@ -115,6 +115,24 @@ let persistenceAvailable = true;
 
 const byId = (id) => document.getElementById(id);
 
+function findDataTarget(startNode, attributeName) {
+  let element = startNode instanceof Element ? startNode : startNode?.parentElement;
+  while (element) {
+    if (element.hasAttribute(attributeName)) return element;
+    element = element.parentElement;
+  }
+  return null;
+}
+
+function focusMainContent() {
+  const main = byId("main-content");
+  try {
+    main.focus({ preventScroll: true });
+  } catch {
+    main.focus();
+  }
+}
+
 function createElement(tagName, className = "", text = "") {
   const element = document.createElement(tagName);
   if (className) element.className = className;
@@ -225,10 +243,14 @@ function navigate(viewId, { focus = true } = {}) {
   byId("page-subtitle").textContent = meta.subtitle;
   byId("module-select-mobile").value = viewId;
   currentView = viewId;
-  window.scrollTo({ top: 0, behavior: "auto" });
+  try {
+    window.scrollTo({ top: 0, behavior: "auto" });
+  } catch {
+    window.scrollTo(0, 0);
+  }
 
   if (focus) {
-    byId("main-content").focus({ preventScroll: true });
+    focusMainContent();
   }
 }
 
@@ -1108,19 +1130,19 @@ function bindForms() {
 
 function bindGlobalEvents() {
   document.addEventListener("click", async (event) => {
-    const viewButton = event.target.closest("[data-view]");
+    const viewButton = findDataTarget(event.target, "data-view");
     if (viewButton) {
       navigate(viewButton.dataset.view);
       return;
     }
 
-    const auditButton = event.target.closest("[data-start-audit]");
+    const auditButton = findDataTarget(event.target, "data-start-audit");
     if (auditButton) {
       startAudit(auditButton.dataset.startAudit);
       return;
     }
 
-    const trainingButton = event.target.closest("[data-training-module]");
+    const trainingButton = findDataTarget(event.target, "data-training-module");
     if (trainingButton) {
       await answerTraining(
         trainingButton.dataset.trainingModule,
@@ -1129,7 +1151,7 @@ function bindGlobalEvents() {
       return;
     }
 
-    const templateButton = event.target.closest("[data-run-template]");
+    const templateButton = findDataTarget(event.target, "data-run-template");
     if (templateButton) {
       const template = workspace.checklistTemplates.find(
         (item) => item.id === templateButton.dataset.runTemplate,
@@ -1138,19 +1160,19 @@ function bindGlobalEvents() {
       return;
     }
 
-    const completeButton = event.target.closest("[data-complete-action]");
+    const completeButton = findDataTarget(event.target, "data-complete-action");
     if (completeButton) {
       await completeAction(completeButton.dataset.completeAction);
       return;
     }
 
-    const prepareButton = event.target.closest("[data-prepare-product]");
+    const prepareButton = findDataTarget(event.target, "data-prepare-product");
     if (prepareButton) {
       await prepareProduct(prepareButton.dataset.prepareProduct);
       return;
     }
 
-    const actionButton = event.target.closest("[data-action]");
+    const actionButton = findDataTarget(event.target, "data-action");
     if (!actionButton) return;
     const action = actionButton.dataset.action;
     if (action === "cancel-audit") {
@@ -1164,7 +1186,11 @@ function bindGlobalEvents() {
       if (list.children.length <= 1) {
         announce("O checklist precisa manter ao menos uma pergunta.");
       } else {
-        actionButton.closest(".builder-question")?.remove();
+        let question = actionButton.parentElement;
+        while (question && !question.classList.contains("builder-question")) {
+          question = question.parentElement;
+        }
+        question?.remove();
       }
     } else if (action === "export-backup") {
       downloadWorkspaceBackup(workspace);
