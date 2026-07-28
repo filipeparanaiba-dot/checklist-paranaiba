@@ -107,6 +107,26 @@ Fontes externas verificadas:
 
 ## Próximas etapas
 
-1. Executar a validação completa.
-2. Publicar a branch no GitHub.
-3. Abrir a pull request com resumo, impacto, testes e limites.
+## Etapa 4 — Validação final
+
+**Objetivo:** impedir regressões nos problemas encontrados na análise inicial.
+
+Resultados:
+
+- cinco testes de regras de negócio aprovados;
+- dez testes estruturais aprovados;
+- quatro testes de documentação aprovados;
+- referências literais do JavaScript verificadas contra os IDs do HTML;
+- controles visíveis verificados quanto a rótulos associados;
+- sintaxe de todos os módulos JavaScript aprovada;
+- servidor local respondeu com HTTP 200 e cabeçalhos defensivos;
+- todos os arquivos necessários ao shell offline responderam com HTTP 200;
+- acesso a caminhos ocultos bloqueado.
+
+Total: **19 testes aprovados**, além das verificações de sintaxe e HTTP.
+
+## Próximas etapas
+
+1. Publicar a branch no GitHub.
+2. Abrir a pull request com resumo, impacto, testes e limites.
+3. Aguardar as verificações do GitHub Actions.

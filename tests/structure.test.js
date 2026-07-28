@@ -33,10 +33,37 @@ test("todos os módulos possuem uma tela real", () => {
   });
 });
 
+test("referências literais do JavaScript apontam para IDs existentes", () => {
+  const ids = new Set(
+    [...html.matchAll(/\sid=["']([^"']+)["']/gi)].map((match) => match[1]),
+  );
+  const references = [
+    ...app.matchAll(/\bbyId\(["']([^"']+)["']\)/g),
+  ].map((match) => match[1]);
+
+  assert.ok(references.length > 40);
+  references.forEach((reference) => {
+    assert.equal(ids.has(reference), true, `ID ausente no HTML: ${reference}`);
+  });
+});
+
 test("HTML não usa handlers inline nem bloqueia zoom", () => {
   assert.doesNotMatch(html, /\son(?:click|change|input|submit)=/i);
   assert.doesNotMatch(html, /user-scalable\s*=\s*no/i);
   assert.doesNotMatch(html, /maximum-scale\s*=\s*1/i);
+});
+
+test("controles de formulário visíveis possuem rótulo associado", () => {
+  const controls = [
+    ...html.matchAll(/<(input|select|textarea)\b[^>]*\bid=["']([^"']+)["'][^>]*>/gi),
+  ]
+    .map((match) => match[2])
+    .filter((id) => id !== "backup-file");
+
+  assert.ok(controls.length > 25);
+  controls.forEach((id) => {
+    assert.match(html, new RegExp(`<label[^>]+for=["']${id}["']`, "i"));
+  });
 });
 
 test("código não injeta dados com innerHTML", () => {
@@ -79,4 +106,3 @@ test("folha de estilos cobre foco e redução de movimento", () => {
   assert.match(css, /:focus-visible/);
   assert.match(css, /prefers-reduced-motion/);
 });
-
