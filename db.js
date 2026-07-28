@@ -40,10 +40,11 @@ export async function loadWorkspace() {
   const database = await openWorkspaceDatabase();
   try {
     const transaction = database.transaction(STORE_NAME, "readonly");
+    const transactionDone = transactionToPromise(transaction);
     const stored = await requestToPromise(
       transaction.objectStore(STORE_NAME).get(WORKSPACE_KEY),
     );
-    await transactionToPromise(transaction);
+    await transactionDone;
 
     if (!stored || stored.schemaVersion !== DATA_SCHEMA_VERSION) {
       const workspace = createInitialWorkspace();
@@ -67,8 +68,9 @@ export async function saveWorkspace(workspace) {
       updatedAt: new Date().toISOString(),
     };
     const transaction = database.transaction(STORE_NAME, "readwrite");
+    const transactionDone = transactionToPromise(transaction);
     transaction.objectStore(STORE_NAME).put(snapshot, WORKSPACE_KEY);
-    await transactionToPromise(transaction);
+    await transactionDone;
     return snapshot;
   } finally {
     database.close();
@@ -106,4 +108,3 @@ export async function parseWorkspaceBackup(file) {
   }
   return parsed;
 }
-

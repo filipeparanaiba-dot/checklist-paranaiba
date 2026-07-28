@@ -37,8 +37,52 @@ Validação:
 
 ## Próximas etapas
 
-1. Reconstruir os fluxos de auditoria e manutenção.
-2. Completar todos os módulos, navegação móvel e acessibilidade.
-3. Implementar PWA offline coerente e ativos locais.
-4. Adicionar documentação operacional, CI e validação visual.
+## Etapa 2 — Fluxos completos, experiência móvel e PWA
 
+**Objetivo:** substituir a maquete monolítica por uma aplicação navegável,
+coerente e honesta sobre suas capacidades.
+
+Alterações:
+
+- reconstrução dos 13 módulos, incluindo as telas antes ausentes de auditoria e
+  manutenção;
+- auditorias com respostas obrigatórias e criação automática de planos para
+  não conformidades;
+- criador de checklist que grava nome, setor e todas as perguntas;
+- cadastros validados para ocorrências, EPI, recebimento, manutenção, produtos,
+  planos e rascunhos de comunicação;
+- cálculos e contadores derivados do estado, isolados por unidade;
+- exportação CSV e backup JSON reais;
+- remoção de handlers inline, dependência `@latest`, `innerHTML` com dados e
+  mensagens falsas de sucesso;
+- navegação móvel para todos os módulos, zoom permitido, foco visível,
+  landmarks, tabelas com legenda, formulários semânticos e diálogo nativo;
+- reconstrução do service worker com cache versionado e remoção limitada aos
+  caches do próprio projeto;
+- manifesto com ícones locais, orientação livre e identidade visual própria;
+- servidor PowerShell convertido em um invólucro que falha corretamente quando
+  o Node.js não está disponível.
+
+Decisões:
+
+- EPI é salvo como rascunho, nunca como “assinatura digital”;
+- treinamento registra conclusão interna, nunca “certificação Anvisa”;
+- ações de preço podem ser preparadas, mas permanecem com status “aguardando
+  backend”;
+- notificações são rascunhos e nunca são apresentadas como entregues.
+
+Validação:
+
+- treze testes automatizados executados com sucesso;
+- todos os 13 destinos de navegação possuem uma tela;
+- nenhum ID duplicado foi encontrado;
+- servidor respondeu com HTTP 200, CSP e `nosniff`;
+- tentativas de acessar `.git` foram bloqueadas e arquivos inexistentes
+  retornaram HTTP 404;
+- imagem social validada e otimizada para 1200 × 630 px.
+
+## Próximas etapas
+
+1. Atualizar documentação operacional, segurança e roadmap.
+2. Adicionar integração contínua e validação completa do pacote.
+3. Publicar os commits e abrir a pull request com os limites externos.

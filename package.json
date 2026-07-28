@@ -9,8 +9,7 @@
   "scripts": {
     "start": "node server.mjs",
     "check": "node --check app.js && node --check core.js && node --check db.js && node --check server.mjs && node --check sw.js",
-    "test": "node --test",
+    "test": "node tests/core.test.js && node tests/structure.test.js",
     "validate": "npm run check && npm test"
   }
 }
-
