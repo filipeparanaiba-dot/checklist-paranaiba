@@ -22,15 +22,13 @@ jobs:
           node-version: "24"
           package-manager-cache: false
 
-      - name: Check syntax
-        run: |
-          node --check app.js
-          node --check core.js
-          node --check db.js
-          node --check server.mjs
-          node --check sw.js
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: "11.9.0"
 
-      - name: Run tests
-        run: |
-          node tests/core.test.js
-          node tests/structure.test.js
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Validate complete workspace
+        run: pnpm validate

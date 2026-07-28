@@ -174,3 +174,36 @@ Validação:
 - clique real na navegação confirmou a troca de módulo;
 - os treze destinos continuam presentes;
 - suíte ampliada para **20 testes automatizados**.
+
+## Etapa 7 — Separação do aplicativo operacional
+
+- criado `apps/operator` com fluxo de entrada, tarefas, preparação, pergunta por
+  tela, revisão, envio e comprovante;
+- removidos resultados, ranking, pesos e regras do contrato do colaborador;
+- respostas são salvas a cada avanço;
+- fila local tenta novamente ao recuperar conexão ou reabrir o aplicativo;
+- projetos nativos Android e iOS gerados com Capacitor.
+
+## Etapa 8 — Fonte central da verdade
+
+- criado `services/api` com banco SQLite transacional;
+- implementados usuários, unidades, associações, versões, atribuições,
+  execuções, respostas, avaliações, planos, idempotência e auditoria;
+- avaliação ocorre exclusivamente no servidor;
+- login local é limitado ao desenvolvimento e OIDC é obrigatório em produção;
+- respostas gerenciais são restritas a gestor/admin e às unidades associadas.
+
+## Etapa 9 — Painel e contratos
+
+- criado `apps/manager`, conectado à API, com métricas e execuções recentes;
+- criado `packages/contracts` com tipos públicos seguros;
+- CI ampliada para instalar, tipar, testar e compilar todo o workspace;
+- documentação de dispositivos, API, implantação e ameaças adicionada.
+
+## Etapa 10 — Validação
+
+- TypeScript estrito validado em aplicativo, painel e API;
+- builds de produção do aplicativo e painel concluídos;
+- testes confirmaram ausência de campos restritos no payload operacional;
+- testes confirmaram bloqueio do painel para colaborador;
+- testes confirmaram idempotência e desligamento do login local em produção.

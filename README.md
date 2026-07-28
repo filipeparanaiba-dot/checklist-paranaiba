@@ -2,15 +2,16 @@
 
 ![Super Checklist Paranaíba](assets/og.png)
 
-Aplicação web offline-first para demonstrar rotinas operacionais, auditorias,
-planos de ação e prevenção de perdas nas duas unidades do Supermercado
-Paranaíba.
+Plataforma de checklists com aplicativo operacional Android/iOS, API de
+avaliação protegida, painel gerencial e demonstração web offline-first.
 
-> **Status:** demonstração local segura. Os dados gravados no navegador não são
-> registros corporativos. VR Software, WhatsApp, autenticação e assinatura
-> digital ainda não possuem backend autorizado.
+> **Status:** a versão 22 é funcional para desenvolvimento e piloto controlado.
+> A demonstração local segura da versão 21 continua disponível na raiz; os dados
+> gravados por ela não são registros corporativos.
 
-## O que existe na versão 21
+Consulte diretamente [a arquitetura móvel da versão 22](#versão-22-execução-móvel-com-resultados-restritos).
+
+## Demonstração web da versão 21
 
 - 13 módulos navegáveis em desktop e celular;
 - auditorias com respostas obrigatórias e geração de planos de ação;
@@ -33,14 +34,15 @@ Paranaíba.
 
 | Capacidade | Situação atual | O que falta para produção |
 | --- | --- | --- |
-| Auditorias e 5W2H | Funcional no dispositivo | API, banco corporativo e trilha de auditoria |
-| Rascunhos offline | IndexedDB local | Outbox de servidor com idempotência e reconciliação |
+| Execução móvel de checklist | Android/iOS, API e painel implementados | OIDC, HTTPS e credenciais das lojas |
+| Avaliação e 5W2H | Servidor transacional com trilha | banco gerenciado para múltiplas réplicas |
+| Rascunhos offline | fila idempotente no app operacional | criptografia nativa e gestão de dispositivos |
 | Alteração de preço | Apenas preparação local | Contrato e credenciais da API VR, aprovação e confirmação |
 | WhatsApp | Apenas rascunho local | Provedor autorizado, templates, consentimento e recibos |
 | EPI | Rascunho local | Identidade, reautenticação, evidência e assinatura válida |
 | Treinamento | Conteúdo textual demonstrativo | Conteúdo aprovado, mídia, legendas e gestão de versões |
 | PDF | Não implementado | Gerador de documentos e validação do modelo |
-| Autenticação | Não implementada | Provedor de identidade e perfis por unidade/função |
+| Autenticação | OIDC na API e login local fora de produção | contratar/configurar o provedor corporativo |
 | IA visual | Não implementada | Dataset, modelo validado, consentimento e monitoramento |
 
 Mensagens da interface seguem essa matriz: nenhuma ação externa é apresentada
@@ -169,3 +171,42 @@ Detalhes e fronteiras estão em [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md).
 
 O repositório ainda não declara uma licença. O proprietário deve escolher e
 publicar os termos antes de permitir reutilização externa.
+# Versão 22: execução móvel com resultados restritos
+
+O repositório agora contém uma solução funcional de ponta a ponta para piloto:
+
+- aplicativo separado do colaborador em `apps/operator`, preparado com Capacitor
+  para Android e iOS;
+- painel separado do gestor em `apps/manager`;
+- API em `services/api`, com autenticação, autorização por função e unidade,
+  avaliação no servidor, idempotência e trilha de auditoria;
+- contratos públicos em `packages/contracts`, deliberadamente sem regras,
+  pesos ou resultados;
+- execução offline com salvamento automático, fila de envio e protocolo;
+- testes que garantem que o colaborador não recebe resultados nem acessa o
+  painel gerencial.
+
+> **Status:** a versão 22 é funcional para desenvolvimento e piloto controlado.
+> A demonstração local segura anterior continua disponível na raiz. Dados do
+> modo legado não são registros corporativos. Publicação em produção exige
+> provedor OIDC, endereço HTTPS para a API, política LGPD e credenciais das lojas.
+
+## Início rápido da solução móvel
+
+```powershell
+pnpm install
+pnpm dev:api
+pnpm dev:operator
+```
+
+Use `operador@paranaiba.local` no aplicativo. Para o painel gerencial:
+
+```powershell
+pnpm --filter @checklist/manager dev
+```
+
+Use `gestor@paranaiba.local`. As contas locais existem somente fora de produção.
+Consulte [Aplicativo móvel](docs/MOBILE.md), [API](docs/API.md),
+[Implantação](docs/DEPLOYMENT.md) e [Modelo de ameaças](docs/THREAT_MODEL.md).
+
+---

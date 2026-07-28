@@ -1,6 +1,6 @@
 {
   "name": "checklist-paranaiba",
-  "version": "21.0.1",
+  "version": "22.0.0",
   "private": true,
   "type": "module",
   "engines": {
@@ -9,8 +9,20 @@
   "scripts": {
     "start": "node server.mjs",
     "build": "node scripts/build.mjs",
+    "build:operator": "pnpm --filter @checklist/operator build",
+    "build:manager": "pnpm --filter @checklist/manager build",
+    "dev:api": "pnpm --filter @checklist/api dev",
+    "dev:operator": "pnpm --filter @checklist/operator dev",
+    "dev:manager": "pnpm --filter @checklist/manager dev",
+    "mobile:sync": "pnpm --filter @checklist/operator mobile:sync",
     "check": "node --check app.js && node --check core.js && node --check db.js && node --check server.mjs && node --check sw.js",
-    "test": "node tests/core.test.js && node tests/structure.test.js && node tests/documentation.test.js",
-    "validate": "npm run check && npm test && npm run build"
+    "typecheck": "pnpm -r typecheck",
+    "test": "node tests/core.test.js && node tests/structure.test.js && node tests/documentation.test.js && pnpm --filter @checklist/api test",
+    "validate": "pnpm run check && pnpm run typecheck && pnpm run test && pnpm run build && pnpm run build:operator && pnpm run build:manager"
+  },
+  "devDependencies": {
+    "@types/node": "^24.0.0",
+    "tsx": "^4.20.0",
+    "typescript": "^5.9.0"
   }
 }

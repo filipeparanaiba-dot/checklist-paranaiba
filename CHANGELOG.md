@@ -2,6 +2,14 @@
 
 Todas as mudanças relevantes deste projeto são registradas aqui.
 
+## 22.0.0 — 2026-07-28
+
+- aplicativo operacional Android/iOS e painel gerencial separados;
+- API com RBAC por unidade, avaliação server-side, idempotência e auditoria;
+- modo offline com protocolo sem exposição de resultados;
+- testes de autorização, separação de dados e produção;
+- documentação de API, implantação, dispositivos e ameaças.
+
 ## 21.0.1 — 2026-07-28
 
 ### Corrigido
@@ -45,3 +53,25 @@ Todas as mudanças relevantes deste projeto são registradas aqui.
 - dependência `lucide@latest` e outros ativos remotos;
 - limpeza global de Cache Storage e autodesregistro do service worker;
 - caminho absoluto no servidor PowerShell.
+# Detalhes da versão 22
+
+### Adicionado
+
+- aplicativo operacional separado, com projetos nativos Android e iOS;
+- fluxo de tarefas, uma pergunta por tela, revisão e comprovante sem resultado;
+- salvamento automático e fila offline com envio idempotente;
+- API autenticada, banco transacional, RBAC por unidade e auditoria;
+- avaliação autoritativa no servidor e criação automática de planos de ação;
+- painel gerencial conectado aos resultados;
+- contratos compartilhados que excluem regras, pesos e notas do aplicativo;
+- testes de isolamento de dados, autorização e idempotência;
+- documentação de API, dispositivos móveis, implantação e ameaças.
+
+### Segurança
+
+- autenticação de demonstração desativada automaticamente em produção;
+- tokens não são persistidos pelo aplicativo operacional;
+- regras de avaliação nunca são enviadas ao pacote do colaborador;
+- cabeçalhos defensivos, limite de corpo, CORS explícito e respostas sem cache.
+
+---

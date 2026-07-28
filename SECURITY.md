@@ -26,7 +26,7 @@ relato privado ao proprietário do repositório com:
 - ações externas bloqueadas em modo demonstração;
 - testes estruturais para evitar regressões conhecidas.
 
-## Limites conhecidos
+## Limites conhecidos da demonstração web legada
 
 - sem autenticação ou autorização;
 - sem backend ou banco corporativo;
@@ -48,3 +48,22 @@ Esses limites impedem o uso em produção.
 6. políticas LGPD, retenção e exclusão;
 7. backup, recuperação e observabilidade;
 8. teste de invasão e correção dos achados.
+## Controles da versão 22
+
+A pilha em `apps/`, `packages/` e `services/` implementa as fronteiras necessárias
+para um piloto controlado:
+
+- autorização baseada no usuário provisionado no banco; função recebida no token
+  nunca concede privilégios;
+- isolamento por unidade em todas as consultas gerenciais;
+- regras, pesos, avaliações e planos existem somente no servidor;
+- chave de idempotência impede duplicação causada por reconexão;
+- versões publicadas de checklist são imutáveis;
+- autenticação local é impossível quando `NODE_ENV=production`;
+- descoberta OIDC, emissor, audiência e algoritmo são validados;
+- limite de 1 MB, CORS explícito, CSP, `no-store` e identificador de requisição;
+- eventos relevantes mantêm ator, unidade, recurso, horário e requisição.
+
+O dispositivo não armazena resultados ou tokens. Antes de usar dados pessoais
+reais, adote armazenamento nativo criptografado e uma política de apagamento
+remoto definida pela empresa.

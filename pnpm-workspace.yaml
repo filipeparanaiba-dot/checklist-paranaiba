@@ -1,0 +1,10 @@
+packages:
+  - "apps/*"
+  - "packages/*"
+  - "services/*"
+
+overrides:
+  postcss: 8.5.6
+
+allowBuilds:
+  esbuild: true

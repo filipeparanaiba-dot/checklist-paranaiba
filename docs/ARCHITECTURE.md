@@ -84,6 +84,32 @@ API autenticada
 Cada mutação deve usar UUID, chave idempotente, versão e resposta confirmada.
 Dados locais só podem ser removidos após confirmação do servidor.
 
+## Arquitetura implementada na versão 22
+
+```text
+apps/operator (Android/iOS)
+  ├─ tarefas e perguntas públicas
+  ├─ rascunhos e fila offline
+  └─ recebe somente protocolo
+            │ HTTPS + token
+            ▼
+services/api
+  ├─ RBAC por função e unidade
+  ├─ validação e idempotência
+  ├─ regras/pesos privados
+  ├─ avaliação transacional
+  ├─ planos de ação
+  └─ auditoria
+            │
+            ▼
+apps/manager
+  └─ notas, desvios e indicadores
+```
+
+`packages/contracts` é a fronteira pública. Qualquer campo adicionado ali pode
+chegar ao dispositivo; por isso avaliações e regras pertencem apenas ao modelo
+interno da API.
+
 ## Decisões futuras obrigatórias
 
 - provedor de identidade;
